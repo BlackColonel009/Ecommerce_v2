@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Blank</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        /* Style pour les cartes de variantes */
+        .variant-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+            position: relative;
+        }
+
+        .variant-card:hover {
+            border-color: #4e73df;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .variant-remove {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #e74a3b;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .variant-remove:hover {
+            color: #be2617;
+        }
+
+        .variant-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4e73df;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 5px;
+        }
+
+        /* Style pour les cartes de variantes dans l'édition */
+        .edit-variant-card {
+            border: 1px solid #d1d3e2;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f8f9fc;
+            position: relative;
+        }
+
+        .edit-variant-card:hover {
+            border-color: #4e73df;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .edit-variant-remove {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #e74a3b;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .edit-variant-remove:hover {
+            color: #be2617;
+        }
+
+        .edit-variant-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4e73df;
+            border-bottom: 1px dashed #d1d3e2;
+            padding-bottom: 5px;
+        }
+
+        /* Badge pour le type de produit */
+        .product-type-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: normal;
+            margin-left: 10px;
+        }
+
+        .badge-simple {
+            background: #1cc88a;
+            color: white;
+        }
+
+        .badge-variants {
+            background: #f6c23e;
+            color: white;
+        }
+        /* Style pour les images existantes et nouvelles */
+        .existing-image-item, .new-image-item {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .existing-image-item:hover, .new-image-item:hover {
+            border-color: #007bff;
+            transform: scale(1.02);
+        }
+
+        .set-main-image, .set-new-main {
+            font-size: 0.7rem;
+            padding: 2px 5px;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+            font-size: 0.65rem;
+        }
+
+        .badge-secondary {
+            background-color: #6c757d;
+            color: white;
+            font-size: 0.65rem;
+        }
+        /* Style pour la barre de recherche */
+        .search-wrapper {
+            min-width: 250px;
+        }
+
+        .search-wrapper .input-group {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+
+        .search-wrapper .input-group input {
+            border-right: none;
+        }
+
+        .search-wrapper .input-group input:focus {
+            box-shadow: none;
+            border-color: #ced4da;
+        }
+
+        .search-wrapper .input-group-append .btn {
+            border-left: none;
+        }
+
+        #searchResultCount {
+            margin-top: 5px;
+            display: block;
+            font-size: 0.8rem;
+        }
+
+        /* Mise en évidence des résultats (optionnel) */
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+
+        /* Style pour le bouton effacer */
+        .btn-outline-secondary {
+            border-color: #ced4da;
+            border-left: none;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #f8f9fa;
+            border-color: #ced4da;
+        }
+
+        /* ===============================================
+        STYLE POUR LES CELLULES SPECS
+        =============================================== */
+
+        .specs-cell {
+            max-width: 250px;
+            max-height: 100px;
+            overflow-y: auto;
+            padding: 5px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            background: #f8f9fa;
+            border-radius: 4px;
+            scrollbar-width: thin;
+        }
+
+        /* Style de la scrollbar (Webkit - Chrome, Safari) */
+        .specs-cell::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .specs-cell::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .specs-cell::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .specs-cell::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .product-field-error {
+            color: #e74a3b;
+            display: block;
+            font-size: .78rem;
+            margin-top: .35rem;
+        }
+
+        #product-form .is-invalid {
+            border-color: #e74a3b !important;
+            box-shadow: 0 0 0 .2rem rgba(231,74,59,.12) !important;
+        }
+
+        .product-feedback-modal .modal-content {
+            border: 0;
+            border-radius: 22px;
+            box-shadow: 0 24px 70px rgba(30,39,65,.24);
+            overflow: hidden;
+        }
+
+        .product-feedback-modal .modal-body { padding: 2.25rem; }
+        .product-feedback-icon {
+            align-items: center;
+            background: #eafaf4;
+            border-radius: 50%;
+            color: #1cc88a;
+            display: inline-flex;
+            font-size: 1.65rem;
+            height: 64px;
+            justify-content: center;
+            width: 64px;
+        }
+        .product-feedback-modal.is-error .product-feedback-icon { background: #fff0ef; color: #e74a3b; }
+        .product-feedback-modal h5 { color: #253044; font-size: 1.25rem; font-weight: 800; }
+        .product-feedback-issues {
+            background: #fff7f6;
+            border-left: 4px solid #e74a3b;
+            border-radius: 10px;
+            color: #71322c;
+            font-size: .88rem;
+            margin: 1.25rem 0 0;
+            padding: .9rem 1rem .9rem 2rem;
+            text-align: left;
+        }
+        .product-feedback-issues:empty { display: none; }
+
+        
+    </style>
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+       <ul  class="nav-container navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar"></ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow topnav-container">
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Gesionnaire des produit</h1>
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <!-- CATEGORY -->
+                            <div class="card mb-4 py-3 border-left-warning">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Création des catégories</h6>
+                                </div>
+                                <div class="card-body">
+
+                                    <form id="category-form">
+                                        <div class="form-group">
+                                            <label for="category-name">Nom de la catégorie</label>
+                                            <input type="text" class="form-control" id="category-name" placeholder="Ex : Boissons">
+
+                                            <label for="category-slug">Slug de la catégorie</label>
+                                            <input type="text" class="form-control" id="category-slug" placeholder="Ex : boissons">
+
+                                            <label for="category-parent">Catégorie parente (optionnel)</label>
+                                            <select class="form-control" id="category-parent">
+                                                <option value="">-- Aucune --</option>
+                                            </select>
+
+                                            <!-- Nouveau champ image -->
+                                            <label for="category-image">Image de la catégorie</label>
+                                            <input type="file" class="form-control" id="category-image" accept="image/*">
+                                            <!-- ou un <input type="file"> si tu veux uploader -->
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-block mt-3">
+                                            Ajouter la catégorie
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                            <div class="card mb-4 py-3 border-left-warning">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Liste des catégories</h6>
+                                </div>
+                                <div class="card-body" id="categories-list" style="max-height: 300px; overflow-y: auto;">
+                                    <!-- Les catégories seront injectées ici via JS -->
+                                </div>
+                            </div>
+
+
+                            <!-- BRAND -->
+                            <div class="card mb-4 py-3 border-left-warning">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Création des marques</h6>
+                                </div>
+                                <div class="card-body">
+
+                                    <form id="brand-form">
+                                        <div class="form-group">
+                                            <label for="brand-name">Nom de la marque</label>
+                                            <input type="text" class="form-control" id="brand-name" placeholder="Ex : Coca-Cola">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-block mt-3">
+                                            Ajouter la marque
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                       
+
+                        <div class="col-lg-6   mb-3">
+                            <div class="card mb-4 py-3 border-left-warning">
+                                <div class="card-header py-3 ">
+                                    <h6 class="m-0 font-weight-bold text-primary">Création des Produits</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- PRODUCT -->
+                                    <form id="product-form" enctype="multipart/form-data" novalidate>
+                                        <!-- Nom -->
+                                        <div class="form-group">
+                                            <label for="product-name">Nom du produit</label>
+                                            <input type="text" class="form-control" id="product-name" list="existing-product-names" autocomplete="off" required>
+                                            <datalist id="existing-product-names"></datalist>
+                                            <small class="form-text text-muted">Commencez à écrire pour reprendre rapidement un nom déjà enregistré.</small>
+                                        </div>
+
+                                        <!-- Slug -->
+                                        <div class="form-group">
+                                            <label for="product-slug">Slug (optionnel)</label>
+                                            <input type="text" class="form-control" id="product-slug" placeholder="ex: sprite-50cl">
+                                        </div>
+
+                                        <!-- SWITCH pour basculer entre mode simple et mode variantes (AJOUTÉ) -->
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="has-variants">
+                                                <label class="custom-control-label" for="has-variants">
+                                                    <strong>Ce produit a plusieurs variantes</strong> 
+                                                    <small class="text-muted">(RAM, Stockage, etc.)</small>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Section Produit Simple (visible par défaut) -->
+                                        <div id="simple-product-section">
+                                            <!-- Prix multiples -->
+                                            <div class="form-group">
+                                                <label>Prix</label>
+                                                <div id="prices-list"></div>
+                                                <button id="add-price-btn" class="btn btn-sm btn-outline-secondary" type="button">+ Ajouter un prix</button>
+                                                <small class="form-text text-muted">Vous pouvez ajouter plusieurs prix (ex. promo, devises différentes).</small>
+                                            </div>
+
+                                            <!-- Stock -->
+                                            <div class="form-group">
+                                                <label for="product-stock">Stock</label>
+                                                <input type="number" class="form-control" id="product-stock" value="0" min="0">
+                                            </div>
+                                        </div>
+
+                                        <!-- Section Produit à Variantes (cachée par défaut) -->
+                                        <div id="variants-section" style="display: none;">
+                                            <div class="alert alert-info">
+                                                <i class="fas fa-info-circle"></i> 
+                                                Créez plusieurs variantes pour ce produit (ex: différentes configurations RAM/Stockage)
+                                            </div>
+
+                                            <!-- Dans la section variantes, AVANT la liste des variantes -->
+                                            <div class="form-group">
+                                                <label for="display-price">
+                                                    <strong>Prix à afficher</strong> 
+                                                    <small class="text-muted">(dans les recherches, grilles, etc.)</small>
+                                                </label>
+                                                <input type="number" 
+                                                    class="form-control" 
+                                                    id="display-price" 
+                                                    placeholder="Ex: 550000" 
+                                                    min="0"
+                                                    required>
+                                                <small class="text-muted">Ce prix sera visible partout, même si les variantes ont des prix différents</small>
+                                            </div>
+
+                                            <div class="divider my-3"></div>
+                                            
+                                            <!-- Liste des variantes -->
+                                            <div id="variants-list" class="mb-3">
+                                                <!-- Les variantes seront ajoutées ici par JS -->
+                                            </div>
+                                            
+                                            <button id="add-variant-btn" class="btn btn-sm btn-outline-primary mb-3" type="button">
+                                                <i class="fas fa-plus"></i> Ajouter une variante
+                                            </button>
+                                            
+                                            <small class="form-text text-muted d-block mb-3">
+                                                Chaque variante a son propre prix et son propre stock
+                                            </small>
+                                        </div>
+
+                                        <!-- Devise -->
+                                        <div class="form-group">
+                                            <label for="product-currency">Devise</label>
+                                            <select id="product-currency" class="form-control">
+                                                <option value="XOF">XOF</option>
+                                                <option value="USD">USD</option>
+                                                <option value="EUR">EUR</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Catégorie -->
+                                        <div class="form-group">
+                                            <label for="product-category">Catégorie</label>
+                                            <select id="product-category" class="form-control" required></select>
+                                        </div>
+
+                                        <!-- Marque -->
+                                        <div class="form-group">
+                                            <label for="product-brand">Marque</label>
+                                            <select id="product-brand" class="form-control" required></select>
+                                        </div>
+
+                                        <!-- Rating / Note du produit -->
+                                        <div class="form-group">
+                                            <label for="product-rating">Note du produit (0-5)</label>
+                                            <input type="number" 
+                                                class="form-control" 
+                                                id="product-rating" 
+                                                name="rating" 
+                                                min="0" 
+                                                max="5" 
+                                                step="0.1" 
+                                                value="0"
+                                                placeholder="Ex: 4.5">
+                                            <small class="form-text text-muted">Note moyenne du produit (optionnel, 0 par défaut)</small>
+                                        </div>
+
+                                        <!-- Description -->
+                                        <div class="form-group">
+                                            <label for="product-description">Description</label>
+                                            <textarea class="form-control" id="product-description" rows="4"></textarea>
+                                        </div>
+
+                                        <!-- Specs -->
+                                        <div class="form-group">
+                                            <label>Caractéristiques (Specs)</label>
+                                            <div id="specs-list"></div>
+                                            <button id="add-spec-btn" class="btn btn-sm btn-outline-secondary" type="button">+ Ajouter une caractéristique</button>
+                                            <small class="form-text text-muted">Format: clé:valeur (ex. RAM:16GB).</small>
+                                        </div>
+
+                                        <!-- Couleurs -->
+                                        <div class="form-group">
+                                            <label>Couleurs</label>
+                                            <div id="colors-list"></div>
+                                            <button id="add-color-btn" class="btn btn-sm btn-outline-secondary" type="button">+ Ajouter une couleur</button>
+                                            <datalist id="existing-product-colors"></datalist>
+                                            <small class="form-text text-muted">Les couleurs déjà utilisées apparaissent pendant la saisie.</small>
+                                        </div>
+
+                                        <!-- Images -->
+                                        <div class="form-group">
+                                            <label for="product-images">Images (plusieurs)</label>
+                                            <input type="file" class="form-control-file" id="product-images" accept="image/*" multiple>
+                                            <small class="form-text text-muted">La première image sera l’image principale.</small>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-success btn-block mt-3">Ajouter le produit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12   mb-3">
+                            <div class="card mt-4 mb-4 py-3 border-left-warning">
+                                <div class="card-header">
+                                    <h6 class="m-0 font-weight-bold text-secondary">Aperçu du produit</h6>
+                                </div>
+                                <div class="card-body" id="product-preview">
+                                    <p><strong>Nom :</strong> <span id="preview-name">—</span></p>
+                                    <p><strong>Prix :</strong> <span id="preview-prices">—</span> <span id="preview-currency"></span></p>
+                                    <p><strong>Couleurs :</strong> <span id="preview-colors">—</span></p>
+                                    <p class="overflow-auto"><strong>Specs :</strong> <span id="preview-specs">—</span></p>
+                                    <p><strong>Stock :</strong> <span id="preview-stock">—</span></p>
+                                    <div id="preview-images" class="d-flex flex-wrap"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                    <!-- /.row -->
+                    <div class="row">
+                        <!-- DataTales Example -->
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center flex-wrap">
+                                    <h6 class="m-0 font-weight-bold text-primary">Produits enregistrés</h6>
+                                    
+                                    <!-- 🔍 BARRE DE RECHERCHE AJOUTÉE -->
+                                    <div class="search-wrapper" style="width: 300px;">
+                                        <div class="input-group">
+                                            <input type="text" 
+                                                class="form-control" 
+                                                id="productSearchInput" 
+                                                placeholder="Rechercher un produit..."
+                                                aria-label="Rechercher">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button" id="productSearchBtn">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <small class="text-muted" id="searchResultCount"></small>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <!-- Ici on fixe une hauteur et on active le scroll -->
+                                    <div class="table-responsive" style="max-height: 700px; overflow-y: auto;">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>Nom</th>
+                                                    <th>Catégorie</th>
+                                                    <th>Marque</th>
+                                                    <th>Prix</th>
+                                                    <th>Stock</th>
+                                                    <th>Specs</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>Nom</th>
+                                                    <th>Catégorie</th>
+                                                    <th>Marque</th>
+                                                    <th>Prix</th>
+                                                    <th>Stock</th>
+                                                    <th>Specs</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody id="products-body">
+                                                <!-- Dynamic content -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Résultat de création du produit -->
+    <div class="modal fade product-feedback-modal" id="productFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="productFeedbackTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <span class="product-feedback-icon" aria-hidden="true"><i class="fas fa-check"></i></span>
+                    <h5 class="mt-3 mb-2" id="productFeedbackTitle">Produit enregistré</h5>
+                    <p class="text-muted mb-0" id="productFeedbackMessage"></p>
+                    <ul class="product-feedback-issues" id="productFeedbackIssues"></ul>
+                    <button type="button" class="btn btn-primary px-4 mt-4" data-dismiss="modal">Compris</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Modal Modification Produit -->
+    <div class="modal fade" id="editProductModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifier le produit</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="editProductForm">
+                        <input type="hidden" id="editProductId">
+                        <input type="hidden" id="editHasVariants">
+
+                        <!-- Infos de base -->
+                        <div class="form-group">
+                            <label>Nom du produit *</label>
+                            <input type="text" id="editName" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Slug (optionnel)</label>
+                            <input type="text" id="editSlug" class="form-control" placeholder="ex: mon-produit">
+                            <small class="text-muted">Laissez vide pour auto-génération</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="editDescription" class="form-control" rows="4"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Catégorie *</label>
+                                    <select id="editCategory" class="form-control" required></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Marque *</label>
+                                    <select id="editBrand" class="form-control" required></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Note (rating) 0-5</label>
+                            <input type="number" id="editRating" class="form-control" min="0" max="5" step="0.1" value="0">
+                        </div>
+
+                        <!-- Séparateur : Infos produit simple / variantes -->
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Type de produit :</strong> 
+                            <span id="editProductTypeLabel">Produit simple</span>
+                        </div>
+
+                        <!-- SECTION PRODUIT SIMPLE -->
+                        <div id="editSimpleSection">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Prix</label>
+                                        <input type="number" id="editPrice" class="form-control" step="100" min="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Stock</label>
+                                        <input type="number" id="editStock" class="form-control" min="0" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION VARIANTES -->
+                        <div id="editVariantsSection" style="display: none;">
+                            <!-- Prix d'affichage (display_price) -->
+                            <div class="form-group">
+                                <label>Prix d'affichage</label>
+                                <input type="number" id="editDisplayPrice" class="form-control" placeholder="Prix visible dans les grilles">
+                                <small class="text-muted">Ce prix sera affiché dans les listes et grilles</small>
+                            </div>
+
+                            <!-- Devise -->
+                            <div class="form-group">
+                                <label>Devise</label>
+                                <select id="editCurrency" class="form-control">
+                                    <option value="XOF">XOF</option>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                </select>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0">Variantes du produit</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="editVariantsList" class="mb-3">
+                                        <!-- Les variantes seront chargées ici -->
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" id="editAddVariantBtn">
+                                        <i class="fas fa-plus"></i> Ajouter une variante
+                                    </button>
+                                    <small class="form-text text-muted mt-2">
+                                        Chaque variante a son propre prix et son stock
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SPECIFICATIONS (Specs) -->
+                        <div class="card mb-3 mt-3">
+                            <div class="card-header bg-secondary text-white">
+                                <h6 class="mb-0">Spécifications (Specs)</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="editSpecsList"></div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" id="editAddSpecBtn">
+                                    <i class="fas fa-plus"></i> Ajouter une spécification
+                                </button>
+                                <small class="form-text text-muted">Format: clé:valeur (ex: RAM:16GB)</small>
+                            </div>
+                        </div>
+
+                        <!-- COULEURS -->
+                        <div class="card mb-3">
+                            <div class="card-header bg-secondary text-white">
+                                <h6 class="mb-0">Couleurs disponibles</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="editColorsList"></div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" id="editAddColorBtn">
+                                    <i class="fas fa-plus"></i> Ajouter une couleur
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Images -->
+                        <div class="form-group mt-3">
+                            <label>Nouvelles images</label>
+                            <input type="file" id="editImages" class="form-control" multiple accept="image/*">
+                            <small class="form-text text-muted">Laissez vide pour garder les images existantes. La première sera l'image principale.</small>
+                        </div>
+
+                        <!-- Dans le modal, après le conteneur d'images -->
+                        <input type="hidden" id="editMainImageId" value="">
+
+                        <!-- Aperçu des images existantes -->
+                        <div class="mt-2">
+                            <label>Images existantes</label>
+                            <div id="editExistingImages" class="d-flex flex-wrap"></div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary" onclick="submitEditProduct()">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                    <button class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/config.js"></script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/js/nav.js"></script>
+    <script src="/static/js/product.js"></script>
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/static/js/sb-admin-2.min.js"></script>
+    <script src="/static/js/index_js.js"></script>
+    <!-- Page level plugins -->
+    <script src="/static/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/static/js/demo/datatables-demo.js"></script>
+    <script>
+                // Délégation d'événements sur le document entier
+        document.addEventListener('click', function(e) {
+            // Vérifie si le clic est sur le bouton toggle ou son icône
+            if (e.target.closest('#sidebarToggleTop')) {
+                e.preventDefault();
+                const sidebar = document.querySelector('.sidebar');
+                const body = document.body;
+                
+                if (sidebar) {
+                    body.classList.toggle('sidebar-toggled');
+                    sidebar.classList.toggle('toggled');
+                }
+            }
+        });
+    </script>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Tableau de bord d'administration de New Technologies Togo">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Tableau de bord | New Technologies Togo</title>
+
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800,900" rel="stylesheet">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link id="dashboard-modern-css" href="/static/css/dashboard-modern.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="nav-container navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar"></ul>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar topnav-container" aria-label="Barre d’administration"></nav>
+
+                <main class="dashboard-main container-fluid" id="contenu-principal">
+                    <section class="dashboard-welcome" aria-labelledby="dashboard-title">
+                        <div class="dashboard-welcome-content">
+                            <span class="dashboard-kicker">Centre de pilotage</span>
+                            <h1 id="dashboard-title">Bonjour, pilotez votre activité.</h1>
+                            <p>Suivez vos prospects, vos campagnes et les demandes clients depuis une vue claire, pensée pour agir rapidement.</p>
+                        </div>
+                        <div class="dashboard-actions" aria-label="Actions rapides">
+                            <a class="dashboard-action primary" href="/product_manage">
+                                <i class="fas fa-plus" aria-hidden="true"></i> Ajouter un produit
+                            </a>
+                            <a class="dashboard-action" href="/popup_promos">
+                                <i class="fas fa-ad" aria-hidden="true"></i> Créer une publicité
+                            </a>
+                            <a class="dashboard-action" href="/support_manage">
+                                <i class="fas fa-headset" aria-hidden="true"></i> Voir le support
+                            </a>
+                        </div>
+                    </section>
+
+                    <section aria-labelledby="kpi-title">
+                        <div class="dashboard-section-heading">
+                            <div>
+                                <h2 id="kpi-title">L’essentiel aujourd’hui</h2>
+                                <p>Les indicateurs utiles pour suivre l’activité commerciale.</p>
+                            </div>
+                        </div>
+
+                        <div class="kpi-grid">
+                            <article class="kpi-card dark">
+                                <div class="kpi-card-top">
+                                    <span class="kpi-label">Produits enregistrés</span>
+                                    <span class="kpi-icon"><i class="fas fa-boxes" aria-hidden="true"></i></span>
+                                </div>
+                                <strong class="kpi-value" id="registered-products">0</strong>
+                                <span class="kpi-note">Catalogue complet en base</span>
+                            </article>
+
+                            <article class="kpi-card">
+                                <div class="kpi-card-top">
+                                    <span class="kpi-label">Total prospects</span>
+                                    <span class="kpi-icon"><i class="fas fa-users" aria-hidden="true"></i></span>
+                                </div>
+                                <strong class="kpi-value" id="total-leads">0</strong>
+                                <span class="kpi-note">Tous les contacts enregistrés</span>
+                            </article>
+
+                            <article class="kpi-card dark">
+                                <div class="kpi-card-top">
+                                    <span class="kpi-label">Confirmés</span>
+                                    <span class="kpi-icon"><i class="fas fa-user-check" aria-hidden="true"></i></span>
+                                </div>
+                                <strong class="kpi-value" id="confirmed-leads">0</strong>
+                                <span class="kpi-note">Prospects validés</span>
+                            </article>
+
+                            <article class="kpi-card yellow">
+                                <div class="kpi-card-top">
+                                    <span class="kpi-label">En attente</span>
+                                    <span class="kpi-icon"><i class="fas fa-clock" aria-hidden="true"></i></span>
+                                </div>
+                                <strong class="kpi-value" id="pending-leads">0</strong>
+                                <span class="kpi-note">À traiter prochainement</span>
+                            </article>
+
+                            <article class="kpi-card">
+                                <div class="kpi-card-top">
+                                    <span class="kpi-label">Annulés</span>
+                                    <span class="kpi-icon"><i class="fas fa-user-times" aria-hidden="true"></i></span>
+                                </div>
+                                <strong class="kpi-value" id="cancelled-leads">0</strong>
+                                <span class="kpi-note">Demandes non abouties</span>
+                            </article>
+
+                            <article class="kpi-card yellow">
+                                <div class="kpi-card-top">
+                                    <span class="kpi-label">Messages support</span>
+                                    <span class="kpi-icon"><i class="fas fa-comments" aria-hidden="true"></i></span>
+                                </div>
+                                <strong class="kpi-value" id="supportMessagesKpi">0</strong>
+                                <span class="kpi-note">Demandes reçues</span>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section aria-labelledby="analytics-title">
+                        <div class="dashboard-section-heading">
+                            <div>
+                                <h2 id="analytics-title">Analyse de l’activité</h2>
+                                <p>Évolution et origine de vos nouvelles opportunités.</p>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-panels">
+                            <article class="dashboard-panel">
+                                <header class="dashboard-panel-header">
+                                    <div>
+                                        <h3>Prospects de la semaine</h3>
+                                        <p>Évolution quotidienne des nouvelles demandes.</p>
+                                    </div>
+                                    <span class="panel-badge">7 jours</span>
+                                </header>
+                                <div class="chart-area">
+                                    <canvas id="leadsAreaChart" aria-label="Évolution des prospects de la semaine" role="img"></canvas>
+                                </div>
+                            </article>
+
+                            <div class="dashboard-side-panels">
+                                <article class="dashboard-panel">
+                                    <header class="dashboard-panel-header">
+                                        <div>
+                                            <h3>Sources des visiteurs</h3>
+                                            <p>Origine du trafic enregistré.</p>
+                                        </div>
+                                    </header>
+                                    <div class="chart-pie">
+                                        <canvas id="visitorSourcesPieChart" aria-label="Sources des visiteurs" role="img"></canvas>
+                                    </div>
+                                    <div class="chart-legend" aria-hidden="true">
+                                        <span><i class="chart-dot red"></i>Direct</span>
+                                        <span><i class="chart-dot black"></i>Social</span>
+                                        <span><i class="chart-dot yellow"></i>Référent</span>
+                                    </div>
+                                </article>
+
+                                <article class="dashboard-panel">
+                                    <header class="dashboard-panel-header">
+                                        <div>
+                                            <h3>Statut des prospects</h3>
+                                            <p>Répartition des demandes commerciales.</p>
+                                        </div>
+                                    </header>
+                                    <div class="chart-pie">
+                                        <canvas id="leadsStatusPieChart" aria-label="Répartition des prospects par statut" role="img"></canvas>
+                                    </div>
+                                    <div class="chart-legend" aria-hidden="true">
+                                        <span><i class="chart-dot yellow"></i>En attente</span>
+                                        <span><i class="chart-dot black"></i>Confirmé</span>
+                                        <span><i class="chart-dot red"></i>Annulé</span>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>© 2026 New Technologies Togo · Espace d’administration</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top" aria-label="Revenir en haut">
+        <i class="fas fa-angle-up" aria-hidden="true"></i>
+    </a>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title h5" id="logoutModalTitle">Se déconnecter ?</h2>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Fermer">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Confirmez pour fermer votre session d’administration.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary" href="/login" data-dashboard-logout>Se déconnecter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/nav.js"></script>
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/static/js/sb-admin-2.min.js"></script>
+    <script src="/static/vendor/chart.js/Chart.min.js"></script>
+    <script src="/static/js/index_js.js"></script>
+</body>
+</html>

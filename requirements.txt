@@ -1,0 +1,21 @@
+fastapi              # Framework web moderne et rapide pour créer des APIs en Python (basé sur Starlette et Pydantic)
+uvicorn[standard]    # Serveur ASGI utilisé pour lancer l'application FastAPI
+psycopg2-binary      # Driver PostgreSQL pour Python, utilisé pour se connecter à une base de données Postgres
+python-multipart     # Gère les formulaires et les fichiers envoyés via HTTP (upload de fichiers dans FastAPI)
+SQLAlchemy           # ORM pour interagir avec la base de données via des modèles Python plutôt que du SQL brut
+alembic              # Outil de migration de base de données pour SQLAlchemy (mise à jour du schéma sans tout casser)
+python-dotenv        # Charge automatiquement les variables d’environnement depuis un fichier .env
+python-jose[cryptography]  # Gère la création et la vérification des tokens JWT pour l’authentification
+bcrypt>=4.1,<6       # Hachage sécurisé des mots de passe, compatible avec les empreintes bcrypt existantes
+pydantic[email]==2.10.6  # Validation Pydantic avec prise en charge des adresses e-mail
+fastapi-mail==1.4.2  # Envoi d’e-mails via FastAPI (notifications, formulaires de contact, etc.)
+pydantic-settings==2.6.1  # Gestion propre des configurations via Pydantic (utile pour centraliser les paramètres)
+reportlab>=4.0.0     # Génération de fichiers PDF dynamiques (factures, rapports, etc.)
+qrcode[pil]          # Création de QR Codes (avec support de PIL pour l’image)
+jinja2               # Moteur de templates HTML (souvent utilisé pour générer des emails ou PDF avec du HTML)
+xhtml2pdf            # Convertit des fichiers HTML/CSS en PDF (souvent combiné à Jinja2)
+pillow               # Librairie de traitement d’images (redimensionnement, génération, manipulation)
+supabase==2.16.0     # Version compatible avec la version de Pydantic utilisée par le projet
+apscheduler          # Planifie des tâches automatiques (ex : envoyer un mail, exécuter un job à heure fixe)
+
+#Vérifiez avec : sudo systemctl status ecommerce-*.service

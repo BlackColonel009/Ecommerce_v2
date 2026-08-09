@@ -1,0 +1,66 @@
+.nt-context-rail {
+    --nt-rail-accent: #fed700;
+    position: fixed;
+    z-index: 1040;
+    top: 50%;
+    right: 0;
+    width: min(302px, calc(100vw - 28px));
+    transform: translateY(-50%);
+    border: 1px solid rgba(26, 32, 44, .12);
+    border-right: 0;
+    border-radius: 18px 0 0 18px;
+    background: rgba(255, 255, 255, .97);
+    box-shadow: 0 18px 50px rgba(15, 23, 42, .2);
+    overflow: hidden;
+    opacity: 0;
+    animation: ntRailDock .62s cubic-bezier(.2, .85, .25, 1) .35s forwards;
+    backdrop-filter: blur(12px);
+}
+
+.nt-context-rail__accent { height: 4px; background: linear-gradient(90deg, #fed700, #ff9f1c); }
+.nt-context-rail__head { display: flex; align-items: center; gap: 10px; padding: 14px 16px 10px; }
+.nt-context-rail__eyebrow { margin: 0; color: #77808f; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.nt-context-rail__title { margin: 1px 0 0; color: #18212f; font-size: 16px; font-weight: 800; line-height: 1.2; }
+.nt-context-rail__close { margin-left: auto; width: 32px; height: 32px; border: 0; border-radius: 50%; background: #f3f5f7; color: #4d5662; font-size: 20px; line-height: 1; cursor: pointer; transition: background .2s, transform .2s; }
+.nt-context-rail__close:hover { background: #fed700; transform: rotate(7deg); }
+.nt-context-rail__viewport { position: relative; min-height: 268px; }
+.nt-context-rail__item { display: none; color: inherit; text-decoration: none !important; }
+.nt-context-rail__item.is-active { display: block; animation: ntRailItem .45s ease both; }
+.nt-context-rail__media { position: relative; height: 150px; margin: 0 14px; overflow: hidden; border-radius: 13px; background: #f2f4f7; }
+.nt-context-rail__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 4.5s ease; }
+.nt-context-rail__item.is-active .nt-context-rail__media img { transform: scale(1.055); }
+.nt-context-rail__badge { position: absolute; top: 10px; left: 10px; padding: 5px 9px; border-radius: 999px; background: #fed700; color: #151515; box-shadow: 0 4px 14px rgba(0,0,0,.15); font-size: 10px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+.nt-context-rail__body { padding: 12px 16px 7px; }
+.nt-context-rail__category { color: #e0182d; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+.nt-context-rail__name { display: -webkit-box; margin: 4px 0 0; overflow: hidden; color: #17202d; font-size: 14px; font-weight: 800; line-height: 1.35; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.nt-context-rail__price { margin-top: 7px; color: #e0182d; font-size: 14px; font-weight: 900; }
+.nt-context-rail__footer { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px 14px; }
+.nt-context-rail__dots { display: flex; gap: 6px; }
+.nt-context-rail__dot { width: 6px; height: 6px; padding: 0; border: 0; border-radius: 99px; background: #ccd1d8; cursor: pointer; transition: width .25s, background .25s; }
+.nt-context-rail__dot.is-active { width: 20px; background: #fed700; }
+.nt-context-rail__more { color: #263343; font-size: 11px; font-weight: 800; }
+.nt-context-rail.is-closing { animation: ntRailLeave .3s ease forwards; }
+
+@keyframes ntRailDock {
+    from { opacity: 0; transform: translate(-56px, -50%); }
+    to { opacity: 1; transform: translate(0, -50%); }
+}
+@keyframes ntRailLeave {
+    to { opacity: 0; transform: translate(110%, -50%); }
+}
+@keyframes ntRailItem {
+    from { opacity: 0; transform: translateX(18px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 767.98px) {
+    .nt-context-rail { top: auto; bottom: 14px; width: min(272px, calc(100vw - 22px)); transform: none; border-right: 1px solid rgba(26, 32, 44, .12); border-radius: 16px 0 0 16px; }
+    .nt-context-rail__viewport { min-height: 225px; }
+    .nt-context-rail__media { height: 116px; }
+    @keyframes ntRailDock { from { opacity: 0; transform: translateX(-45px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes ntRailLeave { to { opacity: 0; transform: translateX(110%); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nt-context-rail, .nt-context-rail__item.is-active, .nt-context-rail__media img { animation: none; transition: none; transform: none; opacity: 1; }
+}

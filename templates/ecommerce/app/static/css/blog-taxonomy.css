@@ -1,0 +1,24 @@
+.nt-blog-taxonomy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: -9px 0 30px;
+}
+.nt-blog-taxonomy a {
+    background: var(--blog-soft);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--blog-muted);
+    font-size: 10px;
+    font-weight: 800;
+    padding: 8px 12px;
+}
+.nt-blog-taxonomy a:hover,
+.nt-blog-taxonomy a.is-active {
+    background: var(--blog-black);
+    color: #fff;
+}
+.nt-blog-taxonomy .nt-blog-tag {
+    background: #fff;
+    border-color: var(--blog-line);
+}

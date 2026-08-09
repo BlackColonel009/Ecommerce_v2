@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="/static/css/components-modern.css">
+<div class="container nt-topbar__inner">
+    <p class="nt-topbar__welcome"><span class="nt-status-dot"></span> Technologie, informatique et sécurité à Lomé</p>
+    <nav class="nt-topbar__links" aria-label="Liens pratiques">
+        <a href="https://maps.app.goo.gl/5Ydb6BiVdSfrWpvo9" target="_blank" rel="noopener"><i class="ec ec-map-pointer"></i> Nous trouver</a>
+        <a href="https://wa.me/22893356041" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <div class="nt-currency position-relative">
+            <button id="currencyDropdownInvoker" type="button" aria-controls="currencyDropdown" aria-expanded="false">
+                <i class="ec ec-dollar"></i> <span id="currentCurrency">XOF (TG)</span> <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="currencyDropdown" class="dropdown-menu nt-currency__menu" aria-labelledby="currencyDropdownInvoker">
+                <a class="dropdown-item" href="#" data-currency="XOF" data-country="TG"><strong>XOF</strong><span>Franc CFA (TG)</span></a>
+                <a class="dropdown-item" href="#" data-currency="USD" data-country="US"><strong>$ USD</strong><span>Dollar (US)</span></a>
+                <a class="dropdown-item" href="#" data-currency="EUR" data-country="EU"><strong>€ EUR</strong><span>Euro (EU)</span></a>
+            </div>
+        </div>
+        <a id="sidebarNavToggler" href="javascript:;" role="button" data-unfold-event="click" data-unfold-target="#sidebarContent" aria-controls="sidebarContent" aria-expanded="false">
+            <i class="ec ec-user"></i> Se connecter
+        </a>
+    </nav>
+</div>

@@ -1,0 +1,29 @@
+
+
+
+
+
+
+
+
+
+
+
+
+category = /category-product?id=${catId}
+
+produit = /single-product?id=${p.id}
+
+config_currency = <span class="js-price" data-fcfa="${price}">${price} XOF</span>
+
+wishlist = <a href="javascript:void(0)" 
+                                class="text-gray-6 font-size-13 wishlist-btn" 
+                                data-id="${p.id}">
+                                    <i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist
+                                </a>
+
+compare = /compare?id=${p.id}
+
+404 = /category-slug
+
+/category-slug?slug=${p.category?.slug}

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr-TG">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Conseils et actualités tech | Blog New Technologies Togo</title>
+    <meta name="description" content="Conseils informatiques, guides d’achat, sécurité et actualités technologiques au Togo par New Technologies.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://newtechnologiestg.com/blog">
+    <link rel="icon" href="/static/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/vendor/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/static/css/font-electro.css">
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/components-modern.css">
+    <link rel="stylesheet" href="/static/css/inner-modern.css">
+    <link rel="stylesheet" href="/static/css/blog-modern.css">
+    <link rel="stylesheet" href="/static/css/blog-taxonomy.css">
+</head>
+<body class="nt-inner-page nt-blog-page">
+    <header id="header" class="u-header modern-header">
+        <div class="u-header__section">
+            <div class="u-header-topbar py-2 d-none d-xl-block nav-container"></div>
+            <div class="py-2 py-xl-3 bg-primary-down-lg mobile-menu-container"></div>
+            <div class="d-none d-xl-block search-container"></div>
+        </div>
+    </header>
+
+    <main id="contenu-principal">
+        <section class="nt-blog-hero">
+            <div class="container">
+                <p><span></span> Le carnet New Technologies</p>
+                <h1>Comprendre la tech.<br><em>Mieux la choisir.</em></h1>
+                <div class="nt-blog-hero__bottom">
+                    <p>Guides pratiques, conseils d’experts et actualités pour faire les bons choix technologiques au Togo.</p>
+                    <form action="/blog" method="get" role="search">
+                        <label class="sr-only" for="blogSearch">Rechercher un article</label>
+                        <input id="blogSearch" name="q" value="{{ q }}" type="search" placeholder="Rechercher un conseil…">
+                        <button type="submit" aria-label="Rechercher"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="container nt-blog-content">
+            <div class="nt-blog-heading">
+                <div><span>À lire</span><h2>{{ 'Résultats de recherche' if q else 'Nos derniers articles' }}</h2></div>
+                <p>{{ total }} article{{ 's' if total != 1 else '' }}</p>
+            </div>
+
+            {% if category or tag or q %}
+            <div class="nt-blog-active-filter">Filtre actif : <strong>{{ category or tag or q }}</strong><a href="/blog">Effacer</a></div>
+            {% endif %}
+
+            {% if categories or tags %}
+            <nav class="nt-blog-taxonomy" aria-label="Filtrer les articles">
+                <a class="{{ 'is-active' if not category and not tag else '' }}" href="/blog">Tout</a>
+                {% for item in categories %}<a class="{{ 'is-active' if category == item else '' }}" href="/blog?category={{ item|urlencode }}">{{ item }}</a>{% endfor %}
+                {% for item in tags[:6] %}<a class="nt-blog-tag {{ 'is-active' if tag == item else '' }}" href="/blog?tag={{ item|urlencode }}">#{{ item }}</a>{% endfor %}
+            </nav>
+            {% endif %}
+
+            {% if posts %}
+            <div class="nt-blog-grid">
+                {% for post in posts %}
+                <article class="nt-blog-card{% if loop.first and post.is_featured %} nt-blog-card--featured{% endif %}">
+                    <a class="nt-blog-card__image" href="/blog/{{ post.slug }}">
+                        {% set cover = post.cover_image or '/static/img/Banniere/tech2.jpg' %}
+                        <img src="{{ cover if cover.startswith('/static') or cover.startswith('http') else api_base + '/' + cover.lstrip('/') }}" alt="{{ post.image_alt or post.title }}" loading="lazy">
+                        {% if post.is_featured %}<span>À la une</span>{% endif %}
+                    </a>
+                    <div class="nt-blog-card__body">
+                        <a class="nt-blog-card__category" href="/blog?category={{ post.category|urlencode }}">{{ post.category }}</a>
+                        <h2><a href="/blog/{{ post.slug }}">{{ post.title }}</a></h2>
+                        <p>{{ post.excerpt or post.content[:180] }}</p>
+                        <div><time datetime="{{ post.published_at or post.created_at }}">{{ (post.published_at or post.created_at).strftime('%d/%m/%Y') }}</time><a href="/blog/{{ post.slug }}">Lire l’article <i class="fas fa-arrow-right"></i></a></div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+            {% if pages > 1 %}
+            <nav class="nt-blog-pagination" aria-label="Pagination du blog">
+                {% if page > 1 %}<a href="?page={{ page - 1 }}&q={{ q|urlencode }}&category={{ category|urlencode }}&tag={{ tag|urlencode }}"><i class="fas fa-arrow-left"></i> Précédent</a>{% endif %}
+                <span>Page {{ page }} sur {{ pages }}</span>
+                {% if page < pages %}<a href="?page={{ page + 1 }}&q={{ q|urlencode }}&category={{ category|urlencode }}&tag={{ tag|urlencode }}">Suivant <i class="fas fa-arrow-right"></i></a>{% endif %}
+            </nav>
+            {% endif %}
+            {% else %}
+            <div class="nt-blog-empty"><i class="far fa-newspaper"></i><h2>Aucun article pour le moment</h2><p>De nouveaux conseils seront bientôt publiés.</p><a href="/shop">Explorer la boutique</a></div>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer class="footer-container"></footer>
+    <aside id="sidebarContent" class="u-sidebar u-sidebar__lg auth-container" aria-labelledby="sidebarNavToggler"></aside>
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script>function reInitUI(){}</script>
+    <script src="/static/js/helper.js"></script>
+    <script src="/static/js/cart_utils.js?v=20260809-context-rail"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/nav_home.js"></script>
+    <script src="/static/js/nav_search_and_components.js"></script>
+    <script src="/static/js/footer-modern.js"></script>
+</body>
+</html>

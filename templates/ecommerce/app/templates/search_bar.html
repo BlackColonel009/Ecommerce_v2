@@ -1,0 +1,558 @@
+<!-- Vertical-and-Search-Bar -->
+                <div class="container">
+                        <div class="row align-items-stretch min-height-50">
+                            <!-- Vertical Menu -->
+                            <div class="col-md-auto d-none d-xl-flex align-items-end ">
+                                <div class="max-width-270 min-width-270">
+                                    <!-- Basics Accordion -->
+                                    <div id="basicsAccordion">
+                                        <!-- Card -->
+                                        <div class="div-bg card border-0 rounded-0">
+                                            <div class="div-bg card-header rounded-0 card-collapse border-0" id="basicsHeadingOne">
+                                                <button type="button" class="bg btn-link btn-remove-focus btn-block d-flex card-btn py-3 text-lh-1 px-4 shadow-none btn-primary rounded-top-lg border-0 font-weight-bold text-gray-90"
+                                                    data-toggle="collapse"
+                                                    data-target="#basicsCollapseOne"
+                                                    aria-expanded="true"
+                                                    aria-controls="basicsCollapseOne">
+                                                    <span class="pl-1 text-gray-white">Circulez dans nos rayons</span>
+                                                    <span class="text-gray-90 ml-3">
+                                                        <span class="ec ec-arrow-down-search"></span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div id="basicsCollapseOne" class="collapse  vertical-menu v1"
+                                                aria-labelledby="basicsHeadingOne"
+                                                data-parent="#basicsAccordion">
+                                                <div class="card-body p-0">
+                                                    <nav class="js-mega-menu navbar navbar-expand-xl u-header__navbar u-header__navbar--no-space hs-menu-initialized">
+                                                        <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
+                                                            <ul class="navbar-nav u-header__navbar-nav border-primary border-top-0">
+                                                                <li class="nav-item u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <!-- <a href="/shop" class="nav-link u-header__nav-link font-weight-bold">Valeur du jour</a>
+                                                                    -->
+                                                                    <span class="nav-link u-header__nav-link font-weight-bold">Valeur du jour</span>
+                                                                </li>
+                                                                <!-- <li class="nav-item u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a href="/shop" class="nav-link u-header__nav-link font-weight-bold">Top 100 des offres</a>
+                                                                </li> -->
+                                                                <li class="nav-item u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a href="/shop" class="nav-link u-header__nav-link font-weight-bold">Nouveautés</a>
+                                                                </li>
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-animation-in="slideInUp"
+                                                                    data-animation-out="fadeOut"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Ordinateurs & Accessoires</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/laptop.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0"
+                                                                                <span class="u-header__sub-menu-title">Ordinateurs & Accessoires</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=laptop,accesoires-info">Tous les ordinateurs et accessoires</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=laptop">Ordinateurs portables</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=desktop">Ordinateurs de bureau</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=ecran">Ecrans</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=imprimante">Imprimantes </a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=toner-encre"> Encres</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=resaux">Périphériques réseau et internet</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=accessoires-info">Accessoires informatiques</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/logiciels">Logiciels</a></li>
+                                                                                    <li>
+                                                                                        <a class="nav-link u-header__sub-menu-nav-link u-nav-divider border-top pt-2 flex-column align-items-start" href="/shop">
+                                                                                            <div class="">Tous les produits</div>
+                                                                                            <div class="u-nav-subtext font-size-11 text-gray-30">Découvrir plus de produits</div>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Licences Office et Windows</span>
+                                                                                <ul class="u-header__sub-menu-nav-group">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=office,windows">Toutes les licences Office(19-26) et Windows(10-11)</a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu1" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Caméras & Photographie</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu1">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/camera.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Caméras & Photographie</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=camera,camera-accesoires,camera-security">Caméras & Photographie</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=camera-accesoires-cam">Accessoire caméras</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=camera-security">Sécurité & Surveillance</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=camera-accesoires-cam">Camcorders</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/logiciels">Logiciels</a></li>
+                                                                                    <li>
+                                                                                        <a class="nav-link u-header__sub-menu-nav-link u-nav-divider border-top pt-2 flex-column align-items-start" href="#">
+                                                                                            <div class="">Tous les produits</div>
+                                                                                            <div class="u-nav-subtext font-size-11 text-gray-30">Découvrir plus de produits</div>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Enceintes</span>
+                                                                                <ul class="u-header__sub-menu-nav-group">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=audio">Enceintes Sonores</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=speaker,headphone">Casques & Micro</a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu2" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Smartphone & Tablettes</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu vmm-bg-extended" aria-labelledby="basicMegaMenu2">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/phone.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Smartphone & Tablettes</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=smartphones,smartphones-ref">tous les Smartphones</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=smartphones">Smartphones</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=smartphones-ref">Refurbished Mobiles (reconditionnés)</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-top pt-2" href="/category-slug?slug=smartphones-accesoires">Tout accessoires Smartphone</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=smartphones-accesoires">Cases & Covers</a></li>
+                                                                                    <li>
+                                                                                        <a class="nav-link u-header__sub-menu-nav-link u-nav-divider border-top pt-2 flex-column align-items-start" href="/shop">
+                                                                                            <div class="">Tous les produits</div>
+                                                                                            <div class="u-nav-subtext font-size-11 text-gray-30">Découvrir plus de produits</div>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <ul class="u-header__sub-menu-nav-group">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="category-slug?slug=tablettes">Toutes les tablettes</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="category-slug?slug=tablettes-accesoires">Accessoires tablettes</a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu3" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Jeux Vidéo</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu3">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/game.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                            
+                                                                                <span class="u-header__sub-menu-title">Jeux vidéo</span>
+                                                                                <ul class="u-header__sub-menu-nav-group">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=games">PC Games</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=consoles">Consoles</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=consoles-accesoires">Accessoires</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=setup-gaming">setup gaming</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=consoles-accesoires,consoles,games,setup-gaming">Rayons gaming</a></li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu4" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Télévision & Audio</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu4">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/audio.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">matériels Audio & Video</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=smart-tv,">Tous les matériels Audio & Video </a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=smart-tv">Televisions</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=headphone">Casques</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=speaker,audio">Micros et enceintes</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=video-accesoires-o-v">Audio & Accessoires Video </a></li>
+                                                                                    
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <!--<li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu5" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Montres intelligentes</a>
+
+                                                                    
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu5">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/img6.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Montres</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=montres-h,montres-f">Toutes les montres</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=montres-h">Montre Hommes</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=montres-f">Montre Femmes</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=montres-p">Montres Premium</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=montres-promo">Promotions sur les montres</a></li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                                </li>
+                                                                -->
+                                                                
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu7" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Imprimantes et Encres</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu7">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/imprimante.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Imprimantes</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=imprimante,jet-encre,copieur">Toutes les Imprimantes</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=imprimante">Imprimantes</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=jet-encre">Jet d'encres</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=scanner">Scanner</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="#">Copieur</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=copieur">Accesoires Imprimantes</a></li>
+                                                                                </ul>
+                                                                                <span class="u-header__sub-menu-title">Encres et Toners</span>
+                                                                                <ul class="u-header__sub-menu-nav-group">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=toner-encre">Toners & encres</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=toner">Toners</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=encre">Encres</a></li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu8" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Licences Offices et Windows</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu8">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/office.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Offices</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=office">Toutes les Licences Offices</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="">Anciennes pack Office</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=licence-num-office">Licences Numériques Office</a></li>
+                                                                            
+                                                                                </ul>
+                                                                                <span class="u-header__sub-menu-title">Windows</span>
+                                                                                <ul class="u-header__sub-menu-nav-group">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=windows">Toutes les Licences Windows</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=licence-num-windows">Licences Numériques Windows</a></li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                           
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu9" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Pieces d'ordinateurs</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu9">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/disc.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Pices et Composantes</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=pieces,memoire,disque,carte-m,processeur,alimentation,boitier-pc,refroidisseur,graphique,accesoires-pc">Toutes les pieces et composantes</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="#">Mémoires</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=disque">Disque Dur (HDD, SSD, etc..)</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=carte-m">Cartes Mères</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=processeur">Processeurs</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=alimentation">Alimentations</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=boitier-pc">Boitiers PC</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=refroidisseur">Refroidissement PC</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=graphique">Cartes Graphiques</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="/category-slug?slug=accesoires-pc">Accessoires PC</a></li>
+                                                                                </ul>
+                                                                                <span class="u-header__sub-menu-title">Coques Completes PC</span>
+                                                                                <ul class="u-header__sub-menu-nav-group">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=boitier-pc">Boitiers PC</a></li>
+                                                                        
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu10" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">PC Gaming et Accesoires</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu10">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/gaming.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Pc Gaming</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=games">GAMER ROOM</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=headphone-gaming">Casques Gaming</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=souris-gaming">Souris gaming</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=clavier-gaming">Clavier gaming</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=tapis-gaming">Tapis de souris</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=chaise-gaming"> chaise gaming</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=boitier-pc" >Setup Gaming</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=pose-gaming">Pose PC</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link border-bottom pb-3" href="category-slug?slug=console-accesoires">Accessoires gaming</a></li>
+                                                                                </ul>
+                                                                                
+                                                                            </div>
+
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu11" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Matériels Occasions, fin de série(Inédit)</a>
+
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu11">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/laptop.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Laptops, desktop Occasions</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=laptop-occas">tous les Laptops</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=desktop-occas">tous les desktop</a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Smartphones d'Occasions</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=smartphones-occas">Smartphones d'Occasions</a></li>
+                                                                                </ul>
+                                                                                
+                                                                            </div>
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Ecran, smart tv Occasions</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=smart-occas">tous les Smart TV</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=ecran-occas">tous les Ecrans</a></li>
+                                                                                </ul>
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                            
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu2" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Battéries, Ecran, Chargeurs</a>
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu vmm-bg-extended" aria-labelledby="basicMegaMenu2">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/piece.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">Battéries, Ecran, Chargeurs</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=batterie">toutes les Battéries</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=ecran">Ecran Disponible</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=chargeurs-pc">Chargeurs Pc</a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                <!-- Nav Item MegaMenu -->
+                                                                <li class="nav-item hs-has-mega-menu u-header__nav-item"
+                                                                    data-event="hover"
+                                                                    data-position="left">
+                                                                    <a id="basicMegaMenu11" class="nav-link u-header__nav-link u-header__nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">SMART TV</a>
+                                                                    <!-- Nav Item - Mega Menu -->
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu11">
+                                                                        <div class="vmm-bg">
+                                                                            <img class="img-fluid" src="/static/img/500X400/smart.png" alt="Image Description">
+                                                                        </div>
+                                                                        <div class="row u-header__mega-menu-wrapper">
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <span class="u-header__sub-menu-title">SMART ROOM</span>
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=smart-tv">tous les Smart TV</a></li>
+                                                                                    <li><a class="nav-link u-header__sub-menu-nav-link" href="/category-slug?slug=speaker,audio,accesoires-o-v">Accessoires Smart TV</a></li>
+                                                                                </ul>
+                                                                                
+                                                                            </div>
+
+                                                                            
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                    <!-- End Nav Item - Mega Menu -->
+                                                                </li>
+                                                                <!-- End Nav Item MegaMenu-->
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Card -->
+                                    </div>
+                                    <!-- End Basics Accordion -->
+                                </div>
+                            </div>
+                            <!-- End Vertical Menu -->
+                            <!-- Search bar -->
+                            <div class="col align-self-center">
+                                <!-- Search-Form -->
+                                <form class="js-focus-state position-relative">
+                                    <label class="sr-only" for="searchProduct">Que Désirez-vous?</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control py-2 pl-5 font-size-15"
+                                                id="searchProduct" placeholder="Search for Products">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-dark py-2 px-3" type="button" id="searchProduct1">
+                                                <span class="ec ec-search font-size-24"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Résultats dynamiques -->
+                                    <div id="search-results" class="list-group position-absolute w-100 shadow-sm"></div>
+                                </form>
+                            </div>
+                            <!-- End Search bar -->
+                            <!-- End Search bar -->
+                            <!-- Header Icons -->
+                            <div class="col-md-auto align-self-center">
+                                <div class="d-flex">
+                                    <ul class="d-flex list-unstyled mb-0">
+                                        <!--<li class="col"><a href="/category-slug" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Compare"><i class="font-size-22 ec ec-compare"></i></a></li> -->
+                                        <li class="col"><a href="/wishlist" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Favorites">
+                                            <i class="font-size-22 ec ec-favorites"></i>
+                                            <!-- nombre de favoris -->
+                                            <span id="wishlist-count" class="width-22 height-22 bg-dark position-absolute flex-content-center text-white rounded-circle left-8 top-8 font-weight-bold font-size-12">0</span>
+
+                                        </a></li>
+                                        <li class="col pr-0">
+                                            <a href="/cart" class="text-gray-90 position-relative d-flex" data-toggle="tooltip" data-placement="top" title="Cart">
+                                                <i class="font-size-22 ec ec-shopping-bag"></i>
+                                                <!-- nombre d'items -->
+                                                <span id="cart-count" class="width-22 height-22 bg-dark position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12">0</span>
+                                                <!-- montant total -->
+                                                <span id="cart-total" class="font-weight-bold font-size-12 text-gray-90 ml-3 js-price">0</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- End Header Icons -->
+                        </div>
+                    </div>
+                <!-- End Vertical-and-secondary-menu -->

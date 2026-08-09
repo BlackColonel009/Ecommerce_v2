@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr-TG">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if post %}
+    <title>{{ post.seo_title or post.title }} | New Technologies Togo</title>
+    <meta name="description" content="{{ post.seo_description or post.excerpt or post.content[:160] }}">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="{{ post.canonical_url or public_url + '/blog/' + post.slug }}">
+    <meta property="og:type" content="article"><meta property="og:title" content="{{ post.seo_title or post.title }}"><meta property="og:description" content="{{ post.seo_description or post.excerpt }}">
+    {% set cover = post.cover_image or '/static/img/Banniere/tech2.jpg' %}<meta property="og:image" content="{{ cover if cover.startswith('http') else (public_url + cover if cover.startswith('/static') else api_base + '/' + cover.lstrip('/')) }}">
+    <script type="application/ld+json">{{ {"@context":"https://schema.org","@type":"BlogPosting","headline":post.title,"description":post.seo_description or post.excerpt,"datePublished":(post.published_at or post.created_at).isoformat(),"dateModified":post.updated_at.isoformat(),"mainEntityOfPage":post.canonical_url or public_url + '/blog/' + post.slug,"author":{"@type":"Organization","name":"New Technologies Togo"},"publisher":{"@type":"Organization","name":"New Technologies Togo","logo":{"@type":"ImageObject","url":public_url + '/static/img/logo/LOGO-NT.png'}}}|tojson }}</script>
+    {% else %}<title>Article introuvable | New Technologies Togo</title><meta name="robots" content="noindex">
+    {% endif %}
+    <link rel="icon" href="/static/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/vendor/font-awesome/css/fontawesome-all.min.css"><link rel="stylesheet" href="/static/css/font-electro.css"><link rel="stylesheet" href="/static/css/theme.css"><link rel="stylesheet" href="/static/css/components-modern.css"><link rel="stylesheet" href="/static/css/inner-modern.css"><link rel="stylesheet" href="/static/css/blog-modern.css">
+</head>
+<body class="nt-inner-page nt-blog-page">
+    <header id="header" class="u-header modern-header"><div class="u-header__section"><div class="u-header-topbar py-2 d-none d-xl-block nav-container"></div><div class="py-2 py-xl-3 bg-primary-down-lg mobile-menu-container"></div><div class="d-none d-xl-block search-container"></div></div></header>
+    <main id="contenu-principal">
+    {% if post %}
+        <article class="nt-article">
+            <header class="nt-article__header container">
+                <nav aria-label="Fil d’Ariane"><a href="/">Accueil</a><i class="fas fa-chevron-right"></i><a href="/blog">Blog</a><i class="fas fa-chevron-right"></i><span>{{ post.category }}</span></nav>
+                <a class="nt-article__category" href="/blog?category={{ post.category|urlencode }}">{{ post.category }}</a>
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.excerpt }}</p>
+                <div><span><i class="far fa-user"></i> Équipe New Technologies</span><time datetime="{{ post.published_at or post.created_at }}"><i class="far fa-calendar"></i> {{ (post.published_at or post.created_at).strftime('%d/%m/%Y') }}</time></div>
+            </header>
+            {% set cover = post.cover_image or '/static/img/Banniere/tech2.jpg' %}
+            <figure class="nt-article__cover container"><img src="{{ cover if cover.startswith('/static') or cover.startswith('http') else api_base + '/' + cover.lstrip('/') }}" alt="{{ post.image_alt or post.title }}"></figure>
+            <div class="nt-article__layout container">
+                <div class="nt-article__body">{{ post.content }}</div>
+                <aside><strong>Partager</strong><a target="_blank" rel="noopener" href="https://wa.me/?text={{ (post.title + ' ' + public_url + '/blog/' + post.slug)|urlencode }}"><i class="fab fa-whatsapp"></i> WhatsApp</a><a href="/contact"><i class="far fa-comment-dots"></i> Une question ?</a></aside>
+            </div>
+        </article>
+
+        {% if related_products %}
+        <section class="container nt-related-products"><div class="nt-blog-heading"><div><span>Pour aller plus loin</span><h2>Produits cités dans cet article</h2></div></div><div class="nt-related-products__grid">
+        {% for product in related_products %}<a href="/single-product?slug={{ product.slug|urlencode }}"><img src="{{ api_base + '/' + product.image_url.lstrip('/') if product.image_url else '/static/img/500X400/laptop.png' }}" alt="{{ product.name }}" loading="lazy"><span>{{ product.name }}</span><strong>{{ '{:,.0f}'.format(product.price).replace(',', ' ') + ' XOF' if product.price else 'Prix sur demande' }}</strong></a>{% endfor %}
+        </div></section>
+        {% endif %}
+
+        {% if related_posts %}<section class="container nt-related-articles"><div class="nt-blog-heading"><div><span>Continuer la lecture</span><h2>Articles associés</h2></div></div><div class="nt-blog-grid">{% for item in related_posts %}<article class="nt-blog-card"><a class="nt-blog-card__image" href="/blog/{{ item.slug }}">{% set item_cover = item.cover_image or '/static/img/Banniere/tech2.jpg' %}<img src="{{ item_cover if item_cover.startswith('/static') or item_cover.startswith('http') else api_base + '/' + item_cover.lstrip('/') }}" alt="{{ item.image_alt or item.title }}" loading="lazy"></a><div class="nt-blog-card__body"><span class="nt-blog-card__category">{{ item.category }}</span><h2><a href="/blog/{{ item.slug }}">{{ item.title }}</a></h2><p>{{ item.excerpt }}</p></div></article>{% endfor %}</div></section>{% endif %}
+    {% else %}
+        <section class="container nt-blog-empty nt-blog-empty--404"><span>404</span><h1>Cet article est introuvable</h1><p>Il a peut-être été déplacé ou n’est pas encore publié.</p><a href="/blog">Retourner au blog</a></section>
+    {% endif %}
+    </main>
+    <footer class="footer-container"></footer><aside id="sidebarContent" class="u-sidebar u-sidebar__lg auth-container" aria-labelledby="sidebarNavToggler"></aside>
+    <script src="/static/vendor/jquery/dist/jquery.min.js"></script><script src="/static/vendor/bootstrap/bootstrap.min.js"></script><script src="/static/js/config.js"></script><script>function reInitUI(){}</script><script src="/static/js/helper.js"></script><script src="/static/js/cart_utils.js?v=20260809-context-rail"></script><script src="/static/js/auth.js"></script><script src="/static/js/nav_home.js"></script><script src="/static/js/nav_search_and_components.js"></script><script src="/static/js/footer-modern.js"></script>
+</body></html>

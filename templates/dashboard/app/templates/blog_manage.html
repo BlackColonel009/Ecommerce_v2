@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Gestion du blog | New Technologies</title>
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800" rel="stylesheet">
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/css/dashboard-modern.css" rel="stylesheet">
+    <link href="/static/css/blog-admin.css" rel="stylesheet">
+    <link href="/static/css/blog-admin-preview.css" rel="stylesheet">
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <ul class="nav-container navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar"></ul>
+    <div id="content-wrapper" class="d-flex flex-column"><div id="content">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow topnav-container"></nav>
+        <main class="container-fluid nt-blog-admin">
+            <header class="nt-admin-page-head"><div><span>Communication</span><h1>Articles du blog</h1><p>Publiez des conseils utiles et reliez-les à vos produits.</p></div><a id="viewPublicBlog" href="/blog" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Voir le blog</a></header>
+
+            <div id="blogNotice" class="nt-blog-notice" hidden role="status"></div>
+            <div class="row">
+                <section class="col-xl-5 mb-4">
+                    <div class="card shadow nt-editor-card"><div class="card-header"><h2 id="editorTitle">Nouvel article</h2><button id="resetBlogForm" type="button" hidden>Annuler la modification</button></div>
+                    <form id="blogForm" class="card-body" novalidate>
+                        <input id="blogPostId" type="hidden">
+                        <div class="form-group"><label for="blogTitle">Titre *</label><input class="form-control" id="blogTitle" name="title" maxlength="220" required><small data-field-error="title"></small></div>
+                        <div class="form-row"><div class="form-group col-md-7"><label for="blogSlug">Slug personnalisé</label><input class="form-control" id="blogSlug" name="slug" placeholder="généré automatiquement"></div><div class="form-group col-md-5"><label for="blogCategory">Catégorie *</label><input class="form-control" id="blogCategory" name="category" list="blogCategories" value="Conseils" required><datalist id="blogCategories"></datalist></div></div>
+                        <div class="form-group"><label for="blogExcerpt">Résumé</label><textarea class="form-control" id="blogExcerpt" name="excerpt" rows="2" maxlength="500"></textarea></div>
+                        <div class="form-group"><div class="nt-editor-label"><label for="blogContent">Contenu *</label><button id="toggleBlogPreview" type="button"><i class="far fa-eye"></i> Aperçu</button></div><textarea class="form-control nt-content-editor" id="blogContent" name="content" rows="11" required placeholder="Rédigez ici le contenu complet de l’article…"></textarea><div id="blogContentPreview" class="nt-content-preview" hidden></div><div class="nt-editor-count"><span id="contentCount">0 caractère</span><small data-field-error="content"></small></div></div>
+                        <div class="form-row"><div class="form-group col-md-6"><label for="blogTags">Tags</label><input class="form-control" id="blogTags" name="tags" placeholder="ordinateur, sécurité, guide"></div><div class="form-group col-md-6"><label for="blogProducts">Slugs produits liés</label><input class="form-control" id="blogProducts" name="related_product_slugs" placeholder="laptop-hp, souris-logitech"></div></div>
+                        <div class="nt-image-field"><div id="blogImagePreview"><i class="far fa-image"></i><span>Aperçu de l’image</span></div><div><label for="blogImage">Image principale</label><input type="file" id="blogImage" name="image" accept="image/jpeg,image/png,image/webp,image/gif"><input class="form-control mt-2" id="blogImageAlt" name="image_alt" placeholder="Description accessible de l’image"></div></div>
+                        <details class="nt-seo-fields"><summary><i class="fas fa-search"></i> Référencement Google</summary><div class="form-group"><label for="blogSeoTitle">Titre SEO</label><input class="form-control" id="blogSeoTitle" name="seo_title" maxlength="70"></div><div class="form-group"><label for="blogSeoDescription">Description SEO</label><textarea class="form-control" id="blogSeoDescription" name="seo_description" maxlength="170" rows="2"></textarea></div><div class="form-group"><label for="blogCanonical">URL canonique</label><input type="url" class="form-control" id="blogCanonical" name="canonical_url"></div></details>
+                        <div class="form-row align-items-end"><div class="form-group col-md-5"><label for="blogStatus">Statut</label><select class="form-control" id="blogStatus" name="status"><option value="draft">Brouillon</option><option value="published">Publié</option><option value="archived">Archivé</option></select></div><div class="form-group col-md-5"><label for="blogPublishedAt">Date de publication</label><input type="datetime-local" class="form-control" id="blogPublishedAt" name="published_at"></div><div class="form-group col-md-2"><label class="nt-check"><input type="checkbox" id="blogFeatured" name="is_featured"><span>À la une</span></label></div></div>
+                        <button class="btn nt-blog-submit" id="blogSubmit" type="submit"><i class="fas fa-save"></i><span>Enregistrer l’article</span></button>
+                    </form></div>
+                </section>
+
+                <section class="col-xl-7 mb-4"><div class="card shadow nt-post-list-card"><div class="card-header"><div><h2>Articles enregistrés</h2><small id="blogPostCount">Chargement…</small></div><div class="nt-post-filters"><input id="blogAdminSearch" type="search" placeholder="Rechercher…"><select id="blogStatusFilter"><option value="">Tous</option><option value="draft">Brouillons</option><option value="published">Publiés</option><option value="archived">Archivés</option></select></div></div><div id="blogPostList" class="card-body nt-post-list"></div><footer id="blogPagination" class="nt-blog-pagination" hidden><button id="blogPrevPage" type="button"><i class="fas fa-chevron-left"></i> Précédent</button><span id="blogPageInfo">Page 1 sur 1</span><button id="blogNextPage" type="button">Suivant <i class="fas fa-chevron-right"></i></button></footer></div></section>
+            </div>
+        </main>
+    </div></div>
+</div>
+
+<div id="blogDialog" class="nt-blog-dialog" hidden><div role="dialog" aria-modal="true" aria-labelledby="blogDialogTitle"><span class="nt-blog-dialog__icon"><i class="fas fa-info"></i></span><h2 id="blogDialogTitle"></h2><p id="blogDialogMessage"></p><div><button id="blogDialogCancel" type="button">Annuler</button><button id="blogDialogConfirm" type="button">Confirmer</button></div></div></div>
+<script src="/static/js/config.js"></script><script src="/static/js/nav.js"></script><script src="/static/vendor/jquery/jquery.min.js"></script><script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script><script src="/static/js/blog-admin.js"></script>
+</body></html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Blank</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul  class="nav-container navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar"></ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow topnav-container">
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Popups & Promotions</h1>
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                                <div class="card shadow mb-4 border-left-info">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Popups promotionnels</h6>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <p>Créez des popups marketing pour attirer l’attention des visiteurs.</p>
+
+                                        <!-- Formulaire Popup -->
+                                        <form id="popupForm" class="mt-3">
+                                            <h6>Ajouter un popup</h6>
+
+                                            <div class="mb-2">
+                                                <input type="text" name="title" class="form-control" placeholder="Titre" required>
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <textarea name="message" class="form-control" placeholder="Message" required></textarea>
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <input type="text" name="cta_text" class="form-control" placeholder="Texte du bouton (ex: Commander)">
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <input type="text" name="cta_link" class="form-control" placeholder="Lien WhatsApp ou page">
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <select name="trigger" class="form-control">
+                                                    <option value="on_load">Au chargement</option>
+                                                    <option value="delay">Après délai</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <input type="number" name="delay_seconds" class="form-control" placeholder="Délai (secondes)">
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <label>Image</label>
+                                                <input type="file" name="image" class="form-control" required>
+                                            </div>
+
+                                            <div class="mb-2 form-check">
+                                                <input type="checkbox" name="is_active" class="form-check-input" checked>
+                                                <label class="form-check-label">Actif</label>
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <input type="date" name="start_date" class="form-control">
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <input type="date" name="end_date" class="form-control">
+                                            </div>
+
+                                            <button class="btn btn-info btn-sm">Créer Popup</button>
+                                        </form>
+
+                                        <hr>
+
+                                        <!-- Liste des popups -->
+                                        <h6>Popups existants</h6>
+                                        <div id="popupList" class="row"></div>
+
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-lg-6 mb-4 overflow-auto" style="max-height: 400px;">
+                            <div class="row"  >
+                                <div class="col-12 mb-4">
+                                    <div class="card shadow border-left-primary">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">Aperçu des Popups</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>Les popups créés apparaîtront ici pour un aperçu en temps réel.</p>
+                                            <div class="row" id="popupsContainer"></div>
+                                        </div>
+                                    </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4 border-left-warning">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Promotions</h6>
+                                </div>
+                                <div class="card-body">
+
+                                    <p>Gérez les promotions appliquées automatiquement aux produits.</p>
+
+                                    <!-- FORM CREATE PROMO -->
+                                    <form id="promoForm" class="mt-3">
+                                        <h6>Ajouter une promotion</h6>
+
+                                        <div class="mb-2">
+                                            <label for="productSelect">Produit</label>
+                                            <select id="productSelect" name="product_id" class="form-control" required>
+                                                <!-- options remplies par JS -->
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="promoTag">Tag</label>
+                                            <select id="promoTag" name="tag" class="form-control" required></select>
+
+                                                <!-- options remplies par JS -->
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <input type="number" name="discount_percentage" class="form-control"
+                                                placeholder="Pourcentage de réduction" required>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <input type="date" name="start_date" class="form-control" required>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <input type="date" name="end_date" class="form-control" required>
+                                        </div>
+
+                                        <button  type="submit" class="btn btn-warning btn-sm">Créer Promotion</button>
+                                    </form>
+
+                                    <hr>
+
+                                    <!-- LIST PROMOS -->
+                                    <h6>Promotions existantes</h6>
+                                    <div id="promoList"></div>
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <!-- PREVIEW -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow border-left-primary">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Aperçu des promotions</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row" id="promosContainer"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                        
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editPromoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifier la promotion</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" id="editPromoId">
+
+                    <div class="mb-2">
+                        <input type="number" id="editDiscount" class="form-control"
+                            placeholder="Pourcentage">
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="editPromoTag">tag</label>
+                        <select id="editPromoTag" class="form-control">
+                            <!-- options remplies par JS -->
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <input type="date" id="editStartDate" class="form-control">
+                    </div>
+
+                    <div class="mb-2">
+                        <input type="date" id="editEndDate" class="form-control">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button class="btn btn-primary" onclick="submitEditPromo()">Enregistrer</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal popup -->
+
+    <div class="modal fade" id="editPopupModal" tabindex="-1" role="dialog" aria-labelledby="editPopupLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <form id="editPopupForm">
+                <div class="modal-header">
+                <h5 class="modal-title" id="editPopupLabel">Modifier Popup</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <input type="hidden" name="id" id="editPopupId">
+                <div class="mb-2">
+                    <input type="text" name="title" id="editTitle" class="form-control" placeholder="Titre" required>
+                </div>
+                <div class="mb-2">
+                    <textarea name="message" id="editMessage" class="form-control" placeholder="Message" required></textarea>
+                </div>
+                <div class="mb-2">
+                    <input type="text" name="cta_text" id="editCtaText" class="form-control" placeholder="Texte du bouton">
+                </div>
+                <div class="mb-2">
+                    <input type="text" name="cta_link" id="editCtaLink" class="form-control" placeholder="Lien">
+                </div>
+                <div class="mb-2">
+                    <select name="trigger" id="editTrigger" class="form-control">
+                    <option value="on_load">Au chargement</option>
+                    <option value="delay">Après délai</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <input type="number" name="delay_seconds" id="editDelay" class="form-control" placeholder="Délai (secondes)">
+                </div>
+                <div class="mb-2">
+                    <label>Image (laisser vide pour garder l’actuelle)</label>
+                    <input type="file" name="image" id="editImage" class="form-control">
+                </div>
+                <div class="mb-2 form-check">
+                    <input type="checkbox" name="is_active" id="editActive" class="form-check-input">
+                    <label class="form-check-label">Actif</label>
+                </div>
+                <div class="mb-2">
+                    <input type="date" name="start_date" id="editStartDate" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <input type="date" name="end_date" id="editEndDate" class="form-control">
+                </div>
+                </div>
+                <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/nav.js"></script>
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/static/js/sb-admin-2.min.js"></script>
+    <script src="/static/js/index_js.js"></script>
+    <script src="/static/js/popups.js"></script>
+    <script>
+                // Délégation d'événements sur le document entier
+        document.addEventListener('click', function(e) {
+            // Vérifie si le clic est sur le bouton toggle ou son icône
+            if (e.target.closest('#sidebarToggleTop')) {
+                e.preventDefault();
+                const sidebar = document.querySelector('.sidebar');
+                const body = document.body;
+                
+                if (sidebar) {
+                    body.classList.toggle('sidebar-toggled');
+                    sidebar.classList.toggle('toggled');
+                }
+            }
+        });
+    </script>
+    
+    
+    
+    
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="/static/css/components-modern.css">
+<div class="container nt-mobile-header">
+    <button class="nt-mobile-toggle" type="button" data-toggle="collapse" data-target="#ntMobilePanel" aria-controls="ntMobilePanel" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+    </button>
+    <a class="nt-mobile-brand" href="/" aria-label="New Technologies Togo — Accueil">
+        <img src="/static/img/logo/LOGO-NT.png" width="142" height="48" alt="New Technologies Togo">
+    </a>
+    <nav class="nt-mobile-actions" aria-label="Actions rapides">
+        <a href="/my-mobile-account" aria-label="Mon compte"><i class="ec ec-user"></i></a>
+        <a href="/wishlist" aria-label="Mes favoris"><i class="ec ec-favorites"></i><b id="wishlist-count-mobile" data-wishlist-count>0</b></a>
+        <a href="/cart" aria-label="Mon panier"><i class="ec ec-shopping-bag"></i><b id="cart-count-mobile" data-cart-count>0</b><span id="cart-total-mobile" class="sr-only" data-cart-total>0</span></a>
+    </nav>
+</div>
+
+<div id="ntMobilePanel" class="collapse nt-mobile-panel">
+    <div class="container">
+        <div class="nt-mobile-search" role="search">
+            <label class="sr-only" for="mobileSearchInput">Rechercher un produit</label>
+            <input id="mobileSearchInput" type="search" autocomplete="off" placeholder="Rechercher un produit…" aria-controls="mobile-search-results">
+            <button id="mobileSearchButton" type="button" aria-label="Lancer la recherche"><i class="ec ec-search"></i></button>
+            <div id="mobile-search-results" class="nt-search__results" aria-live="polite"></div>
+        </div>
+        <nav class="nt-mobile-nav" aria-label="Navigation mobile">
+            <a href="/"><i class="fas fa-home"></i><span>Accueil</span></a>
+            <a href="/shop"><i class="fas fa-shopping-bag"></i><span>Boutique</span></a>
+            <a href="/category"><i class="fas fa-th-large"></i><span>Catégories</span></a>
+            <a href="/services"><i class="fas fa-tools"></i><span>Services</span></a>
+            <a href="/logiciels"><i class="fas fa-laptop-code"></i><span>Logiciels</span></a>
+            <a href="/blog"><i class="far fa-newspaper"></i><span>Blog</span></a>
+            <a href="/wishlist"><i class="fas fa-heart"></i><span>Favoris</span></a>
+            <a href="/about"><i class="fas fa-info-circle"></i><span>À propos</span></a>
+            <a href="/contact"><i class="fas fa-headset"></i><span>Contact</span></a>
+        </nav>
+        <a class="nt-mobile-whatsapp" href="https://wa.me/22893356041" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i><span><strong>Besoin d’un conseil ?</strong>Discutez avec nous sur WhatsApp</span></a>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+.product-item {
+  position: relative;
+  overflow: hidden; /* enferme les overlays dans le bloc */
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;   /* couvre exactement le parent */
+  height: 100%;  /* idem */
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Bande bleue */
+.banner-overlay.blue {
+  background: rgba(0, 0, 255, 0.4);
+}
+
+/* Bande gradient rouge-jaune */
+.banner-overlay.gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 0, 0.4) 0%,
+    rgba(255, 255, 0, 0.4) 100%
+  );
+}
+
+/* Hover */
+.product-item:hover .main-img {
+  transform: scale(1.05);
+}
+
+.product-item:hover .banner-overlay.blue {
+  animation: sweepBlue 0.8s forwards;
+}
+
+.product-item:hover .banner-overlay.gradient {
+  animation: sweepGradient 0.8s forwards;
+}
+
+/* Keyframes : balayage diagonal interne */
+@keyframes sweepBlue {
+  0%   { opacity: 0; transform: translate(100%, -100%); }
+  50%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(0,0); }
+}
+
+@keyframes sweepGradient {
+  0%   { opacity: 0; transform: translate(-100%, 100%); }
+  50%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(0,0); }
+}
+
+/* <div class="mb-2 product-images-wrapper">
+                                <a href="/single-product?id=${p.id}" class="d-block text-center">
+                                    <div class=" text-center position-relative">
+                                        <img class="img-fluid main-img" src="${API}/${mainImage}" alt="${p.name}">
+                                        
+                                    </div>
+                                </a>
+                            
+                            </div>
+                            <div class="banner-overlay blue"></div>
+                            <div class="banner-overlay gradient"></div> */

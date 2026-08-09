@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="/static/css/components-modern.css">
+<div class="nt-desktop-header">
+    <div class="container nt-desktop-header__main">
+        <a class="nt-brand" href="/" aria-label="New Technologies Togo — Accueil">
+            <img src="/static/img/logo/LOGO-NT.png" width="190" height="64" alt="New Technologies Togo">
+        </a>
+
+        <div class="nt-search" role="search">
+            <label class="sr-only" for="searchProduct">Rechercher un produit</label>
+            <i class="ec ec-search nt-search__icon" aria-hidden="true"></i>
+            <input id="searchProduct" type="search" autocomplete="off" placeholder="Quel produit recherchez-vous ?" aria-controls="search-results">
+            <button id="searchProduct1" type="button">Rechercher</button>
+            <div id="search-results" class="nt-search__results" aria-live="polite"></div>
+        </div>
+
+        <nav class="nt-header-actions" aria-label="Actions personnelles">
+            <a href="/wishlist" aria-label="Mes favoris"><i class="ec ec-favorites"></i><span>Favoris</span><b id="wishlist-count" data-wishlist-count>0</b></a>
+            <a id="desktopAccountLink" href="/my-mobile-account" aria-label="Accéder à mon compte"><i class="ec ec-user"></i><span>Compte</span></a>
+            <a class="nt-cart-link" href="/cart" aria-label="Voir le panier"><i class="ec ec-shopping-bag"></i><span>Panier</span><b id="cart-count" data-cart-count>0</b><small id="cart-total" data-cart-total>0</small></a>
+        </nav>
+    </div>
+
+    <div class="nt-primary-nav">
+        <div class="container nt-primary-nav__inner">
+            <a class="nt-shop-all" href="/category"><i class="fas fa-th-large"></i> Tous les rayons</a>
+            <nav aria-label="Navigation principale">
+                <ul>
+                    <li><a href="/">Accueil</a></li>
+                    <li class="nt-has-menu">
+                        <a href="/shop">Boutique <i class="fas fa-chevron-down"></i></a>
+                        <div class="nt-mega-menu">
+                            <div><strong>Informatique</strong><a href="/category-slug?slug=laptop,desktop">Ordinateurs</a><a href="/category-slug?slug=ecran,imprimante,scanner">Bureautique</a><a href="/category-slug?slug=pieces,memoire,disque">Composants</a></div>
+                            <div><strong>Mobile & image</strong><a href="/category-slug?slug=smartphones,tablettes">Smartphones & tablettes</a><a href="/category-slug?slug=camera,camera-security">Caméras & sécurité</a><a href="/category-slug?slug=smart-tv,projecteur">TV & projecteurs</a></div>
+                            <div><strong>Équipements</strong><a href="/category-slug?slug=accesoires,chargeurs-pc,batterie">Accessoires</a><a href="/category-slug?slug=reseaux,switch,routeur">Réseaux</a><a href="/category-slug?slug=consoles,games,setup-gaming">Gaming</a></div>
+                            <a class="nt-mega-menu__visual nt-mega-menu-latest" href="/shop" aria-label="Voir les produits récemment ajoutés">
+                                <span>Nouveautés</span>
+                                <strong class="nt-mega-menu-latest__name">Produits récemment ajoutés</strong>
+                                <small class="nt-mega-menu-latest__price" aria-live="polite">Chargement…</small>
+                                <img class="nt-mega-menu-latest__image" src="/static/img/500X400/laptop.png" alt="" loading="lazy">
+                                <span class="nt-mega-menu-latest__progress" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/logiciels">Logiciels</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/about">À propos</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+            <a class="nt-nav-support" href="https://wa.me/22893356041" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Besoin d’aide ?</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,758 @@
+
+<!DOCTYPE html>
+<html lang="fr-TG">
+    
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <head>
+        <!-- Title -->
+        <title>Connexion et inscription | New Technologies Togo</title>
+        <meta name="robots" content="noindex, nofollow">
+
+        <!-- Required Meta Tags Always Come First -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="/static/img/favicon.png">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;display=swap" rel="stylesheet">
+
+        <!-- CSS Implementing Plugins -->
+        <link rel="stylesheet" href="/static/vendor/font-awesome/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="/static/css/font-electro.css">
+        
+        <link rel="stylesheet" href="/static/vendor/animate.css/animate.min.css">
+        <link rel="stylesheet" href="/static/vendor/hs-megamenu/src/hs.megamenu.css">
+        <link rel="stylesheet" href="/static/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
+        <link rel="stylesheet" href="/static/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="/static/vendor/slick-carousel/slick/slick.css">
+        <link rel="stylesheet" href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+
+        <!-- CSS Electro Template -->
+        <link rel="stylesheet" href="/static/css/theme.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <style>
+            .loading-spinner {
+                overflow: auto;
+                height: 400px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        </style>
+
+        <link rel="stylesheet" href="/static/css/inner-modern.css">
+    </head>
+
+    <body class="nt-inner-page nt-page-auth">
+
+        <!-- ========== HEADER ========== -->
+        <header id="header" class="u-header u-header-left-aligned-nav">
+            <div class="u-header__section">
+                <!-- Topbar -->
+                <div class="u-header-topbar py-2 d-none d-xl-block nav-container">
+                    <!-- Content loaded from nav-home.html -->
+                </div>
+                <!-- End Topbar -->
+
+                <!-- Logo and Menu -->
+                <div class="py-2 py-xl-4 bg-primary-down-lg mobile-menu-container">
+                    <!-- Content loaded from mobile-menu.html -->
+                </div>
+
+                <!-- Vertical-and-Search-Bar -->
+                <div class="d-none d-xl-block bg-primary search-container">
+                    
+                </div>
+                <!-- End Vertical-and-secondary-menu -->
+
+            
+            </div>
+        </header>
+        <!-- ========== END HEADER ========== -->
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+        <!-- breadcrumb -->
+        <div class="bg-gray-13 bg-md-transparent">
+            <div class="container">
+                <div class="my-md-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Accueil</a></li>
+                            <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Mon compte</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End breadcrumb -->
+
+        <div class="container">
+            <div class="mb-4">
+                <h1 class="text-center">Mon compte</h1>
+            </div>
+            
+            <div class="my-4 my-xl-8">
+                <div class="row">
+
+                    <!-- ===================== -->
+                    <!-- COLONNE CONNEXION -->
+                    <!-- ===================== -->
+                    <div class="col-md-5 ml-xl-auto mr-md-auto mr-xl-0 mb-8 mb-md-0">
+                        
+                        <div class="border-bottom border-color-1 mb-6">
+                            <h3 class="d-inline-block section-title mb-0 pb-2 font-size-26">
+                                Connexion
+                            </h3>
+                        </div>
+
+                        <p class="text-gray-90 mb-4">
+                            Heureux de vous revoir ! Connectez-vous à votre compte.
+                        </p>
+
+                        <form id="loginFormMobile" novalidate>
+
+                            <div class="form-group">
+                                <label for="signinUsername" class="form-label">
+                                    Nom d'utilisateur <span class="text-danger">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="signinUsername"
+                                    name="username"
+                                    placeholder="Nom d'utilisateur"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signinPassword" class="form-label">
+                                    Mot de passe <span class="text-danger">*</span>
+                                </label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="signinPassword"
+                                    name="password"
+                                    placeholder="Mot de passe"
+                                    required
+                                >
+                            </div>
+
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="rememberCheckbox">
+                                <label class="custom-control-label" for="rememberCheckbox">
+                                    Se souvenir de moi
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary-dark-w px-5">
+                                    Se connecter
+                                </button>
+                            </div>
+
+                            <!-- <div class="mb-3">
+                                <a href="/forgot-password" class="text-blue">
+                                    Mot de passe oublié ?
+                                </a>
+                            </div> -->
+
+                            <div id="login-messages"></div>
+
+                        </form>
+                    </div>
+
+                    <!-- ===================== -->
+                    <!-- SÉPARATEUR -->
+                    <!-- ===================== -->
+                    <div class="col-md-1 d-none d-md-block">
+                        <div class="flex-content-center h-100 position-relative">
+                            <div class="width-1 bg-1 h-100"></div>
+                            <div class="width-50 height-50 border border-color-1 rounded-circle flex-content-center font-italic bg-white position-absolute">
+                                ou
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===================== -->
+                    <!-- COLONNE INSCRIPTION -->
+                    <!-- ===================== -->
+                    <div class="col-md-5 ml-md-auto ml-xl-0 mr-xl-auto">
+
+                        <div class="border-bottom border-color-1 mb-6">
+                            <h3 class="d-inline-block section-title mb-0 pb-2 font-size-26">
+                                Inscription
+                            </h3>
+                        </div>
+
+                        <p class="text-gray-90 mb-4">
+                            Créez un compte pour bénéficier d'une expérience d'achat personnalisée.
+                        </p>
+
+                        <form id="signupFormMobile" novalidate>
+
+                            <!-- 🔥 AJOUTÉ (obligatoire pour ton JS) -->
+                            <div class="form-group">
+                                <label for="signupUsername" class="form-label">
+                                    Nom d'utilisateur <span class="text-danger">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="signupUsername"
+                                    name="username"
+                                    placeholder="Choisissez un nom d'utilisateur"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signupEmail" class="form-label">
+                                    Adresse email <span class="text-danger">*</span>
+                                </label>
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="signupEmail"
+                                    name="email"
+                                    placeholder="votre@email.com"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signupPassword" class="form-label">
+                                    Mot de passe <span class="text-danger">*</span>
+                                </label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="signupPassword"
+                                    name="password"
+                                    placeholder="Mot de passe"
+                                    minlength="6"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signupConfirmPassword" class="form-label">
+                                    Confirmer le mot de passe <span class="text-danger">*</span>
+                                </label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="signupConfirmPassword"
+                                    name="confirmPassword"
+                                    placeholder="Confirmer le mot de passe"
+                                    required
+                                >
+                            </div>
+
+                            <p class="text-gray-90 mb-4">
+                                Vos données personnelles seront utilisées pour soutenir votre expérience sur ce site web,
+                                gérer votre compte et à d'autres fins décrites dans notre
+                                <a href="/terms-and-conditions" class="text-blue">politique de confidentialité</a>.
+                            </p>
+
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary-dark-w px-5">
+                                    S'inscrire
+                                </button>
+                            </div>
+
+                            <div id="signup-messages"></div>
+
+                        </form>
+
+                        <h3 class="font-size-18 mb-3">En créant un compte, vous pourrez :</h3>
+                        <ul class="list-group list-group-borderless">
+                            <li class="list-group-item px-0">
+                                <i class="fas fa-check mr-2 text-green"></i> Accélérer vos achats
+                            </li>
+                            <li class="list-group-item px-0">
+                                <i class="fas fa-check mr-2 text-green"></i> Suivre vos commandes facilement
+                            </li>
+                            <li class="list-group-item px-0">
+                                <i class="fas fa-check mr-2 text-green"></i> Conserver un historique de vos achats
+                            </li>
+                            <li class="list-group-item px-0">
+                                <i class="fas fa-check mr-2 text-green"></i> Gérer vos bons de réduction
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <!-- ========== END MAIN CONTENT ========== -->
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="footer-container">
+            <!-- Content loaded from footer.html -->
+        </footer>
+        <!-- ========== END FOOTER ========== -->
+
+        <!-- ========== SECONDARY CONTENTS ========== -->
+        
+        <!-- ========== END SECONDARY CONTENTS ========== -->
+        <!-- Sidebar Navigation -->
+        <aside id="sidebarContent" class="u-sidebar u-sidebar__lg auth-container" aria-labelledby="sidebarNavToggler">
+            <div class="u-sidebar__scroller">
+                <div class="u-sidebar__container">
+                    <div class="js-scrollbar u-header-sidebar__footer-offset pb-3">
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- End Sidebar Navigation -->
+
+        <!-- Go to Top -->
+        <a class="js-go-to u-go-to" href="#"
+            data-position='{"bottom": 15, "right": 15 }'
+            data-type="fixed"
+            data-offset-top="400"
+            data-compensation="#header"
+            data-show-effect="slideInUp"
+            data-hide-effect="slideOutDown">
+            <span class="fas fa-arrow-up u-go-to__inner"></span>
+        </a>
+        <!-- End Go to Top -->
+
+        <!-- JS Global Compulsory -->
+        <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/static/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+        <script src="/static/vendor/popper.js/dist/umd/popper.min.js"></script>
+        <script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+
+        <!-- JS Implementing Plugins -->
+        <script src="/static/vendor/appear.js"></script>
+        <script src="/static/vendor/jquery.countdown.min.js"></script>
+        <script src="/static/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+        <script src="/static/vendor/svg-injector/dist/svg-injector.min.js"></script>
+        <script src="/static/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="/static/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="/static/vendor/fancybox/jquery.fancybox.min.js"></script>
+        <script src="/static/vendor/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+        <script src="/static/vendor/typed.js/lib/typed.min.js"></script>
+        <script src="/static/vendor/slick-carousel/slick/slick.js"></script>
+        <script src="/static/vendor/appear.js"></script>
+        <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+        <!-- JS Electro -->
+        <script src="/static/js/hs.core.js"></script>
+        <script src="/static/js/components/hs.countdown.js"></script>
+        <script src="/static/js/components/hs.header.js"></script>
+        <script src="/static/js/components/hs.hamburgers.js"></script>
+        <script src="/static/js/components/hs.unfold.js"></script>
+        <script src="/static/js/components/hs.focus-state.js"></script>
+        <script src="/static/js/components/hs.malihu-scrollbar.js"></script>
+        <script src="/static/js/components/hs.validation.js"></script>
+        <script src="/static/js/components/hs.fancybox.js"></script>
+        <script src="/static/js/components/hs.onscroll-animation.js"></script>
+        <script src="/static/js/components/hs.slick-carousel.js"></script>
+        <script src="/static/js/components/hs.quantity-counter.js"></script>
+        <script src="/static/js/components/hs.range-slider.js"></script>
+        <script src="/static/js/components/hs.show-animation.js"></script>
+        <script src="/static/js/components/hs.svg-injector.js"></script>
+        <script src="/static/js/components/hs.scroll-nav.js"></script>
+        <script src="/static/js/components/hs.go-to.js"></script>
+        <script src="/static/js/components/hs.selectpicker.js"></script>
+        <script src="/static/js/config.js"></script>
+        <script src="/static/js/visitors.js"></script>
+        <script src="/static/js/cart_utils.js?v=20260809-context-rail"></script>
+        <script src="/static/js/nav_home.js"></script>
+        <script src="/static/js/nav_search_and_components.js"></script>
+        <script src="/static/js/currency.js"></script>
+        <script src="/static/js/auth.js"></script>
+        <script src="/static/js/mobile_auth.js?v=20260809-signup-fix"></script>
+
+        
+
+        <!-- ===============================================
+        1. JS PLUGINS INITIALISATION (une seule fois)
+        =============================================== -->
+        <script>
+            $(window).on('load', function () {
+                // HSMegaMenu
+                $('.js-mega-menu').HSMegaMenu({
+                    event: 'hover',
+                    direction: 'horizontal',
+                    pageContainer: $('.container'),
+                    breakpoint: 767.98,
+                    hideTimeOut: 0
+                });
+            });
+
+            $(document).on('ready', function () {
+                // Header
+                $.HSCore.components.HSHeader.init($('#header'));
+
+                // Animation
+                $.HSCore.components.HSOnScrollAnimation.init('[data-animation]');
+
+                // Unfold (dropdowns, sidebar)
+                $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
+                    afterOpen: function () {
+                        $(this).find('input[type="search"]').focus();
+                    }
+                });
+
+                // Fancybox
+                $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+                // Countdown
+                $.HSCore.components.HSCountdown.init('.js-countdown', {
+                    yearsElSelector: '.js-cd-years',
+                    monthsElSelector: '.js-cd-months',
+                    daysElSelector: '.js-cd-days',
+                    hoursElSelector: '.js-cd-hours',
+                    minutesElSelector: '.js-cd-minutes',
+                    secondsElSelector: '.js-cd-seconds'
+                });
+
+                // Malihu Scrollbar
+                $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
+
+                // Forms
+                $.HSCore.components.HSFocusState.init();
+
+                // Form Validation
+                $.HSCore.components.HSValidation.init('.js-validate', {
+                    rules: {
+                        confirmPassword: {
+                            equalTo: '#signupPassword'
+                        }
+                    }
+                });
+
+                // Show Animations
+                $.HSCore.components.HSShowAnimation.init('.js-animation-link');
+
+                // Go To
+                $.HSCore.components.HSGoTo.init('.js-go-to');
+
+                // Hamburgers
+                $.HSCore.components.HSHamburgers.init('#hamburgerTrigger');
+
+                // Select Picker
+                $.HSCore.components.HSSelectPicker.init('.js-select');
+            });
+        </script>
+
+        <!-- ===============================================
+            2. FONCTION REINIT UI (pour les composants dynamiques)
+        =============================================== -->
+        <script>
+            async function reInitUI() {
+                console.log("🔄 Réinitialisation UI...");
+
+                // Mega Menu
+                if ($('.js-mega-menu').length) {
+                    $('.js-mega-menu').HSMegaMenu({
+                        event: 'hover',
+                        direction: 'horizontal',
+                        pageContainer: $('.container'),
+                        breakpoint: 767.98,
+                        hideTimeOut: 0
+                    });
+                }
+
+                // Header
+                if ($('#header').length) {
+                    $.HSCore.components.HSHeader.init($('#header'));
+                }
+
+                // Unfold (général)
+                if ($('[data-unfold-target]').length) {
+                    $.HSCore.components.HSUnfold.init($('[data-unfold-target]'));
+                }
+
+                // Slick Carousel
+                $('.js-slick-carousel.slick-initialized').slick('unslick');
+                if ($('.js-slick-carousel').length) {
+                    $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+                }
+
+                // Fancybox
+                if ($('.js-fancybox').length) {
+                    $.HSCore.components.HSFancyBox.init('.js-fancybox');
+                }
+
+                // Validation
+                if ($.HSCore.components.HSValidation) {
+                    $.HSCore.components.HSValidation.init('.js-validate', {
+                        rules: {
+                            confirmPassword: {
+                                equalTo: '#signupPassword'
+                            }
+                        }
+                    });
+                }
+
+                // Focus State
+                if ($.HSCore.components.HSFocusState) {
+                    $.HSCore.components.HSFocusState.init();
+                }
+
+                // Select Picker
+                if ($.HSCore.components.HSSelectPicker) {
+                    $('.js-select').selectpicker('refresh');
+                }
+
+                // Le panneau d'authentification vient d'être injecté par nav_home.js.
+                // On initialise uniquement sa logique commune, sans recharger les composants.
+                if (typeof initAuthForms === 'function' && document.querySelector('#sidebarContent form.js-validate')) {
+                    initAuthForms();
+                }
+            }
+        </script>
+
+        <!-- ===============================================
+            3. FONCTION D'INITIALISATION SPÉCIFIQUE AUTH
+            =============================================== -->
+        <script>
+            function legacyInitAuth() {
+                console.log("🎯 INIT AUTH - VERSION COMPLÈTE");
+                
+                const sidebar = document.getElementById('sidebarContent');
+                const bouton = document.getElementById('sidebarNavToggler');
+                
+                if (!sidebar || !bouton) {
+                    console.error("❌ Éléments manquants");
+                    return;
+                }
+                
+                // 1. Cacher la sidebar au départ
+                sidebar.style.display = 'none';
+                
+                // 2. Ouvrir/fermer avec le bouton
+                bouton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("👆 CLIC SUR BOUTON");
+                    
+                    if (sidebar.style.display === 'none') {
+                        console.log("✅ OUVERTURE");
+                        sidebar.style.display = 'block';
+                    } else {
+                        console.log("❌ FERMETURE");
+                        sidebar.style.display = 'none';
+                    }
+                });
+                
+                // 3. ✅ FERMETURE avec le bouton X
+                const closeButtons = sidebar.querySelectorAll('.close, [aria-label="Close"]');
+                closeButtons.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        console.log("👆 FERMETURE PAR BOUTON X");
+                        sidebar.style.display = 'none';
+                    });
+                });
+                
+                // 4. ✅ NAVIGATION ENTRE FORMULAIRES
+                const animationLinks = sidebar.querySelectorAll('.js-animation-link');
+                animationLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('data-target');
+                        const linkGroup = this.getAttribute('data-link-group');
+                        
+                        console.log(`🔄 Changement vers: ${targetId}`);
+                        
+                        if (!targetId) return;
+                        
+                        // Cacher tous les formulaires du groupe
+                        const groupForms = sidebar.querySelectorAll(`[data-target-group="${linkGroup}"]`);
+                        groupForms.forEach(form => {
+                            form.style.display = 'none';
+                            form.style.opacity = '0';
+                        });
+                        
+                        // Afficher le formulaire cible
+                        const targetForm = sidebar.querySelector(targetId);
+                        if (targetForm) {
+                            targetForm.style.display = 'block';
+                            targetForm.style.opacity = '1';
+                            
+                            // Optionnel: animation simple
+                            targetForm.style.animation = 'fadeIn 0.3s';
+                            setTimeout(() => {
+                                targetForm.style.animation = '';
+                            }, 300);
+                        }
+                    });
+                });
+                
+                // 5. ✅ S'ASSURER QUE LE FORMULAIRE LOGIN EST VISIBLE PAR DÉFAUT
+                const loginForm = sidebar.querySelector('#login');
+                const signupForm = sidebar.querySelector('#signup');
+                const forgotForm = sidebar.querySelector('#forgotPassword');
+                
+                if (loginForm) loginForm.style.display = 'block';
+                if (signupForm) signupForm.style.display = 'none';
+                if (forgotForm) forgotForm.style.display = 'none';
+                
+                // 6. ✅ FERMETURE EN CLIQUANT À L'EXTÉRIEUR (optionnel)
+                document.addEventListener('click', function(e) {
+                    if (sidebar.style.display === 'block' && 
+                        !sidebar.contains(e.target) && 
+                        e.target !== bouton &&
+                        !bouton.contains(e.target)) {
+                        console.log("👆 FERMETURE PAR CLIC EXTÉRIEUR");
+                        sidebar.style.display = 'none';
+                    }
+                });
+
+                // 🔥🔥🔥 NOUVEAU : Initialiser les formulaires
+                legacyInitAuthForms();
+                
+                console.log("✅ Auth initialisé avec navigation");
+            }
+
+            // Ajouter l'animation fadeIn si pas déjà présente
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            function legacyInitAuthForms() {
+                console.log("📝 Initialisation des formulaires auth...");
+                
+                const sidebar = document.getElementById('sidebarContent');
+                if (!sidebar) return;
+                
+                const form = sidebar.querySelector('form.js-validate');
+                if (!form) return;
+                
+                // 🔴 NE PAS remplacer le formulaire, juste ajouter l'événement
+                
+                // Supprimer l'ancien événement submit s'il existe
+                const oldForm = form;
+                const newForm = oldForm.cloneNode(true);  // On clone quand même
+                oldForm.parentNode.replaceChild(newForm, oldForm);
+                
+                // MAINTENANT, on réattache la navigation SUR LE NOUVEAU formulaire
+                // car le clonage a supprimé tous les événements
+                
+                // Réattacher la navigation (tes liens .js-animation-link)
+                const animationLinks = newForm.querySelectorAll('.js-animation-link');
+                animationLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('data-target');
+                        const linkGroup = this.getAttribute('data-link-group');
+                        
+                        console.log(`🔄 Changement vers: ${targetId}`);
+                        
+                        if (!targetId) return;
+                        
+                        const groupForms = sidebar.querySelectorAll(`[data-target-group="${linkGroup}"]`);
+                        groupForms.forEach(form => {
+                            form.style.display = 'none';
+                            form.style.opacity = '0';
+                        });
+                        
+                        const targetForm = sidebar.querySelector(targetId);
+                        if (targetForm) {
+                            targetForm.style.display = 'block';
+                            targetForm.style.opacity = '1';
+                            targetForm.style.animation = 'fadeIn 0.3s';
+                            setTimeout(() => {
+                                targetForm.style.animation = '';
+                            }, 300);
+                        }
+                    });
+                });
+                
+                // Réattacher le bouton X
+                const closeButtons = newForm.querySelectorAll('.close, [aria-label="Close"]');
+                closeButtons.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        console.log("👆 FERMETURE PAR BOUTON X");
+                        sidebar.style.display = 'none';
+                    });
+                });
+                
+                // ✅ MAINTENANT on attache l'événement submit
+                newForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    console.log("📤 Formulaire soumis");
+                    
+                    const loginVisible = this.querySelector('#login').style.display !== 'none';
+                    const signupVisible = this.querySelector('#signup').style.display !== 'none';
+                    const forgotVisible = this.querySelector('#forgotPassword').style.display !== 'none';
+                    
+                    if (loginVisible) {
+                        await handleLogin(this);
+                    } else if (signupVisible) {
+                        await handleSignup(this);
+                    } else if (forgotVisible) {
+                        await handleForgotPassword(this);
+                    }
+                });
+                
+                console.log("✅ Formulaires auth initialisés");
+            }
+        </script>
+
+        <!-- ===============================================
+            4. CHARGEMENT DES COMPOSANTS DYNAMIQUES
+            =============================================== -->
+        <script>
+            document.addEventListener("legacy-mobile-account-components", () => {
+                console.log("🚀 Début chargement composants...");
+
+                // Navigation
+                loadComponentByClass("nav-container", "/nav", reInitUI);
+
+                // Recherche
+                // Charger la recherche
+                loadComponentByClass("search-container", "/search", function() {
+                    reInitUI();
+                    // Déclencher manuellement l'init de la recherche
+                    if (typeof initSearchComponent === 'function') {
+                        setTimeout(() => {
+                            initSearchComponent();
+                        }, 200);
+                    }
+                });
+
+                // 🔐 AUTH - avec gestion spéciale
+                loadComponentByClass("auth-container", "/auth", function() {
+                    setTimeout(() => {
+                        reInitUI();      // Réinitialisation générale
+                        initAuth();      // Initialisation spécifique auth
+                    }, 300);
+                });
+
+                // 📦 FOOTER - avec promo
+                loadComponentByClass("footer-container", "/footer", function() {
+                    reInitUI();
+                    setTimeout(() => {
+                        console.log("Chargement footer-promo...");
+                        const script = document.createElement('script');
+                        script.src = '/static/js/footer-promo.js';
+                        document.body.appendChild(script);
+                    }, 500);
+                });
+
+                // 📱 Menu mobile
+                loadComponentByClass("mobile-menu-container", "/mobile-menu", reInitUI);
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fr-TG">
+    
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <!-- Title -->
+        <title>Produits par catégorie | New Technologies Togo</title>
+        <meta name="description" content="Comparez les produits New Technologies par catégorie, marque, couleur et prix.">
+
+        <!-- Required Meta Tags Always Come First -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="/static/img/favicon.png">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;display=swap" rel="stylesheet">
+
+        <!-- CSS Implementing Plugins -->
+        <link rel="stylesheet" href="/static/vendor/font-awesome/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="/static/css/font-electro.css">
+        
+        <link rel="stylesheet" href="/static/vendor/animate.css/animate.min.css">
+        <link rel="stylesheet" href="/static/vendor/hs-megamenu/src/hs.megamenu.css">
+        <link rel="stylesheet" href="/static/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
+        <link rel="stylesheet" href="/static/vendor/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="/static/vendor/slick-carousel/slick/slick.css">
+        <link rel="stylesheet" href="/static/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+
+        <!-- CSS Electro Template -->
+        <link rel="stylesheet" href="/static/css/theme.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        
+        <link rel="stylesheet" href="/static/css/inner-modern.css">
+    </head>
+
+
+    <body class="nt-inner-page nt-page-category-results">
+
+        <!-- ========== HEADER ========== -->
+        <header id="header" class="u-header u-header-left-aligned-nav">
+            <div class="u-header__section">
+                <!-- Topbar -->
+                <div class="u-header-topbar py-2 d-none d-xl-block nav-container">
+                    <!-- Content loaded from nav-home.html -->
+                </div>
+                <!-- End Topbar -->
+
+                <!-- Logo and Menu -->
+                <div class="py-2 py-xl-4 bg-primary-down-lg mobile-menu-container">
+                    <!-- Content loaded from mobile-menu.html -->
+                </div>
+
+                <!-- Vertical-and-Search-Bar -->
+                <div class="d-none d-xl-block bg-primary search-container">
+                    
+                </div>
+                <!-- End Vertical-and-secondary-menu -->
+
+            
+            </div>
+        </header>
+        <!-- ========== END HEADER ========== -->
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main">
+            <!-- breadcrumb -->
+            <div class="bg-gray-13 bg-md-transparent">
+                <div class="container">
+                    <!-- breadcrumb -->
+                    <div class="my-md-3">
+                        <nav aria-label="breadcrumb" 
+                            data-category-id="5" 
+                            data-category-name="Chaussures" 
+                            data-product-id="42" 
+                            data-product-name="Nike Air Max">
+                            <ol class="breadcrumb"></ol>
+                        </nav>
+                    </div>
+                    <!-- End breadcrumb -->
+                </div>
+            </div>
+            <!-- End breadcrumb -->
+
+            <div class="container">
+                <div class="row mb-8">
+                    <div class="d-none d-xl-block col-xl-3 col-wd-2gdot5">
+                        <div class="mb-6 border border-width-2 border-color-3 borders-radius-6">
+                            <!-- List -->
+                            
+                            <!-- End List -->
+                        </div>
+                        <div class="mb-6">
+                            <div class="border-bottom border-color-1 mb-5">
+                                <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Filtres</h3>
+                            </div>
+                            <div class="border-bottom pb-4 mb-4">
+                                <h4 class="font-size-14 mb-3 font-weight-bold">Marques</h4>
+                                <div id="brandFilters"></div>
+                            </div>
+
+                            <div class="border-bottom pb-4 mb-4">
+                                <h4 class="font-size-14 mb-3 font-weight-bold">Couleur</h4>
+                                <div id="colorFilters"></div>
+                            </div>
+
+                            <div class="range-slider">
+                                <h4 class="font-size-14 mb-3 font-weight-bold">Prix</h4>
+                                <input class="js-range-slider" type="text">
+                                <div class="mt-1 text-gray-111 d-flex mb-4">
+                                    <span class="mr-0dot5">Prix: </span>
+                                    <span></span>
+                                    <span id="rangeSliderExample3MinResult"></span>
+                                    <span class="mx-0dot5"> — </span>
+                                    <span></span>
+                                    <span id="rangeSliderExample3MaxResult"></span>
+                                </div>
+                                <button type="submit" class="btn px-4 btn-primary-dark-w py-2 rounded-lg">Filtrer</button>
+                            </div>
+                        </div>
+                        <div class="mb-8">
+                        <div class="border-bottom border-color-1 mb-5">
+                            <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Derniers produits ajoutés</h3>
+                        </div>
+                        <ul class="list-unstyled latest-products-list">
+                            <!-- Les <li> seront injectés ici -->
+                        </ul>
+                        <div class="mb-6">
+                                <a href="/services" class="d-block">
+                                    <img class="img-fluid" src="/static/img/270X700/img1.png" alt="Image Description">
+                                </a>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-xl-9 col-wd-9gdot5">
+                        <!-- Recommended Products -->
+                        <div class="mb-6 d-none d-xl-block">
+                            <div class=" position-relative">
+                            
+                        </div>
+                        </div>
+                        <!-- End Recommended Products -->
+                        <div class="shop-wrapper container-fluid">
+                        <!-- Header -->
+                        <div class="flex-center-between mb-3">
+                            <h1 id="category-title" class="font-size-25 mb-0">Produits de la catégorie</h1>
+                            <p id="results-counter" class="font-size-14 text-gray-90 mb-0">Showing 0–0 of 0 results</p>
+                        </div>
+
+                        <!-- Shop-control-bar -->
+                        <div class="bg-shop flex-center-between borders-radius-9 py-2 px-3 mb-3">
+                            <div class="d-flex align-items-center">
+                                <!-- Tri -->
+                                <form method="get" class="mr-2">
+                                    <select id="sortSelect" class="js-select selectpicker dropdown-select max-width-200"
+                                        data-style="btn-sm bg-white font-weight-normal py-2 border text-gray-20">
+                                        <option value="default" selected><i class="fa fa-sort"></i> Tri par défaut</option>
+                                        <option value="popularity"><i class="fa fa-fire"></i> Trier par popularité</option>
+                                        <option value="rating"><i class="fa fa-star"></i> Trier par note moyenne</option>
+                                        <option value="latest"><i class="fa fa-clock"></i> Trier par date la plus récente</option>
+                                        <option value="price_asc"><i class="fa fa-arrow-down"></i> Prix: bas → élevé</option>
+                                        <option value="price_desc"><i class="fa fa-arrow-up"></i> Prix: élevé → bas</option>
+                                    </select>
+                                </form>
+
+                                <!-- Nombre de produits -->
+                                <form method="POST" class="ml-2">
+                                    <select id="showSelect" class="js-select selectpicker dropdown-select max-width-120"
+                                        data-style="btn-sm bg-white font-weight-normal py-2 border text-gray-20">
+                                        <option value="20" selected><i class="fa fa-list-ol"></i> Afficher - 20</option>
+                                        <option value="40"><i class="fa fa-list-ol"></i> Afficher - 40</option>
+                                        <option value="all"><i class="fa fa-th-large"></i> Afficher Tout</option>
+                                    </select>
+                                </form>
+                            </div>
+
+                            <!-- Icônes de vue (Grid / Liste) -->
+                            <div class="d-flex align-items-center ml-auto">
+                                <ul class="nav nav-tab-shop" id="view-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="view-grid" data-toggle="pill" href="#grid-view" role="tab"
+                                        aria-controls="grid-view" aria-selected="true" title="Vue Grille">
+                                            <i class="fa fa-th"></i>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="view-list" data-toggle="pill" href="#list-view" role="tab"
+                                        aria-controls="list-view" aria-selected="false" title="Vue Liste">
+                                            <i class="fa fa-list"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Shop Body -->
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade pt-2 show active" id="pills-one-example1" role="tabpanel">
+                                <ul class="row list-unstyled shop-product no-gutters">
+                                    <!-- 🔹 Produits injectés ici -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Shop Pagination -->
+                        <nav class="d-md-flex justify-content-between align-items-center border-top pt-3 mt-3"
+                            aria-label="Page navigation example">
+                            <div id="pagination-counter" class="text-center text-md-left mb-3 mb-md-0">
+                                Showing 0–0 of 0 results
+                            </div>
+                            <ul id="pagination" class="pagination mb-0 pagination-shop justify-content-center justify-content-md-start">
+                                <!-- 🔹 Pagination dynamique injectée ici -->
+                            </ul>
+                        </nav>
+                    </div>
+                    </div>
+                </div>
+                <!-- Brand Carousel -->
+                <div class="mb-8">
+                    <div class="py-2 border-top border-bottom">
+                        <div class="js-slick-carousel u-slick my-1 marque-container"
+                            data-slides-show="5"
+                            data-slides-scroll="1"
+                            data-arrows-classes="d-none d-lg-inline-block u-slick__arrow-normal u-slick__arrow-centered--y"
+                            data-arrow-left-classes="fa fa-angle-left u-slick__arrow-classic-inner--left z-index-9"
+                            data-arrow-right-classes="fa fa-angle-right u-slick__arrow-classic-inner--right"
+                            data-responsive='[{
+                                "breakpoint": 992,
+                                "settings": {
+                                    "slidesToShow": 2
+                                }
+                            }, {
+                                "breakpoint": 768,
+                                "settings": {
+                                    "slidesToShow": 1
+                                }
+                            }, {
+                                "breakpoint": 554,
+                                "settings": {
+                                    "slidesToShow": 1
+                                }
+                            }]'>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- End Brand Carousel -->
+            </div>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->
+
+        <!-- ========== FOOTER ========== -->
+        <footer class="footer-container">
+            <!-- Content loaded from footer.html -->
+        </footer>
+        <!-- ========== END FOOTER ========== -->
+
+        <!-- ========== SECONDARY CONTENTS ========== -->
+        <!-- Account Sidebar Navigation -->
+        <aside id="sidebarContent" class="u-sidebar u-sidebar__lg auth-container" aria-labelledby="sidebarNavToggler">
+            <div class="u-sidebar__scroller">
+                <div class="u-sidebar__container">
+                    <div class="js-scrollbar u-header-sidebar__footer-offset pb-3">
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- End Account Sidebar Navigation -->
+        <!-- ========== END SECONDARY CONTENTS ========== -->
+        <!-- Sidebar Navigation -->
+        
+        <!-- End Sidebar Navigation -->
+
+        <!-- Go to Top -->
+        <a class="js-go-to u-go-to" href="#"
+            data-position='{"bottom": 15, "right": 15 }'
+            data-type="fixed"
+            data-offset-top="400"
+            data-compensation="#header"
+            data-show-effect="slideInUp"
+            data-hide-effect="slideOutDown">
+            <span class="fas fa-arrow-up u-go-to__inner"></span>
+        </a>
+        <!-- End Go to Top -->
+
+        <!-- JS Global Compulsory -->
+        <script src="/static/js/config.js"></script>
+        <script src="/static/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="/static/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+        <script src="/static/vendor/popper.js/dist/umd/popper.min.js"></script>
+        <script src="/static/vendor/bootstrap/bootstrap.min.js"></script>
+
+        <!-- JS Implementing Plugins -->
+        <script src="/static/vendor/appear.js"></script>
+        <script src="/static/vendor/jquery.countdown.min.js"></script>
+        <script src="/static/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+        <script src="/static/vendor/svg-injector/dist/svg-injector.min.js"></script>
+        <script src="/static/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="/static/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="/static/vendor/fancybox/jquery.fancybox.min.js"></script>
+        <script src="/static/vendor/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
+        <script src="/static/vendor/typed.js/lib/typed.min.js"></script>
+        <script src="/static/vendor/slick-carousel/slick/slick.js"></script>
+        <script src="/static/vendor/appear.js"></script>
+        <script src="/static/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+        <!-- JS Electro -->
+        <script src="/static/js/hs.core.js"></script>
+        <script src="/static/js/components/hs.countdown.js"></script>
+        <script src="/static/js/components/hs.header.js"></script>
+        <script src="/static/js/components/hs.hamburgers.js"></script>
+        <script src="/static/js/components/hs.unfold.js"></script>
+        <script src="/static/js/components/hs.focus-state.js"></script>
+        <script src="/static/js/components/hs.malihu-scrollbar.js"></script>
+        <script src="/static/js/components/hs.validation.js"></script>
+        <script src="/static/js/components/hs.fancybox.js"></script>
+        <script src="/static/js/components/hs.onscroll-animation.js"></script>
+        <script src="/static/js/components/hs.slick-carousel.js"></script>
+        <script src="/static/js/components/hs.quantity-counter.js"></script>
+        <script src="/static/js/components/hs.range-slider.js"></script>
+        <script src="/static/js/components/hs.show-animation.js"></script>
+        <script src="/static/js/components/hs.svg-injector.js"></script>
+        <script src="/static/js/components/hs.scroll-nav.js"></script>
+        <script src="/static/js/components/hs.go-to.js"></script>
+        <script src="/static/js/components/hs.selectpicker.js"></script>
+        
+        <script src="/static/js/cart_utils.js?v=20260809-context-rail"></script>
+        <script src="/static/js/nav_home.js"></script>
+        <script src="/static/js/currency.js"></script>
+        <script src="/static/js/helper.js"></script>
+        <script src="/static/js/category.js"></script>
+        <script src="/static/js/marque.js"></script>
+        <script src="/static/js/auth.js"></script>
+        <script src="/static/js/breadcrumb.js"></script>
+        
+
+        
+
+
+        <!-- ===============================================
+        1. JS PLUGINS INITIALISATION (une seule fois)
+        =============================================== -->
+        <script>
+            $(window).on('load', function () {
+                // HSMegaMenu
+                $('.js-mega-menu').HSMegaMenu({
+                    event: 'hover',
+                    direction: 'horizontal',
+                    pageContainer: $('.container'),
+                    breakpoint: 767.98,
+                    hideTimeOut: 0
+                });
+            });
+
+            $(document).on('ready', function () {
+                // Header
+                $.HSCore.components.HSHeader.init($('#header'));
+
+                // Animation
+                $.HSCore.components.HSOnScrollAnimation.init('[data-animation]');
+
+                // Unfold (dropdowns, sidebar)
+                $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
+                    afterOpen: function () {
+                        $(this).find('input[type="search"]').focus();
+                    }
+                });
+
+                // Fancybox
+                $.HSCore.components.HSFancyBox.init('.js-fancybox');
+
+                // Countdown
+                $.HSCore.components.HSCountdown.init('.js-countdown', {
+                    yearsElSelector: '.js-cd-years',
+                    monthsElSelector: '.js-cd-months',
+                    daysElSelector: '.js-cd-days',
+                    hoursElSelector: '.js-cd-hours',
+                    minutesElSelector: '.js-cd-minutes',
+                    secondsElSelector: '.js-cd-seconds'
+                });
+
+                // Malihu Scrollbar
+                $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
+
+                // Forms
+                $.HSCore.components.HSFocusState.init();
+
+                // Form Validation
+                $.HSCore.components.HSValidation.init('.js-validate', {
+                    rules: {
+                        confirmPassword: {
+                            equalTo: '#signupPassword'
+                        }
+                    }
+                });
+
+                // Show Animations
+                $.HSCore.components.HSShowAnimation.init('.js-animation-link');
+
+                // Go To
+                $.HSCore.components.HSGoTo.init('.js-go-to');
+
+                // Hamburgers
+                $.HSCore.components.HSHamburgers.init('#hamburgerTrigger');
+
+                // Select Picker
+                $.HSCore.components.HSSelectPicker.init('.js-select');
+            });
+        </script>
+
+        <!-- ===============================================
+            2. FONCTION REINIT UI (pour les composants dynamiques)
+        =============================================== -->
+        <script>
+            async function reInitUI() {
+                console.log("🔄 Réinitialisation UI...");
+
+                // Mega Menu
+                if ($('.js-mega-menu').length) {
+                    $('.js-mega-menu').HSMegaMenu({
+                        event: 'hover',
+                        direction: 'horizontal',
+                        pageContainer: $('.container'),
+                        breakpoint: 767.98,
+                        hideTimeOut: 0
+                    });
+                }
+
+                // Header
+                if ($('#header').length) {
+                    $.HSCore.components.HSHeader.init($('#header'));
+                }
+
+                // Unfold (général)
+                if ($('[data-unfold-target]').length) {
+                    $.HSCore.components.HSUnfold.init($('[data-unfold-target]'));
+                }
+
+                // Slick Carousel
+                $('.js-slick-carousel.slick-initialized').slick('unslick');
+                if ($('.js-slick-carousel').length) {
+                    $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+                }
+
+                // Fancybox
+                if ($('.js-fancybox').length) {
+                    $.HSCore.components.HSFancyBox.init('.js-fancybox');
+                }
+
+                // Validation
+                if ($.HSCore.components.HSValidation) {
+                    $.HSCore.components.HSValidation.init('.js-validate', {
+                        rules: {
+                            confirmPassword: {
+                                equalTo: '#signupPassword'
+                            }
+                        }
+                    });
+                }
+
+                // Focus State
+                if ($.HSCore.components.HSFocusState) {
+                    $.HSCore.components.HSFocusState.init();
+                }
+
+                // Select Picker
+                if ($.HSCore.components.HSSelectPicker) {
+                    $('.js-select').selectpicker('refresh');
+                }
+            }
+        </script>
+
+        <!-- ===============================================
+            3. FONCTION D'INITIALISATION SPÉCIFIQUE AUTH
+            =============================================== -->
+        <script>
+            function initAuth() {
+                console.log("🎯 INIT AUTH - VERSION COMPLÈTE");
+                
+                const sidebar = document.getElementById('sidebarContent');
+                const bouton = document.getElementById('sidebarNavToggler');
+                
+                if (!sidebar || !bouton) {
+                    console.error("❌ Éléments manquants");
+                    return;
+                }
+                
+                // 1. Cacher la sidebar au départ
+                sidebar.style.display = 'none';
+                
+                // 2. Ouvrir/fermer avec le bouton
+                bouton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("👆 CLIC SUR BOUTON");
+                    
+                    if (sidebar.style.display === 'none') {
+                        console.log("✅ OUVERTURE");
+                        sidebar.style.display = 'block';
+                    } else {
+                        console.log("❌ FERMETURE");
+                        sidebar.style.display = 'none';
+                    }
+                });
+                
+                // 3. ✅ FERMETURE avec le bouton X
+                const closeButtons = sidebar.querySelectorAll('.close, [aria-label="Close"]');
+                closeButtons.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        console.log("👆 FERMETURE PAR BOUTON X");
+                        sidebar.style.display = 'none';
+                    });
+                });
+                
+                // 4. ✅ NAVIGATION ENTRE FORMULAIRES
+                const animationLinks = sidebar.querySelectorAll('.js-animation-link');
+                animationLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('data-target');
+                        const linkGroup = this.getAttribute('data-link-group');
+                        
+                        console.log(`🔄 Changement vers: ${targetId}`);
+                        
+                        if (!targetId) return;
+                        
+                        // Cacher tous les formulaires du groupe
+                        const groupForms = sidebar.querySelectorAll(`[data-target-group="${linkGroup}"]`);
+                        groupForms.forEach(form => {
+                            form.style.display = 'none';
+                            form.style.opacity = '0';
+                        });
+                        
+                        // Afficher le formulaire cible
+                        const targetForm = sidebar.querySelector(targetId);
+                        if (targetForm) {
+                            targetForm.style.display = 'block';
+                            targetForm.style.opacity = '1';
+                            
+                            // Optionnel: animation simple
+                            targetForm.style.animation = 'fadeIn 0.3s';
+                            setTimeout(() => {
+                                targetForm.style.animation = '';
+                            }, 300);
+                        }
+                    });
+                });
+                
+                // 5. ✅ S'ASSURER QUE LE FORMULAIRE LOGIN EST VISIBLE PAR DÉFAUT
+                const loginForm = sidebar.querySelector('#login');
+                const signupForm = sidebar.querySelector('#signup');
+                const forgotForm = sidebar.querySelector('#forgotPassword');
+                
+                if (loginForm) loginForm.style.display = 'block';
+                if (signupForm) signupForm.style.display = 'none';
+                if (forgotForm) forgotForm.style.display = 'none';
+                
+                // 6. ✅ FERMETURE EN CLIQUANT À L'EXTÉRIEUR (optionnel)
+                document.addEventListener('click', function(e) {
+                    if (sidebar.style.display === 'block' && 
+                        !sidebar.contains(e.target) && 
+                        e.target !== bouton &&
+                        !bouton.contains(e.target)) {
+                        console.log("👆 FERMETURE PAR CLIC EXTÉRIEUR");
+                        sidebar.style.display = 'none';
+                    }
+                });
+
+                // 🔥🔥🔥 NOUVEAU : Initialiser les formulaires
+                initAuthForms();
+                
+                console.log("✅ Auth initialisé avec navigation");
+            }
+
+            // Ajouter l'animation fadeIn si pas déjà présente
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            function initAuthForms() {
+                console.log("📝 Initialisation des formulaires auth...");
+                
+                const sidebar = document.getElementById('sidebarContent');
+                if (!sidebar) return;
+                
+                const form = sidebar.querySelector('form.js-validate');
+                if (!form) return;
+                
+                // 🔴 NE PAS remplacer le formulaire, juste ajouter l'événement
+                
+                // Supprimer l'ancien événement submit s'il existe
+                const oldForm = form;
+                const newForm = oldForm.cloneNode(true);  // On clone quand même
+                oldForm.parentNode.replaceChild(newForm, oldForm);
+                
+                // MAINTENANT, on réattache la navigation SUR LE NOUVEAU formulaire
+                // car le clonage a supprimé tous les événements
+                
+                // Réattacher la navigation (tes liens .js-animation-link)
+                const animationLinks = newForm.querySelectorAll('.js-animation-link');
+                animationLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('data-target');
+                        const linkGroup = this.getAttribute('data-link-group');
+                        
+                        console.log(`🔄 Changement vers: ${targetId}`);
+                        
+                        if (!targetId) return;
+                        
+                        const groupForms = sidebar.querySelectorAll(`[data-target-group="${linkGroup}"]`);
+                        groupForms.forEach(form => {
+                            form.style.display = 'none';
+                            form.style.opacity = '0';
+                        });
+                        
+                        const targetForm = sidebar.querySelector(targetId);
+                        if (targetForm) {
+                            targetForm.style.display = 'block';
+                            targetForm.style.opacity = '1';
+                            targetForm.style.animation = 'fadeIn 0.3s';
+                            setTimeout(() => {
+                                targetForm.style.animation = '';
+                            }, 300);
+                        }
+                    });
+                });
+                
+                // Réattacher le bouton X
+                const closeButtons = newForm.querySelectorAll('.close, [aria-label="Close"]');
+                closeButtons.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        console.log("👆 FERMETURE PAR BOUTON X");
+                        sidebar.style.display = 'none';
+                    });
+                });
+                
+                // ✅ MAINTENANT on attache l'événement submit
+                newForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    console.log("📤 Formulaire soumis");
+                    
+                    const loginVisible = this.querySelector('#login').style.display !== 'none';
+                    const signupVisible = this.querySelector('#signup').style.display !== 'none';
+                    const forgotVisible = this.querySelector('#forgotPassword').style.display !== 'none';
+                    
+                    if (loginVisible) {
+                        await handleLogin(this);
+                    } else if (signupVisible) {
+                        await handleSignup(this);
+                    } else if (forgotVisible) {
+                        await handleForgotPassword(this);
+                    }
+                });
+                
+                console.log("✅ Formulaires auth initialisés");
+            }
+        </script>
+
+        <!-- ===============================================
+            4. CHARGEMENT DES COMPOSANTS DYNAMIQUES
+            =============================================== -->
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                console.log("🚀 Début chargement composants...");
+
+                // Navigation
+                loadComponentByClass("nav-container", "/nav", reInitUI);
+
+                // Recherche
+                loadComponentByClass("search-container", "/search", reInitUI);
+
+                // 🔐 AUTH - avec gestion spéciale
+                loadComponentByClass("auth-container", "/auth", function() {
+                    setTimeout(() => {
+                        reInitUI();      // Réinitialisation générale
+                        initAuth();      // Initialisation spécifique auth
+                    }, 300);
+                });
+
+                // 📦 FOOTER - avec promo
+                loadComponentByClass("footer-container", "/footer", function() {
+                    reInitUI();
+                    setTimeout(() => {
+                        console.log("Chargement footer-promo...");
+                        const script = document.createElement('script');
+                        script.src = '/static/js/footer-promo.js';
+                        document.body.appendChild(script);
+                    }, 500);
+                });
+
+                // 📱 Menu mobile
+                loadComponentByClass("mobile-menu-container", "/mobile-menu", reInitUI);
+            });
+        </script>
+
+        <!--BREADCRUMB-->
+
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            const index = params.get("id");
+
+            async function loadCategoryBreadcrumb(index) {
+                try {
+                    const res = await fetch(`${API}/categories/${index}`);
+                    const category = await res.json();
+
+                    // Mettre à jour le titre de la catégorie
+                    const titleEl = document.getElementById("category-title");
+                    if (titleEl) {
+                        titleEl.textContent = category.name; // <-- directement le nom de la catégorie
+                    }
+
+                    // Breadcrumb : tu peux utiliser category directement
+                    renderBreadcrumb({
+                        category: {
+                            id: category.id,
+                            name: category.name,
+                            slug: category.category.slug,
+                            parent_id: category.category.parent_id
+                        }
+                    });
+
+                } catch (err) {
+                    console.error("Erreur chargement breadcrumb", err);
+                }
+            }
+
+            if (index) {
+                loadCategoryBreadcrumb(index);
+            }
+        </script>
+        
+    </body>
+
+</html>

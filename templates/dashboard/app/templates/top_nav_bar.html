@@ -1,0 +1,73 @@
+<button id="sidebarToggleTop" class="topbar-icon-button d-md-none" type="button" aria-label="Ouvrir le menu">
+    <i class="fas fa-bars" aria-hidden="true"></i>
+</button>
+
+<div class="topbar-context mr-auto">
+    <span class="topbar-eyebrow">Espace administrateur</span>
+    <strong>New Technologies Togo</strong>
+</div>
+
+<ul class="navbar-nav ml-auto align-items-center">
+    <li class="nav-item d-none d-sm-block mr-2">
+        <a class="topbar-store-link" href="https://newtechnologiestg.com/" target="_blank" rel="noopener">
+            <i class="fas fa-store" aria-hidden="true"></i>
+            Voir la boutique
+        </a>
+    </li>
+
+    <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle topbar-icon-button" href="#" id="alertsDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+            <i class="fas fa-bell" aria-hidden="true"></i>
+            <span id="alertsCount" class="badge badge-danger badge-counter d-none"></span>
+        </a>
+        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+            aria-labelledby="alertsDropdown">
+            <h6 class="dropdown-header">Notifications récentes</h6>
+            <div id="alertsList"></div>
+            <a class="dropdown-item text-center small" href="/leads_manage">Voir tous les prospects</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle topbar-icon-button" href="#" id="messagesDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Messages">
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+            <span id="messagesCount" class="badge badge-danger badge-counter d-none"></span>
+        </a>
+        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+            aria-labelledby="messagesDropdown">
+            <h6 class="dropdown-header">Messages du support</h6>
+            <div id="messagesList"></div>
+            <a class="dropdown-item text-center small" href="/support_manage">Ouvrir le support</a>
+        </div>
+    </li>
+
+    <li class="topbar-divider d-none d-sm-block"></li>
+
+    <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle admin-profile" href="#" id="userDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="admin-avatar" aria-hidden="true"><i class="fas fa-user"></i></span>
+            <span class="admin-profile-copy d-none d-lg-flex">
+                <strong id="adminName">Administrateur</strong>
+                <small>Compte sécurisé</small>
+            </span>
+            <i class="fas fa-chevron-down admin-chevron d-none d-lg-inline" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <div class="dropdown-user-intro">
+                <strong id="adminNameMenu">Administration NT</strong>
+                <small>Gestion de la boutique</small>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/">
+                <i class="fas fa-chart-line fa-sm fa-fw mr-2"></i>Tableau de bord
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>Se déconnecter
+            </a>
+        </div>
+    </li>
+</ul>

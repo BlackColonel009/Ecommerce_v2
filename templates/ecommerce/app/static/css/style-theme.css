@@ -1,0 +1,2146 @@
+/* -----------------------------------------------------------------------------
+ *  Style pour le thème Prestige 3D
+ * -------------------------------------------------------------------------- */
+
+    
+    /* DESIGN 4 - Prestige 3D */
+    .prestige-3d {
+        perspective: 1000px;
+    }
+
+    .prestige-3d .section-title {
+        
+        font-size: 1.2rem;
+        background: linear-gradient(135deg, #E53E3E, #FFD700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+        position: relative;
+        display: inline-block;
+    }
+
+    .prestige-3d .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #E53E3E, #FFD700, #E53E3E, transparent);
+    }
+
+    .prestige-3d .product-item__outer,
+    .tab-pane.prestige-3d .product-item__outer {
+        background: white;
+        border-radius: 15px;
+        transform-style: preserve-3d;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        box-shadow: 0 10px 30px rgba(229, 62, 62, 0.1);
+    }
+
+    .prestige-3d .product-item__outer:hover {
+        transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+        box-shadow: 20px 20px 30px rgba(229, 62, 62, 0.2), -5px -5px 20px rgba(255, 215, 0, 0.1);
+    }
+
+    .prestige-3d .product-item__inner,
+    .tab-pane.prestige-3d .product-item__inner {
+        position: relative;
+        z-index: 2;
+        background: white;
+        border-radius: 15px;
+    }
+
+    .prestige-3d .product-item__outer::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: -10px;
+        bottom: -10px;
+        background: linear-gradient(135deg, #E53E3E, #FFD700);
+        border-radius: 15px;
+        z-index: 1;
+        opacity: 0;
+        transition: all 0.5s ease;
+    }
+
+    .prestige-3d .product-item__outer:hover::before {
+        opacity: 0.3;
+        transform: translate(5px, 5px);
+    }
+
+    .prestige-3d .product-item__title a {
+        background: linear-gradient(135deg, #1A1A1A, #E53E3E);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .prestige-3d .btn-add-cart {
+        background: radial-gradient(circle at 30% 30%, #E53E3E, #8B0000) !important;
+        border: 2px solid #FFD700 !important;
+        border-radius: 50px !important;
+        width: 45px;
+        height: 45px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease !important;
+    }
+
+    .prestige-3d .btn-add-cart::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+        transform: rotate(45deg);
+        animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    .prestige-3d .btn-add-cart:hover {
+        transform: scale(1.2) rotate(360deg);
+    }
+
+    .prestige-3d .u-slick__arrow-normal {
+        background: linear-gradient(135deg, #E53E3E, #FFD700);
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        color: white !important;
+        border: none;
+        box-shadow: 0 5px 15px rgba(229, 62, 62, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .prestige-3d .u-slick__arrow-normal:hover {
+        transform: scale(1.1) rotate(10deg);
+        box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    .prestige-3d .u-slick__pagination li button {
+        width: 12px;
+        height: 12px;
+        background: #ddd;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .prestige-3d .u-slick__pagination li.slick-active button {
+        background: #E53E3E;
+        transform: scale(1.3);
+        box-shadow: 0 0 15px #FFD700;
+    }
+
+    .prestige-3d .u-slick__pagination li.slick-active button::after {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        border: 1px solid #FFD700;
+        border-radius: 50%;
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    .prestige-3d .prodcut-price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #E53E3E, #FFD700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        display: inline-block;
+    }
+
+    .prestige-3d .prodcut-price::before {
+        content: '●';
+        color: #FFD700;
+        position: absolute;
+        left: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.5rem;
+    }
+
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #E53E3E, #FFD700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+    }
+
+    .section-title p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+/* ---------------------------- DEAL --------------------------------------------- */
+
+    /* -----------------------------------------------------------------------------
+ *  Prestige 3D - Deals Style (VERSION SIMPLIFIÉE)
+ * -------------------------------------------------------------------------- */
+
+.prestige-3d .border-primary {
+    border: 3px solid transparent !important;
+    background: transparent !important;  /* On enlève le background */
+    position: relative;
+}
+
+/* On crée un effet de bordure avec box-shadow à la place */
+.prestige-3d .bg-white {
+    position: relative;
+    z-index: 2;
+    background: white !important;
+    border-radius: 15px;
+    transform-style: preserve-3d;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 0 3px #EAD5D5, 0 10px 30px rgba(229, 62, 62, 0.1);
+}
+
+.prestige-3d .bg-white:hover {
+   /* transform: translateY(-10px) rotateX(2deg); */
+    box-shadow: 0 0 0 3px #A4D0E4, 20px 20px 30px rgba(229, 62, 62, 0.2);
+}
+
+/* Badge de réduction */
+.prestige-3d .bg-primary {
+    background: #FFFFFF !important;
+    border: 2px solid #FF7300 !important;
+    box-shadow: 0 5px 15px rgba(229, 62, 62, 0.3);
+    z-index: 10;
+}
+
+/* Prix */
+.prestige-3d ins.text-red {
+    color: #E53E3E !important;
+    font-weight: 700;
+    position: relative;
+}
+
+/* Barre de progression */
+/* .prestige-3d .time-progress-bar {
+    background: #3EE597 !important;
+} */
+
+/* Titre */
+.prestige-3d .text-blue.font-weight-bold {
+    color: #E53E3E !important;
+    transition: all 0.3s ease;
+}
+
+/* Images miniatures */
+.prestige-3d .list-group-item:hover img {
+    border-color: #F1A483 !important;
+    box-shadow: 0 0 20px rgba(229, 62, 62, 0.3);
+}
+
+/* Compteur */
+.prestige-3d .js-countdown .bg-gray-4 {
+    background: white !important;
+    border: 1px solid #E53E3E;
+    color: #E53E3E !important;
+    border-radius: 10px !important;
+}
+
+/* ----------------------------  END Prestige 3D  --------------------------------*/
+
+/* -----------------------------  Style de la galerie principale ------------------*/
+.main-image-container {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+    height: 500px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.main-image-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+}
+
+.main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.main-image-container:hover .main-image {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 40px;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.main-image-container:hover .image-overlay {
+    opacity: 1;
+}
+
+.image-overlay h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.image-overlay p {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    transform: translateY(20px);
+    transition: transform 0.3s ease 0.1s;
+}
+
+.main-image-container:hover .image-overlay h3,
+.main-image-container:hover .image-overlay p {
+    transform: translateY(0);
+}
+
+.image-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #E53E3E, #FFD700);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 5px 15px rgba(229, 62, 62, 0.4);
+    z-index: 10;
+}
+
+/* Miniatures */
+.thumbnail-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.thumbnail-item {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.thumbnail-item:hover {
+    transform: translateY(-5px);
+}
+
+.thumbnail-item.active {
+    border-color: #E53E3E;
+    box-shadow: 0 5px 20px rgba(229, 62, 62, 0.4);
+}
+
+.thumbnail-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail-item:hover .thumbnail-overlay {
+    opacity: 1;
+}
+
+.thumbnail-overlay i {
+    color: white;
+    font-size: 1.5rem;
+}
+
+/* Boutons de navigation */
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E53E3E, #FFD700);
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(229, 62, 62, 0.4);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Badge de catégorie */
+.category-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 10;
+}
+
+
+
+/* Informations supplémentaires */
+.image-info {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.image-info span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.image-info i {
+    color: #E53E3E;
+}
+
+/* Animation de chargement */
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem;
+    display: none;
+}
+
+.main-image-container.loading .loading-spinner {
+    display: block;
+}
+
+.main-image-container.loading .main-image {
+    opacity: 0.5;
+}
+
+/* Style responsive */
+@media (max-width: 768px) {
+    .gallery-container {
+        padding: 20px;
+    }
+    
+    .main-image-container {
+        height: 350px;
+    }
+    
+    .image-overlay h3 {
+        font-size: 1.5rem;
+    }
+    
+    .image-overlay p {
+        font-size: 1rem;
+    }
+    
+    .thumbnail-item {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Animation de transition */
+.main-image {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+/* Effet de chargement */
+.main-image-container.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(3px);
+    z-index: 5;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.5; }
+}
+
+/* Scroll fluide pour les miniatures */
+.thumbnail-container {
+    scroll-behavior: smooth;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.thumbnail-container::-webkit-scrollbar {
+    height: 5px;
+}
+
+.thumbnail-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.thumbnail-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #E53E3E, #FFD700);
+    border-radius: 10px;
+}
+
+/* ----------------------------- END GALERY ---------------------------------- */
+
+/* nav */
+/* ----------------------- Style Prestige 3D pour les onglets  ----------*/
+    .prestige-3d.nav-tabs {
+        border-bottom: none;
+        position: relative;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(229, 62, 62, 0.1);
+        display: inline-flex;
+        backdrop-filter: blur(10px);
+    }
+
+    .prestige-3d .nav-item {
+        margin: 0 5px;
+        position: relative;
+        transform-style: preserve-3d;
+    }
+
+    .prestige-3d .nav-link {
+        border: none !important;
+        padding: 12px 30px !important;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+        color: #1A1A1A !important;
+        border-radius: 40px !important;
+        background: transparent;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        transform-style: preserve-3d;
+    }
+
+    .prestige-3d .nav-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #E53E3E, #FFD700);
+        border-radius: 40px;
+        opacity: 0;
+        transition: all 0.4s ease;
+        z-index: -2;
+    }
+
+    .prestige-3d .nav-link::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        right: 2px;
+        bottom: 2px;
+        background: white;
+        border-radius: 38px;
+        z-index: -1;
+        opacity: 1;
+        transition: all 0.4s ease;
+    }
+
+    /* Effet 3D au hover */
+    .prestige-3d .nav-link:hover {
+        transform: translateY(-3px) rotateX(5deg);
+        color: #E53E3E !important;
+        box-shadow: 0 10px 20px -5px rgba(229, 62, 62, 0.3);
+    }
+
+    .prestige-3d .nav-link:hover::before {
+        opacity: 1;
+    }
+
+    /* Style pour l'onglet actif */
+    .prestige-3d .nav-link.active {
+        background: transparent !important;
+        color: white !important;
+        transform: translateY(-2px) rotateX(5deg);
+        box-shadow: 0 15px 25px -5px rgba(229, 62, 62, 0.4), 0 0 0 2px #FFD700;
+        animation: prestigePulse 2s infinite;
+    }
+
+    .prestige-3d .nav-link.active::before {
+        opacity: 1;
+    }
+
+    .prestige-3d .nav-link.active::after {
+        opacity: 0;
+    }
+
+    /* Effet de brillance */
+    .prestige-3d .nav-link {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .prestige-3d .nav-link .d-md-flex {
+        position: relative;
+        z-index: 2;
+    }
+
+    .prestige-3d .nav-link .d-md-flex::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        transform: rotate(45deg);
+        animation: shimmer 3s infinite;
+        pointer-events: none;
+    }
+
+    @keyframes shimmer {
+        0% {
+            transform: translateX(-100%) rotate(45deg);
+        }
+        100% {
+            transform: translateX(100%) rotate(45deg);
+        }
+    }
+
+    /* Animation pulse pour l'onglet actif */
+    @keyframes prestigePulse {
+        0% {
+            box-shadow: 0 15px 25px -5px rgba(229, 62, 62, 0.4), 0 0 0 2px #FFD700;
+        }
+        50% {
+            box-shadow: 0 15px 35px -3px rgba(229, 62, 62, 0.6), 0 0 0 4px #FFD700;
+        }
+        100% {
+            box-shadow: 0 15px 25px -5px rgba(229, 62, 62, 0.4), 0 0 0 2px #FFD700;
+        }
+    }
+
+    /* Effet de bordure lumineuse */
+    .prestige-3d .nav-item {
+        position: relative;
+    }
+
+    .prestige-3d .nav-item::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, #E53E3E, #FFD700, #E53E3E);
+        border-radius: 42px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        filter: blur(5px);
+    }
+
+    .prestige-3d .nav-item:hover::before {
+        opacity: 0.5;
+        animation: rotate 3s linear infinite;
+    }
+
+    @keyframes rotate {
+        0% {
+            filter: blur(5px) hue-rotate(0deg);
+        }
+        100% {
+            filter: blur(5px) hue-rotate(360deg);
+        }
+    }
+
+    /* Style responsive */
+    @media (max-width: 768px) {
+        .prestige-3d.nav-tabs {
+            padding: 5px;
+            border-radius: 30px;
+        }
+        
+        .prestige-3d .nav-link {
+            padding: 8px 20px !important;
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Effet de profondeur supplémentaire */
+    .prestige-3d .nav-link.active {
+        position: relative;
+        transform-style: preserve-3d;
+    }
+
+    .prestige-3d .nav-link.active::before {
+        transform: translateZ(-5px);
+    }
+
+    /* Icônes animées si tu veux ajouter des icônes plus tard */
+    .prestige-3d .nav-link i {
+        margin-right: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .prestige-3d .nav-link:hover i {
+        transform: rotate(360deg);
+    }
+
+/* -------------------------END ---------------------------*/
+
+/* For BOUTON */
+
+/* Bouton Prestige 3D */
+.btn-prestige-3d {
+    position: relative;
+    padding: 12px 35px !important;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    color: #1A1A1A !important;
+    background: transparent;
+    border: none !important;
+    border-radius: 50px !important;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    transform-style: preserve-3d;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(229, 62, 62, 0.1);
+}
+
+/* Effet de fond dégradé */
+.btn-prestige-3d::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #E53E3E, #FFD700);
+    border-radius: 50px;
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: -2;
+}
+
+/* Fond blanc par-dessus */
+.btn-prestige-3d::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: white;
+    border-radius: 48px;
+    z-index: -1;
+    opacity: 1;
+    transition: all 0.4s ease;
+}
+
+/* Effet de brillance */
+.btn-prestige-3d span,
+.btn-prestige-3d i {
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.btn-prestige-3d::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: btnShimmer 3s infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes btnShimmer {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+/* Hover effet 3D */
+.btn-prestige-3d:hover {
+    transform: translateY(-3px) rotateX(5deg);
+    color: #E53E3E !important;
+    box-shadow: 0 15px 25px -5px rgba(229, 62, 62, 0.4);
+}
+
+.btn-prestige-3d:hover::before {
+    opacity: 1;
+}
+
+/* Style pour le bouton principal (actif/important) */
+.btn-prestige-3d.primary {
+    color: black !important;
+}
+
+.btn-prestige-3d.primary::after {
+    opacity: 0;
+}
+
+.btn-prestige-3d.primary::before {
+    opacity: 1;
+}
+
+/* Style pour le bouton outline */
+.btn-prestige-3d.outline {
+    background: transparent;
+    border: 2px solid transparent !important;
+    background-clip: padding-box;
+}
+
+.btn-prestige-3d.outline::before {
+    opacity: 0;
+}
+
+.btn-prestige-3d.outline:hover {
+    border-color: transparent !important;
+}
+
+/* Style pour petit bouton */
+.btn-prestige-3d.small {
+    padding: 8px 25px !important;
+    font-size: 0.9rem;
+}
+
+/* Style pour grand bouton */
+.btn-prestige-3d.large {
+    padding: 15px 45px !important;
+    font-size: 1.2rem;
+}
+
+/* Style pour bouton avec icône seulement */
+.btn-prestige-3d.icon-only {
+    padding: 12px !important;
+    width: 45px;
+    height: 45px;
+    border-radius: 50% !important;
+}
+
+.btn-prestige-3d.icon-only::after {
+    border-radius: 50%;
+}
+
+.btn-prestige-3d.icon-only::before {
+    border-radius: 50%;
+}
+
+/* Effet de bordure lumineuse */
+.btn-prestige-3d {
+    position: relative;
+}
+
+.btn-prestige-3d::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #E53E3E, #FFD700, #E53E3E);
+    border-radius: 52px;
+    z-index: -3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    filter: blur(5px);
+}
+
+.btn-prestige-3d:hover::before {
+    opacity: 0.8;
+    animation: btnRotate 3s linear infinite;
+}
+
+@keyframes btnRotate {
+    0% {
+        filter: blur(5px) hue-rotate(0deg);
+    }
+    100% {
+        filter: blur(5px) hue-rotate(360deg);
+    }
+}
+
+/* Effet de clic */
+.btn-prestige-3d:active {
+    transform: translateY(2px) rotateX(-5deg);
+    box-shadow: 0 5px 15px rgba(229, 62, 62, 0.3);
+}
+
+/* État désactivé */
+.btn-prestige-3d:disabled,
+.btn-prestige-3d.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(0.5);
+}
+
+/* Animation de pulse pour attirer l'attention */
+.btn-prestige-3d.pulse {
+    animation: btnPulse 2s infinite;
+}
+
+@keyframes btnPulse {
+    0% {
+        box-shadow: 0 5px 15px rgba(229, 62, 62, 0.1);
+    }
+    50% {
+        box-shadow: 0 5px 25px rgba(229, 62, 62, 0.4), 0 0 0 3px rgba(255, 215, 0, 0.3);
+    }
+    100% {
+        box-shadow: 0 5px 15px rgba(229, 62, 62, 0.1);
+    }
+}
+
+
+
+/* Style pour bouton avec effet de profondeur maximale */
+.btn-prestige-3d.deep {
+    transform-style: preserve-3d;
+    transform: perspective(400px) rotateX(0deg);
+}
+
+.btn-prestige-3d.deep:hover {
+    transform: perspective(400px) rotateX(5deg) translateY(-5px);
+}
+
+/* Style pour bouton avec ombre colorée */
+.btn-prestige-3d.colored-shadow {
+    box-shadow: 0 10px 20px -5px rgba(229, 62, 62, 0.3), 0 5px 10px -3px rgba(255, 215, 0, 0.2);
+}
+
+/* Style pour bouton avec icône animée */
+.btn-prestige-3d i {
+    transition: all 0.3s ease;
+}
+
+.btn-prestige-3d:hover i {
+    transform: scale(1.2) rotate(10deg);
+    color: #FFD700;
+}
+
+/* Style pour bouton avec effet de texte brillant */
+.btn-prestige-3d.shine-text:hover span {
+    background: linear-gradient(135deg, #E53E3E, #FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+/* Style pour bouton avec bordure double */
+.btn-prestige-3d.double-border {
+    box-shadow: 0 0 0 2px #FFD700, 0 0 0 4px #E53E3E;
+}
+
+.btn-prestige-3d.double-border:hover {
+    box-shadow: 0 0 0 2px #E53E3E, 0 0 0 4px #FFD700;
+}
+
+/* ----------------------- END PRESTIGE ----------------------------------*/
+
+/* ------------------------------- FOR BANNER -------------------------- */
+
+/* Effet de brillance Prestige pour bannière - Version couleurs du thème */
+.banner-shine {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    transition: transform 0.4s ease;
+    background: linear-gradient(145deg, #ffffff, #f8f8f8);
+}
+
+/* Effet de brillance avec les couleurs du thème */
+.banner-shine::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        transparent 20%,
+        rgba(229, 62, 62, 0.15) 30%,
+        rgba(255, 215, 0, 0.25) 45%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 215, 0, 0.25) 55%,
+        rgba(229, 62, 62, 0.15) 70%,
+        transparent 80%,
+        transparent 100%
+    );
+    transform: rotate(45deg);
+    animation: bannerShinePrestige 4s infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes bannerShinePrestige {
+    0% {
+        transform: translateX(-150%) rotate(45deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    40% {
+        transform: translateX(50%) rotate(45deg);
+        opacity: 0.8;
+    }
+    60% {
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(200%) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+/* Effet de bordure lumineuse aux couleurs du thème */
+
+    .banner-shine::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 2px solid transparent;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #E53E3E, #FFD700) border-box;
+        -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: all 0.4s ease;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .banner-shine:hover::after {
+        opacity: 0.8;
+        box-shadow: 0 0 25px rgba(229, 62, 62, 0.3), 0 0 35px rgba(255, 215, 0, 0.2);
+    }
+
+    /* Animation de pulse aux couleurs du thème */
+    @keyframes subtlePulsePrestige {
+        0% {
+            box-shadow: 0 5px 15px rgba(229, 62, 62, 0.1), 0 0 0 rgba(255, 215, 0, 0);
+        }
+        50% {
+            box-shadow: 0 8px 25px rgba(229, 62, 62, 0.2), 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+        100% {
+            box-shadow: 0 5px 15px rgba(229, 62, 62, 0.1), 0 0 0 rgba(255, 215, 0, 0);
+        }
+    }
+
+    .banner-shine {
+        animation: subtlePulsePrestige 3s infinite;
+    }
+
+    /* Option: Version avec brillance plus subtile */
+    .banner-shine-subtle::before {
+        background: linear-gradient(
+            45deg,
+            transparent 0%,
+            transparent 30%,
+            rgba(229, 62, 62, 0.08) 40%,
+            rgba(255, 215, 0, 0.12) 50%,
+            rgba(255, 255, 255, 0.2) 60%,
+            transparent 70%,
+            transparent 100%
+        );
+    }
+
+    /* Option: Brillance centrée avec dégradé rouge/or */
+    .banner-shine-center {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .banner-shine-center::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, 
+            rgba(255, 215, 0, 0.2) 0%,
+            rgba(229, 62, 62, 0.1) 50%,
+            transparent 80%
+        );
+        opacity: 0;
+        transition: all 0.6s ease;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    .banner-shine-center:hover::before {
+        width: 250%;
+        height: 250%;
+        opacity: 1;
+    }
+
+    /* Option: Effet de lumière qui suit la souris */
+    .banner-shine-interactive {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .banner-shine-interactive::before {
+        content: '';
+        position: absolute;
+        top: var(--y, 0);
+        left: var(--x, 0);
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, 
+            rgba(255, 215, 0, 0.3) 0%,
+            rgba(229, 62, 62, 0.2) 50%,
+            transparent 80%
+        );
+        border-radius: 50%;
+        opacity: 0;
+        transition: width 0.3s ease, height 0.3s ease;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    .banner-shine-interactive:hover::before {
+        width: 300px;
+        height: 300px;
+        opacity: 1;
+    }
+
+    /* Effet de texte avec les couleurs du thème */
+    .banner-shine .font-weight-light {
+        position: relative;
+        z-index: 3;
+    }
+
+    .banner-shine strong {
+        background: linear-gradient(135deg, #E53E3E, #FFD700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Style pour le lien "Shop now" */
+    .banner-shine .link {
+        position: relative;
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .banner-shine .link:hover {
+        background: linear-gradient(135deg, #E53E3E, #FFD700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transform: translateX(5px);
+    }
+
+    .banner-shine .link__icon {
+        background: linear-gradient(135deg, #E53E3E, #FFD700);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .banner-shine .link:hover .link__icon {
+        transform: rotate(360deg);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+
+    /* Effet de superposition au hover */
+    .banner-shine {
+        position: relative;
+        z-index: 1;
+    }
+
+    .banner-shine > * {
+        position: relative;
+        z-index: 3;
+    }
+
+    /* Effet de brillance supplémentaire sur l'image */
+    .banner-shine img {
+        transition: all 0.5s ease;
+        filter: brightness(1);
+        position: relative;
+        z-index: 2;
+    }
+
+    .banner-shine:hover img {
+        transform: scale(1.05);
+        filter: brightness(1.05) contrast(1.05);
+    }
+
+    /* Version avec bordure double aux couleurs du thème */
+    .banner-shine-double {
+        position: relative;
+    }
+
+    .banner-shine-double::after {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        background: linear-gradient(135deg, #E53E3E, #FFD700, #E53E3E);
+        border-radius: 18px;
+        z-index: -1;
+        opacity: 0;
+        transition: all 0.4s ease;
+        filter: blur(5px);
+    }
+
+    .banner-shine-double:hover::after {
+        opacity: 0.6;
+        animation: borderRotate 3s linear infinite;
+    }
+
+    @keyframes borderRotate {
+        0% {
+            filter: blur(5px) hue-rotate(0deg);
+        }
+        100% {
+            filter: blur(5px) hue-rotate(360deg);
+        }
+    }
+
+    /* Style pour l'effet de profondeur */
+    .banner-shine-depth {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+    }
+
+    .banner-shine-depth:hover {
+        transform: perspective(1000px) rotateX(2deg) rotateY(2deg) scale(1.02);
+    }
+
+    /* Animation de scintillement pour les points forts */
+    @keyframes twinkle {
+        0%, 100% {
+            opacity: 0.3;
+        }
+        50% {
+            opacity: 1;
+        }
+    }
+
+    .banner-shine .font-weight-light::after {
+        content: '✨';
+        position: absolute;
+        top: -10px;
+        right: -20px;
+        font-size: 0.8rem;
+        animation: twinkle 2s infinite;
+    }
+
+
+
+/* ------------------------------- FOOTER -------------------------- */
+
+    /* Background Flux Commerciaux avec animation */
+    .footer-commerce-flow {
+        position: relative;
+        background: #0A0A0A;
+        overflow: hidden;
+    }
+
+    .footer-commerce-flow::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            /* Grille de fond */
+            linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.02) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.02) 1px,
+                transparent 1px
+            );
+        background-size: 50px 50px;
+    }
+
+    .footer-commerce-flow::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            /* Flèches de circulation */
+            repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 30px,
+                rgba(255, 255, 255, 0.01) 30px,
+                rgba(255, 255, 255, 0.03) 31px,
+                transparent 31px,
+                transparent 60px
+            ),
+            repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 30px,
+                rgba(255, 255, 255, 0.01) 30px,
+                rgba(255, 255, 255, 0.03) 31px,
+                transparent 31px,
+                transparent 60px
+            );
+        background-size: 100px 100px;
+        animation: flowAnimation 20s linear infinite;
+    }
+
+    @keyframes flowAnimation {
+        0% {
+            background-position: 0 0, 0 0;
+        }
+        100% {
+            background-position: 100px 100px, -100px -100px;
+        }
+    }
+
+    .footer-commerce-flow .dots {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(
+                circle at 30% 40%,
+                rgba(255, 255, 255, 0.2) 0px,
+                transparent 2px
+            ),
+            radial-gradient(
+                circle at 70% 60%,
+                rgba(255, 255, 255, 0.2) 0px,
+                transparent 2px
+            ),
+            radial-gradient(
+                circle at 45% 70%,
+                rgba(255, 255, 255, 0.2) 0px,
+                transparent 2px
+            );
+        background-size: 100% 100%;
+        pointer-events: none;
+    }
+
+/* ------------------------------- border -------------------------- */
+    .border-colorful {
+        border-right: 2px solid #FF8B6B;  /* Rouge corail */
+        border-left: 2px solid transparent;
+        border-bottom: 2px solid #FF8B6B;
+        border-top: 2px solid #FF8B6B;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .border-colorful-green{
+        border-right: 2px solid #4ECDC4;  /* Bleu turquoise */
+        border-left: 2px solid #4ECDC4;
+        border-bottom: 2px solid #4ECDC4;
+        border-top: 2px solid #4ECDC4;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .border-color-bottom {
+        border-bottom: 4px solid #FF6B6B;  /* Rouge vif */
+        border-top: 1px solid transparent;
+        border-left: 2px solid transparent;
+        border-right: 2px solid transparent;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .border-color-full-black {
+        border: 2px solid #0000006A;  /* Noir classique */
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    .border-color_wishlist {
+        border: 2px solid transparent;
+        border-left: 2px solid #FF6B6B;  /* Rouge vif */
+        border-right: 2px solid #FF6B6B; 
+        border-top: 2px solid #FF6B6B;
+        border-bottom: 2px solid #FF6B6B;
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    .border-color-top-bottom {
+        border-top: 3px solid #4ECDC4;  /* Bleu turquoise */
+        border-bottom: 5px solid #4ECDC4;
+        border-left: 2px solid transparent;
+        border-right: 2px solid transparent;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .border-colorful-blog {
+        border: 3px solid transparent;
+        border-left: 2px solid #4ECDC4;
+        border-right: 2px solid #4ECDC4; 
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    .border-gradient {
+        border: 4px solid transparent;
+        border-image: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1) 1;
+        border-radius: 12px;
+        padding: 10px;
+    }
+
+    .border-hover {
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        border-left: 2px solid #FF6B6B;
+        border-bottom: 2px solid #FF6B6B;
+        border-top: 1px solid transparent;
+    }
+
+    .border-hover:hover {
+        border-color: #FF8B6B;
+        box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+    }
+
+
+    .border-left-accent {
+        border-left: 6px solid #4ECDC4;
+        background: rgba(78, 205, 196, 0.05);
+        padding: 15px;
+        border-radius: 0 10px 10px 0;
+    }
+
+    .border-shadow {
+        border: 2px solid #45B7D1;
+        box-shadow: 0 5px 20px rgba(69, 183, 209, 0.3);
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+/* ------------------------------- END border -------------------------- */
+
+/* ------------------------------- BACKGROUND -------------------------- */
+
+    /* Background Fixed - Version Élégante */
+    .bg-fixed-lg {
+        position: relative;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        padding: 60px 0;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+
+    /* Overlay pour améliorer la lisibilité */
+    .bg-fixed-lg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(5px);
+        z-index: 1;
+        border-radius: 20px;
+    }
+
+    /* S'assurer que le contenu est au-dessus de l'overlay */
+    .bg-fixed-lg .row {
+        position: relative;
+        z-index: 2;
+    }
+
+
+    /* Background Fixed - Style avec image */
+    .bg-fixed-lg.custom-bg {
+        background: 
+            linear-gradient(rgba(121, 119, 119, 0.5), rgba(208, 205, 205, 0.5)),
+            url('/static/img/Banniere/tech2.jpg');
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .custom-bg::before {
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+/* ------------------------------- END BACKGROUND -------------------------- */
+
+/* ------------------------------- BAGBE PROMO ------------------------------ */
+
+.promo-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(145deg, #ff4d4d, #b30000);
+    color: #fff;
+    font-weight: bold;
+    padding: 6px 12px;
+    animation: popIn 0.4s ease-out;
+    border-radius: 8px;
+    font-size: 14px;
+    transform: rotate(10deg);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    z-index: 10;
+    transition: all 0.3s ease;  /* ← AJOUTER */
+}
+
+.promo-badge:hover {
+    transform: rotate(0deg) scale(1.1);  /* ← AJOUTER */
+    box-shadow: 0 6px 12px rgba(255, 0, 0, 0.4);
+}
+
+@keyframes popIn {
+    0% { transform: rotate(10deg) scale(0); }
+    80% { transform: rotate(10deg) scale(1.1); }
+    100% { transform: rotate(10deg) scale(1); }
+}
+
+/* Badge promo dans la vue liste */
+.product-item__header .position-relative {
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+/* Style pour les puces */
+.list-bullet {
+    position: relative;
+    padding-left: 20px;
+}
+
+.list-bullet::before {
+    content: "•";
+    color: #e53e3e;
+    font-weight: bold;
+    position: absolute;
+    left: 5px;
+    font-size: 18px;
+}
+
+/* Prix dans la liste */
+.product-item__footer .prodcut-price {
+    font-size: 1.2rem;
+}
+
+/* Animation au survol */
+.product-item__inner:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+/* ------------------------------- theme btn VARIANTE ------------------------------ */
+
+/* Style pour les boutons de variantes - Version Prestige Bleu */
+.variant-option-btn {
+    border: 2px solid transparent;
+    background: linear-gradient(145deg, #f0f5ff, #e6ecf8);
+    color: #1a4c7a;
+    padding: 10px 25px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(26, 76, 122, 0.15);
+    z-index: 1;
+    min-width: 80px;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+/* Espacement entre les boutons */
+.gap-2 {
+    gap: 12px !important;
+}
+
+/* Effet de brillance Prestige */
+.variant-option-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(52, 152, 219, 0.3),
+        rgba(41, 128, 185, 0.3),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: variantShimmer 3s infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes variantShimmer {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+/* Hover effect */
+.variant-option-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(41, 128, 185, 0.4);
+    background: linear-gradient(145deg, #e6f0ff, #d9e6f5);
+    border-color: #3498db;
+}
+
+/* État sélectionné */
+.variant-option-btn.active {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    color: white;
+    border-color: #1a4c7a;
+    box-shadow: 0 8px 25px rgba(41, 128, 185, 0.6), inset 0 2px 5px rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}
+
+/* Effet de brillance renforcé pour l'état actif */
+.variant-option-btn.active::before {
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: activeShimmer 2s infinite;
+}
+
+@keyframes activeShimmer {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+        opacity: 0.5;
+    }
+}
+
+/* État désactivé */
+.variant-option-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: linear-gradient(145deg, #e0e0e0, #d0d0d0);
+    color: #666;
+    pointer-events: none;
+    border-color: #999;
+    box-shadow: none;
+}
+
+/* Prix supplémentaire */
+.variant-option-btn .price-extra {
+    font-size: 11px;
+    margin-left: 6px;
+    color: #e67e22;
+    font-weight: 600;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 6px;
+    border-radius: 20px;
+}
+
+.variant-option-btn.active .price-extra {
+    color: #f1c40f;
+    background: rgba(0,0,0,0.1);
+}
+
+/* Animation au clic */
+.variant-option-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+/* ✅ CORRIGÉ : Style spécifique pour les labels des variantes */
+.variant-label {
+    color: #3498db !important;
+   
+    letter-spacing: 0.5px;
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.variant-label::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    border-radius: 2px;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+    .variant-option-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+        min-width: 70px;
+    }
+    
+    .gap-2 {
+        gap: 8px !important;
+    }
+    
+    .col-3 {
+        padding-right: 5px;
+    }
+    
+    .col-9 {
+        padding-left: 5px;
+    }
+}
+
+/* ✅ CORRIGÉ : Cartes variantes avec préfixe */
+.variant-card {
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.variant-card:hover {
+    border-color: rgba(52, 152, 219, 0.5);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.1);
+}
+/* ------------------------------- end theme btn VARIANTE ------------------------------ */
+
+/* ------------------------------- GO TO TOP THEME ------------------------------ */
+
+/* ===============================================
+   GO TO TOP - Version Prestige (FLÈCHE CENTRÉE)
+   =============================================== */
+/* ===============================================
+   GO TO TOP - Version Prestige (SEULE L'ICÔNE BOUGE)
+   =============================================== */
+
+/* Style de base du bouton - INCHANGÉ */
+.js-go-to.u-go-to {
+    position: fixed !important;
+    bottom: 15px !important;
+    right: 15px !important;
+    width: 50px !important;
+    height: 50px !important;
+    background: linear-gradient(145deg, #E07B33, #E4FB14) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: white !important;
+    font-size: 20px !important;
+    box-shadow: 0 5px 20px rgba(41, 128, 185, 0.4) !important;
+    transition: all 0.3s ease !important;
+    z-index: 9999 !important;
+    text-decoration: none !important;
+    overflow: hidden !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+}
+
+/* L'icône seulement - animée vers le haut */
+.js-go-to.u-go-to .u-go-to__inner {
+    position: relative !important;
+    z-index: 2 !important;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2)) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    
+    /* ✅ SEULE L'ICÔNE EST ANIMÉE */
+    animation: iconFloat 1.5s ease-in-out infinite !important;
+}
+
+/* Animation de la flèche vers le haut */
+/* Animation de la flèche vers le haut - AVEC DÉCALAGE HORIZONTAL */
+@keyframes iconFloat {
+    0% {
+        transform: translateX(-22px) translateY(0);  /* ← DÉCALAGE À -20px */
+    }
+    30% {
+        transform: translateX(-22px) translateY(-20px);  /* ← ICI AUSSI */
+    }
+    50% {
+        transform: translateX(-22px) translateY(0);  /* ← ICI AUSSI */
+    }
+    70% {
+        transform: translateX(-22px) translateY(-20px);  /* ← ICI AUSSI */
+    }
+    100% {
+        transform: translateX(-22px) translateY(0);  /* ← ICI AUSSI */
+    }
+}
+
+/* Pour mobile - animation adaptée */
+@media (max-width: 768px) {
+    .js-go-to.u-go-to {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 18px !important;
+        bottom: 10px !important;
+        right: 10px !important;
+    }
+    
+    @keyframes iconFloat {
+        0% {
+            transform: translateX(-22px) translateY(0);  /* ← DÉCALAGE À -20px */
+        }
+        30% {
+            transform: translateX(-22px) translateY(-20px);  /* ← ICI AUSSI */
+        }
+        50% {
+            transform: translateX(-22px) translateY(0);  /* ← ICI AUSSI */
+        }
+        70% {
+            transform: translateX(-22px) translateY(-20px);  /* ← ICI AUSSI */
+        }
+        100% {
+            transform: translateX(-22px) translateY(0);  /* ← ICI AUSSI */
+        }
+    }
+}
+
+/* Option pour désactiver l'animation */
+@media (prefers-reduced-motion: reduce) {
+    .js-go-to.u-go-to .u-go-to__inner {
+        animation: none !important;
+    }
+}
+/* ------------------------------- END GO TO TOP THEME ------------------------------ */
+
+/* ==================== RESPONSIVE PRESTIGE 3D ==================== */
+
+/* Version mobile - 2 produits par ligne */
+@media (max-width: 768px) {
+    /* Container en grid */
+    .products-group {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;  /* 2 colonnes */
+        gap: 10px !important;
+        padding: 0 5px !important;
+    }
+    
+    /* Reset des anciens styles flex */
+    .products-group .product-item {
+        flex: none !important;
+        max-width: none !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Cards compactes */
+    .prestige-3d .product-item__outer {
+        margin-bottom: 0 !important;
+        height: 100% !important;
+        padding: 0 !important;
+    }
+    
+    .prestige-3d .product-item__inner {
+        padding: 10px !important;
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Image plus petite */
+    .prestige-3d .product-item__inner img {
+        max-width: 90%;
+        height: auto;
+        margin: 0 auto 5px;
+    }
+    
+    /* Titre réduit avec ellipse */
+    .prestige-3d .product-item__title {
+        margin-bottom: 3px !important;
+    }
+    
+    .prestige-3d .product-item__title a {
+        font-size: 0.8rem !important;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+    
+    /* Catégorie plus discrète */
+    .prestige-3d .text-gray-5 {
+        font-size: 0.65rem !important;
+        margin-bottom: 2px !important;
+    }
+    
+    /* Prix compact */
+    .prestige-3d .prodcut-price {
+        font-size: 0.9rem !important;
+        margin: 2px 0 !important;
+    }
+    
+    .prestige-3d .prodcut-price del {
+        font-size: 0.7rem !important;
+    }
+    
+    .prestige-3d .prodcut-price ins {
+        font-size: 0.95rem !important;
+    }
+    
+    /* Bouton plus petit */
+    .prestige-3d .btn-add-cart {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.7rem !important;
+    }
+    
+    /* Cacher les éléments superflus */
+    .prestige-3d .u-slick__arrow-normal {
+        display: none !important;
+    }
+    
+    .prestige-3d .mb-2.d-none.d-md-block {
+        display: none !important;
+    }
+    
+    /* Espacement */
+    .prestige-3d .mb-2 {
+        margin-bottom: 3px !important;
+    }
+    
+    .prestige-3d .pb-xl-2 {
+        padding-bottom: 3px !important;
+    }
+    
+    /* Bouton wishlist plus petit */
+    .prestige-3d .wishlist-btn {
+        font-size: 0.7rem !important;
+    }
+    
+    .prestige-3d .wishlist-btn i {
+        font-size: 0.8rem !important;
+    }
+}
+
+/* Très petits téléphones (<= 400px) - réduction supplémentaire */
+@media (max-width: 400px) {
+    .products-group {
+        gap: 5px !important;
+    }
+    
+    .prestige-3d .product-item__inner {
+        padding: 6px !important;
+    }
+    
+    .prestige-3d .product-item__title a {
+        font-size: 0.7rem !important;
+    }
+    
+    .prestige-3d .prodcut-price {
+        font-size: 0.8rem !important;
+    }
+    
+    .prestige-3d .btn-add-cart {
+        width: 24px !important;
+        height: 24px !important;
+    }
+}
+
+/* Version alternative avec grille plus espacée */
+@media (max-width: 768px) {
+    .products-group-alt {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 10px;
+    }
+    
+    .products-group-alt .product-item__outer {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        border-radius: 12px;
+    }
+}
+
+/* Désactiver effets 3D sur mobile */
+@media (max-width: 768px) {
+    .prestige-3d .product-item__outer::before {
+        display: none;
+    }
+    
+    .prestige-3d .product-item__outer:hover {
+        transform: translateY(-3px);
+    }
+}
