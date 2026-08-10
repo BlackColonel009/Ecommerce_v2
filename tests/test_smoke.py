@@ -111,7 +111,7 @@ def test_admin_login_sets_secure_session_cookie():
         response = TestClient(api_app).post(
             "/auth/login",
             data={"username": "admin@alpha.com", "password": "admin123"},
-            headers={"Origin": "http://localhost:8012"},
+            headers={"Origin": "https://dashboard.newtechnologiestg.com"},
         )
     finally:
         api_app.dependency_overrides.pop(get_db, None)
@@ -121,6 +121,8 @@ def test_admin_login_sets_secure_session_cookie():
     assert settings.ADMIN_COOKIE_NAME in cookie
     assert "HttpOnly" in cookie
     assert "SameSite=lax" in cookie
+    assert "Domain=.newtechnologiestg.com" in cookie
+    assert "Secure" in cookie
 
 
 def test_admin_route_requires_authentication():
@@ -446,3 +448,8 @@ def test_dashboard_login_uses_modern_secure_form():
     assert document.xpath("//input[@autocomplete='username']")
     assert document.xpath("//input[@autocomplete='current-password']")
     assert 'credentials: "include"' in response.text
+    assert "config.js?v=20260810-dashboard-auth" in response.text
+
+    config_js = Path("templates/dashboard/app/static/js/config.js").read_text(encoding="utf-8")
+    assert '"https://api.newtechnologiestg.com"' in config_js
+    assert "isLocalDevelopment" in config_js

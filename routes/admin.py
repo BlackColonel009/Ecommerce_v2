@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, Depends, HTTPException, Response
+from fastapi import APIRouter, Body, Depends, HTTPException, Request, Response
 from models.model_cart import Settings
 from sqlalchemy.orm import Session
 from sqlalchemy import func, or_
@@ -62,6 +62,7 @@ def create_superadmin(data: AdminCreate, db: Session = Depends(get_db)):
 # ---------------------------
 @router.post("/login")
 def login(
+    request: Request,
     response: Response,
     form: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
@@ -80,15 +81,17 @@ def login(
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     token = create_access_token({"admin_id": admin.id})
+    cookie_host = request.headers.get("origin") or request.url.hostname
 
     response.set_cookie(
         key=settings.ADMIN_COOKIE_NAME,
         value=token,
         max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
         httponly=True,
-        secure=settings.COOKIE_SECURE,
+        secure=settings.admin_cookie_is_secure(cookie_host),
         samesite="lax",
         path="/",
+        domain=settings.admin_cookie_domain_for_host(cookie_host),
     )
 
     return {
@@ -192,13 +195,15 @@ def update_profile(
 
 
 @router.post("/logout", status_code=204)
-def logout(response: Response):
+def logout(request: Request, response: Response):
+    cookie_host = request.headers.get("origin") or request.url.hostname
     response.delete_cookie(
         key=settings.ADMIN_COOKIE_NAME,
         path="/",
-        secure=settings.COOKIE_SECURE,
+        secure=settings.admin_cookie_is_secure(cookie_host),
         httponly=True,
         samesite="lax",
+        domain=settings.admin_cookie_domain_for_host(cookie_host),
     )
 
 from routes.auth import has_permission

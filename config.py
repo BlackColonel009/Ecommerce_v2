@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 ENV_FILE = Path(__file__).resolve().with_name(".env")
@@ -24,6 +25,7 @@ class Settings(BaseSettings):
     
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     ADMIN_COOKIE_NAME: str = "nt_admin_session"
+    ADMIN_COOKIE_DOMAIN: str = ".newtechnologiestg.com"
     COOKIE_SECURE: bool = False
 
     SUPERADMIN_USERNAME: str
@@ -73,6 +75,24 @@ class Settings(BaseSettings):
                 }
             )
         return sorted(origins)
+
+    def admin_cookie_domain_for_host(self, host_or_url: str | None) -> str | None:
+        """Partage la session admin entre l'API et le dashboard en production."""
+        if not host_or_url:
+            return None
+
+        parsed = urlparse(
+            host_or_url if "://" in host_or_url else f"//{host_or_url}"
+        )
+        hostname = (parsed.hostname or "").lower().rstrip(".")
+        cookie_domain = self.ADMIN_COOKIE_DOMAIN.strip().lower().rstrip(".")
+        root_domain = cookie_domain.lstrip(".")
+        if hostname == root_domain or hostname.endswith(f".{root_domain}"):
+            return f".{root_domain}"
+        return None
+
+    def admin_cookie_is_secure(self, host_or_url: str | None) -> bool:
+        return self.COOKIE_SECURE or self.admin_cookie_domain_for_host(host_or_url) is not None
 
 
 settings = Settings()

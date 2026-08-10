@@ -48,9 +48,10 @@ async def protect_dashboard(request: Request, call_next):
             response.delete_cookie(
                 settings.ADMIN_COOKIE_NAME,
                 path="/",
-                secure=settings.COOKIE_SECURE,
+                secure=settings.admin_cookie_is_secure(request.url.hostname),
                 httponly=True,
                 samesite="lax",
+                domain=settings.admin_cookie_domain_for_host(request.url.hostname),
             )
         return response
 
@@ -140,14 +141,15 @@ def index(request: Request):
 
 
 @app.get("/logout")
-def logout():
+def logout(request: Request):
     response = RedirectResponse(url="/login", status_code=303)
     response.delete_cookie(
         settings.ADMIN_COOKIE_NAME,
         path="/",
-        secure=settings.COOKIE_SECURE,
+        secure=settings.admin_cookie_is_secure(request.url.hostname),
         httponly=True,
         samesite="lax",
+        domain=settings.admin_cookie_domain_for_host(request.url.hostname),
     )
     return response
 
