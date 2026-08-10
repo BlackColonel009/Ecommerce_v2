@@ -889,6 +889,11 @@ async function openEditModal(productId) {
     const token = localStorage.getItem("access_token");
     
     try {
+        document.getElementById("editImages").value = "";
+        document.getElementById("editMainImageId").value = "";
+        document.getElementById("editNewImagesPreview")?.remove();
+        window.newMainImageIndex = undefined;
+
         // 1️⃣ Charger le produit
         const res = await fetch(`${API_BASE}/products/${productId}`, {
             headers: { "Authorization": `Bearer ${token}` }
@@ -1164,10 +1169,15 @@ function removeEditVariant(element) {
 
 
 // Ajouter un écouteur pour montrer quelle image sera principale
-document.getElementById("editImages").addEventListener("change", function(e) {
+document.getElementById("editImages")?.addEventListener("change", function(e) {
     const files = e.target.files;
     if (files.length > 0) {
-        previewNewImages(files); // ✅ Appeler la fonction existante
+        document.getElementById("editMainImageId").value = "";
+        window.newMainImageIndex = 0;
+        previewNewImages(files);
+    } else {
+        window.newMainImageIndex = undefined;
+        document.getElementById("editNewImagesPreview")?.remove();
     }
 });
 
@@ -1194,7 +1204,7 @@ function displayExistingImages(images) {
             : '<span class="badge badge-secondary position-absolute" style="top: 0; left: 0;">Secondaire</span>';
         
         const setMainBtn = !img.is_main 
-            ? `<button class="btn btn-sm btn-primary set-main-image mt-1" data-image-id="${img.id}" data-image-url="${img.image_url}">Définir principale</button>`
+            ? `<button type="button" class="btn btn-sm btn-primary set-main-image mt-1" data-image-id="${img.id}" data-image-url="${img.image_url}">Définir principale</button>`
             : '';
         
         imgDiv.innerHTML = `
@@ -1242,13 +1252,15 @@ function handleSetMainClick(e) {
             item.dataset.isMain = 'true';
         } else {
             // Les autres deviennent secondaires
+            item.dataset.isMain = 'false';
             if (badge) {
                 badge.textContent = 'Secondaire';
                 badge.className = 'badge badge-secondary position-absolute';
             }
             // Ajouter le bouton si pas présent
-            if (!item.querySelector('.set-main-image') && item.dataset.isMain !== 'true') {
+            if (!item.querySelector('.set-main-image')) {
                 const newBtn = document.createElement('button');
+                newBtn.type = 'button';
                 newBtn.className = 'btn btn-sm btn-primary set-main-image mt-1';
                 newBtn.dataset.imageId = item.dataset.imageId;
                 newBtn.dataset.imageUrl = item.dataset.imageUrl;
@@ -1256,69 +1268,53 @@ function handleSetMainClick(e) {
                 newBtn.addEventListener('click', handleSetMainClick);
                 item.querySelector('.text-center').appendChild(newBtn);
             }
-            item.dataset.isMain = 'false';
         }
     });
     
     // Stocker l'ID de la nouvelle image principale
     document.getElementById('editMainImageId').value = imageId;
+    document.getElementById('editImages').value = '';
+    document.getElementById('editNewImagesPreview')?.remove();
+    window.newMainImageIndex = undefined;
 }
 
 // Aperçu des nouvelles images avec sélection de la principale
 function previewNewImages(files) {
     const container = document.getElementById("editNewImagesPreview") || createPreviewContainer();
-    container.innerHTML = '<h6 class="mt-2">Nouvelles images :</h6>';
-    
-    // Stocker l'ordre des images
-    window.newImagesOrder = [];
+    container.innerHTML = '<h6 class="w-100 mt-2">Nouvelles images — elles remplaceront les images existantes :</h6>';
+    window.newMainImageIndex = 0;
     
     for (let i = 0; i < files.length; i++) {
         const reader = new FileReader();
         const imgDiv = document.createElement('div');
         imgDiv.className = 'position-relative mr-2 mb-2 new-image-item d-inline-block';
         imgDiv.dataset.index = i;
-        
-        reader.onload = function(e) {
-            const isMain = i === 0 ? 'badge-success' : 'badge-secondary';
-            const mainText = i === 0 ? 'Principale' : `Image ${i + 1}`;
-            
-            imgDiv.innerHTML = `
-                <img src="${e.target.result}" style="width: 100px; height: 100px; object-fit: cover;" class="img-thumbnail">
-                <span class="badge ${isMain} position-absolute" style="top: 0; left: 0;">${mainText}</span>
-                <button class="btn btn-sm btn-outline-primary set-new-main mt-1" data-index="${i}">Définir principale</button>
-            `;
-            container.appendChild(imgDiv);
-        };
+        imgDiv.innerHTML = `
+            <img alt="Aperçu image ${i + 1}" style="width: 100px; height: 100px; object-fit: cover;" class="img-thumbnail">
+            <span class="badge ${i === 0 ? 'badge-success' : 'badge-secondary'} position-absolute" style="top: 0; left: 0;">${i === 0 ? 'Principale' : `Image ${i + 1}`}</span>
+            <button type="button" class="btn btn-sm btn-outline-primary set-new-main mt-1" data-index="${i}" ${i === 0 ? 'disabled' : ''}>${i === 0 ? 'Sélectionnée' : 'Définir principale'}</button>
+        `;
+        container.appendChild(imgDiv);
+        const previewImage = imgDiv.querySelector('img');
+        reader.onload = event => { previewImage.src = event.target.result; };
         reader.readAsDataURL(files[i]);
-        window.newImagesOrder.push(i);
+        imgDiv.querySelector('.set-new-main').addEventListener('click', () => selectNewMainImage(i));
     }
-    
-    // Événements pour changer l'image principale parmi les nouvelles
-    setTimeout(() => {
-        document.querySelectorAll('.set-new-main').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const newMainIndex = parseInt(this.dataset.index);
-                
-                // Réorganiser les badges
-                document.querySelectorAll('.new-image-item').forEach((item, idx) => {
-                    const badge = item.querySelector('.badge');
-                    const btn = item.querySelector('.set-new-main');
-                    
-                    if (idx === newMainIndex) {
-                        badge.textContent = 'Principale';
-                        badge.className = 'badge badge-success position-absolute';
-                    } else {
-                        badge.textContent = `Image ${idx + 1}`;
-                        badge.className = 'badge badge-secondary position-absolute';
-                    }
-                });
-                
-                // Stocker le nouvel ordre (on reconstruira au submit)
-                window.newMainImageIndex = newMainIndex;
-            });
-        });
-    }, 100);
+}
+
+function selectNewMainImage(newMainIndex) {
+    const container = document.getElementById("editNewImagesPreview");
+    container?.querySelectorAll('.new-image-item').forEach(item => {
+        const itemIndex = Number(item.dataset.index);
+        const selected = itemIndex === newMainIndex;
+        const badge = item.querySelector('.badge');
+        const button = item.querySelector('.set-new-main');
+        badge.textContent = selected ? 'Principale' : `Image ${itemIndex + 1}`;
+        badge.className = `badge ${selected ? 'badge-success' : 'badge-secondary'} position-absolute`;
+        button.disabled = selected;
+        button.textContent = selected ? 'Sélectionnée' : 'Définir principale';
+    });
+    window.newMainImageIndex = newMainIndex;
 }
 
 function createPreviewContainer() {
@@ -1427,28 +1423,15 @@ async function submitEditProduct() {
     if (files.length > 0) {
         console.log(`📸 ${files.length} nouvelle(s) image(s) sélectionnée(s)`);
         
-        // Si l'utilisateur a choisi une nouvelle image principale
-        if (window.newMainImageIndex !== undefined) {
-            // Réorganiser les fichiers pour que la choisie soit en premier
-            const filesArray = Array.from(files);
-            const mainFile = filesArray[window.newMainImageIndex];
-            const otherFiles = filesArray.filter((_, i) => i !== window.newMainImageIndex);
-            
-            // Ajouter d'abord l'image principale, puis les autres
-            formData.append("images", mainFile);
-            otherFiles.forEach(file => formData.append("images", file));
-            
-            console.log(`🖼️ Image principale définie: ${window.newMainImageIndex + 1}`);
-        } else {
-            // Sinon, garder l'ordre original (première = principale)
-            for (let i = 0; i < files.length; i++) {
-                formData.append("images", files[i]);
-            }
+        for (let i = 0; i < files.length; i++) {
+            formData.append("images", files[i]);
         }
+        formData.append("new_main_image_index", String(window.newMainImageIndex ?? 0));
+        console.log(`🖼️ Image principale définie: ${(window.newMainImageIndex ?? 0) + 1}`);
     }
     
     // Si on veut changer l'image principale parmi les existantes
-    if (mainImageId) {
+    if (mainImageId && files.length === 0) {
         // On peut passer un paramètre spécial au backend
         formData.append("main_image_id", mainImageId);
     }

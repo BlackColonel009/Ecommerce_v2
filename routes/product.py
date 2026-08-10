@@ -447,6 +447,8 @@ async def update_product(
     stock: Optional[int] = Form(None),
     
     images: Optional[List[UploadFile]] = File(None),
+    main_image_id: Optional[int] = Form(None),
+    new_main_image_index: Optional[int] = Form(None),
     db: Session = Depends(get_db),
     _admin = Depends(get_current_admin)
 ):
@@ -633,11 +635,37 @@ async def update_product(
     # ---------------------
     # Update images
     # ---------------------
-    if images:
+    valid_images = [image for image in (images or []) if image and image.filename]
+    if valid_images:
+        selected_index = new_main_image_index if new_main_image_index is not None else 0
+        if selected_index < 0 or selected_index >= len(valid_images):
+            raise HTTPException(status_code=400, detail="L'image principale sélectionnée est invalide")
+
         db.query(ProductImage).filter(ProductImage.product_id == product_id).delete()
-        for i, img_file in enumerate(images):
+        for i, img_file in enumerate(valid_images):
             file_path = save_upload_file(img_file)
-            db.add(ProductImage(product_id=product_id, image_url=file_path, is_main=(i == 0)))
+            db.add(ProductImage(
+                product_id=product_id,
+                image_url=file_path,
+                alt_text=f"Image de {product.name}"[:150],
+                is_main=(i == selected_index),
+            ))
+    elif main_image_id is not None:
+        selected_image = db.query(ProductImage).filter(
+            ProductImage.id == main_image_id,
+            ProductImage.product_id == product_id,
+        ).first()
+        if not selected_image:
+            raise HTTPException(status_code=400, detail="Cette image n'appartient pas au produit")
+
+        db.query(ProductImage).filter(ProductImage.product_id == product_id).update(
+            {ProductImage.is_main: False},
+            synchronize_session=False,
+        )
+        db.query(ProductImage).filter(ProductImage.id == main_image_id).update(
+            {ProductImage.is_main: True},
+            synchronize_session=False,
+        )
 
     db.commit()
     db.refresh(product)

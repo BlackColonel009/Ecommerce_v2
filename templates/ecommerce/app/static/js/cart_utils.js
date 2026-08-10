@@ -36,7 +36,7 @@ function updateWishlistNav(favorites = []) {
 
 async function refreshCartBadge() {
   try {
-    const res = await fetch(`${API}/cart`, { credentials: "include" });
+    const res = await fetch(`${API}/cart/`, { credentials: "include" });
     if (res.status === 404) {
       const emptyCart = { items: [], total_amount: 0 };
       updateCartNav(emptyCart);

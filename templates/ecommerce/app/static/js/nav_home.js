@@ -47,7 +47,7 @@ async function loadCartNav() {
     }
 
     try {
-        const res = await fetch(`${API}/cart`, {
+        const res = await fetch(`${API}/cart/`, {
             method: "GET",
             credentials: "include"
         });

@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 from lxml import html
 from pathlib import Path
 from types import SimpleNamespace
+import pytest
 
 from main import app as api_app
 from templates.dashboard.app.main import app as dashboard_app
@@ -39,6 +40,47 @@ def test_dashboard_origin_is_allowed_by_cors():
     assert response.status_code == 200
     assert response.headers["access-control-allow-origin"] == "http://localhost:8012"
     assert response.headers["access-control-allow-credentials"] == "true"
+
+
+def test_public_dashboard_login_preflight_is_allowed():
+    response = TestClient(api_app).options(
+        "/auth/login",
+        headers={
+            "Origin": "https://dashboard.newtechnologiestg.com",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == (
+        "https://dashboard.newtechnologiestg.com"
+    )
+    assert response.headers["access-control-allow-credentials"] == "true"
+
+
+@pytest.mark.parametrize(
+    ("path", "method", "request_headers"),
+    (
+        ("/visitor", "POST", "content-type"),
+        ("/cart/", "GET", None),
+        ("/favorites/", "POST", "content-type"),
+    ),
+)
+def test_public_storefront_preflights_are_allowed(path, method, request_headers):
+    headers = {
+        "Origin": "https://newtechnologiestg.com",
+        "Access-Control-Request-Method": method,
+    }
+    if request_headers:
+        headers["Access-Control-Request-Headers"] = request_headers
+
+    response = TestClient(api_app).options(path, headers=headers)
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "https://newtechnologiestg.com"
+    assert response.headers["access-control-allow-credentials"] == "true"
+    assert method in response.headers["access-control-allow-methods"]
 
 
 def test_admin_login_sets_secure_session_cookie():
@@ -248,6 +290,17 @@ def test_contextual_blog_and_promotion_rail_is_shared_and_accessible():
     assert "position: fixed" in rail_css
     assert "prefers-reduced-motion" in rail_css
     assert "context-rail.js?v=" in cart_utils
+
+
+def test_dashboard_product_editor_sends_explicit_main_image_selection():
+    dashboard_js = Path("templates/dashboard/app/static/js/product.js").read_text(encoding="utf-8")
+    dashboard_template = Path("templates/dashboard/app/templates/product_manage.html").read_text(encoding="utf-8")
+
+    assert 'formData.append("main_image_id", mainImageId)' in dashboard_js
+    assert 'formData.append("new_main_image_index"' in dashboard_js
+    assert "selectNewMainImage" in dashboard_js
+    assert "setTimeout(() =>" not in dashboard_js[dashboard_js.index("function previewNewImages"):dashboard_js.index("function createPreviewContainer")]
+    assert "product.js?v=20260810-main-image-fix" in dashboard_template
 
 
 def test_modern_navigation_and_footer_components_render():

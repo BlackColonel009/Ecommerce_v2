@@ -4,7 +4,7 @@ const cartDesiredQuantities = new Map();
 
 async function loadCart() {
     try {
-        const res = await fetch(`${API}/cart`, {
+        const res = await fetch(`${API}/cart/`, {
             method: "GET",
             credentials: "include"   
         });

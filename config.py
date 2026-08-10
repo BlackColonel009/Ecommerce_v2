@@ -48,6 +48,11 @@ class Settings(BaseSettings):
             "http://127.0.0.1:8002",
             "http://localhost:8001",
             "http://localhost:8002",
+            # Origines publiques officielles. Elles restent autorisees meme si
+            # un serveur conserve temporairement ses URL locales dans le .env.
+            "https://newtechnologiestg.com",
+            "https://www.newtechnologiestg.com",
+            "https://dashboard.newtechnologiestg.com",
             self.FRONTEND_URL.rstrip("/"),
             self.DASHBOARD_URL.rstrip("/"),
         }

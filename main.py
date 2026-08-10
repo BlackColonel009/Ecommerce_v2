@@ -1,8 +1,8 @@
 from datetime import datetime
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, Request, Response
-from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from jose import JWTError
 import jwt
@@ -11,7 +11,13 @@ from policy import afficher_banner
 from routes import admin, banner, blog, brands, cart, category, compare, graph_W_F, lead, newsletter, popups, popups_promo, product, promos, recent, review, roles_permissions, stats, support, favoris, visitor, filtre
 from script.init_db import init_database
 # from routes import (user, annonces, favoris , clicked, galerie)
-from fastapi.middleware.cors import CORSMiddleware
+
+PUBLIC_CORS_ORIGINS = {
+    "https://newtechnologiestg.com",
+    "https://www.newtechnologiestg.com",
+    "https://dashboard.newtechnologiestg.com",
+}
+CORS_ORIGINS = sorted(set(settings.cors_origins) | PUBLIC_CORS_ORIGINS)
 
 afficher_banner()
 
@@ -19,6 +25,7 @@ afficher_banner()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("🚀 Démarrage de l'API...")
+    print(f"🌐 Origines CORS autorisées : {', '.join(CORS_ORIGINS)}")
     init_database()
     print("✅ API prête!")
     yield
@@ -32,17 +39,6 @@ app = FastAPI(
 )
 
 
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "https://newtechnologiestg.com",
-        "https://www.newtechnologiestg.com",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 app.mount(
     "/uploads", StaticFiles(directory="uploads"), name="uploads"
@@ -90,11 +86,9 @@ app.include_router(graph_W_F.router)
 app.include_router(blog.router)
 
 
-
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
