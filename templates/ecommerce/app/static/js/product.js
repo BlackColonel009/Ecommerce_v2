@@ -335,6 +335,7 @@ function updateActionButton(price, soldOut = false) {
     const oldPriceElement = document.getElementById("productOldPrice");
     const stockElement = document.getElementById("productStock");
     const productContainer = document.getElementById("single-product-container");
+    const hasVariants = Array.isArray(productVariants) && productVariants.length > 0;
     
     if (!actionBtn || !productContainer) return;
     
@@ -370,7 +371,7 @@ function updateActionButton(price, soldOut = false) {
         if (quantitySection) quantitySection.style.display = 'flex';
         if (quantityControl) quantityControl.style.display = '';
         if (colorSection) colorSection.style.display = 'block';
-        if (variantSection) variantSection.style.display = 'none';
+        if (variantSection) variantSection.style.display = hasVariants ? 'block' : 'none';
         
     } else {
         console.log("📱 Mode WHATSAPP - prix:", numericPrice);
@@ -388,7 +389,7 @@ function updateActionButton(price, soldOut = false) {
         if (quantitySection) quantitySection.style.display = 'flex';
         if (quantityControl) quantityControl.style.display = soldOut ? 'none' : '';
         if (colorSection) colorSection.style.display = 'none';
-        if (variantSection) variantSection.style.display = 'none';
+        if (variantSection) variantSection.style.display = hasVariants ? 'block' : 'none';
     }
 }
 

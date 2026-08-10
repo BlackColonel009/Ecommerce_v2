@@ -916,6 +916,16 @@ def delete_product_permanent(product_id: int, db: Session = Depends(get_db), _ad
     return {"message": f"Product {product_id} permanently deleted"}
 
 
+def attach_variant_metadata(product: Product, db: Session) -> Product:
+    variants_count = db.query(ProductVariant).filter(
+        ProductVariant.product_id == product.id,
+        ProductVariant.is_active.is_(True),
+    ).count()
+    product.has_variants = variants_count > 0
+    product.variants_count = variants_count
+    return product
+
+
 @router.get("/slug/{slug}", response_model=ProductSchema)
 def get_product_by_slug(slug: str, db: Session = Depends(get_db)):
     """
@@ -943,7 +953,7 @@ def get_product_by_slug(slug: str, db: Session = Depends(get_db)):
             if p.name:
                 p_slug = Product.generate_slug(p.name)
                 if p_slug == slug:
-                    return p
+                    return attach_variant_metadata(p, db)
         
         # 3. Toujours pas trouvé → 404
         raise HTTPException(
@@ -951,7 +961,7 @@ def get_product_by_slug(slug: str, db: Session = Depends(get_db)):
             detail=f"Product with slug '{slug}' not found"
         )
     
-    return product
+    return attach_variant_metadata(product, db)
 
 @router.get("/{product_id}", response_model=ProductSchema)
 def get_product(product_id: int, db: Session = Depends(get_db)):
@@ -961,20 +971,7 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    # ✅ Vérifier si le produit a des variantes
-    variants_count = db.query(ProductVariant).filter(
-        ProductVariant.product_id == product_id,
-        ProductVariant.is_active == True
-    ).count()
-
-    # ✅ Ajouter l'info has_variants à l'objet product
-    # (soit en créant un attribut temporaire)
-    product.has_variants = variants_count > 0
-
-    # Optionnel : ajouter aussi le nombre de variantes
-    product.variants_count = variants_count
-
-    return product
+    return attach_variant_metadata(product, db)
 
 @router.get("/{product_id}/variants")
 def get_product_variants(product_id: int, db: Session = Depends(get_db)):

@@ -268,6 +268,19 @@ def test_product_review_button_has_dedicated_visible_states():
     assert "prefers-reduced-motion" in css
 
 
+def test_single_product_title_and_variants_remain_visible():
+    product_js = Path("templates/ecommerce/app/static/js/product.js").read_text(encoding="utf-8")
+    css = Path("templates/ecommerce/app/static/css/inner-modern.css").read_text(encoding="utf-8")
+    template = Path("templates/ecommerce/app/templates/single-product.html").read_text(encoding="utf-8")
+
+    assert "variantSection.style.display = hasVariants ? 'block' : 'none'" in product_js
+    assert "-webkit-line-clamp: unset" in css
+    assert "overflow-wrap: anywhere" in css
+    assert "clamp(20px, 2.15vw, 30px)" in css
+    assert "product.js?v=20260810-product-variants" in template
+    assert "inner-modern.css?v=20260810-product-variants" in template
+
+
 def test_cart_quantity_controls_are_ajax_only_and_bounded():
     cart_js = Path("templates/ecommerce/app/static/js/cart.js").read_text(encoding="utf-8")
     cart_schema = Path("schemas/cart_schema.py").read_text(encoding="utf-8")

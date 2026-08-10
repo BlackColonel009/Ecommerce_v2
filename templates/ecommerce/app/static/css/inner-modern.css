@@ -36,7 +36,25 @@
 .nt-inner-heading { padding: 48px 0 34px; text-align: center; }
 .nt-inner-heading > p { color: var(--nt-red); font-size: 10px; font-weight: 800; letter-spacing: .14em; margin: 0 0 10px; text-transform: uppercase; }
 .nt-inner-heading h1 { margin: 0; }
-.nt-page-category-results #category-title, .nt-page-product #productName { font-size: clamp(27px, 3vw, 38px); margin-bottom: 8px; }
+.nt-page-category-results #category-title { font-size: clamp(27px, 3vw, 38px); margin-bottom: 8px; }
+.nt-page-product #productName {
+    font-size: clamp(20px, 2.15vw, 30px);
+    hyphens: auto;
+    line-height: 1.24;
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    word-break: normal;
+}
+.nt-page-product .prestige-3d .product-item__title > a {
+    -webkit-box-orient: initial;
+    -webkit-line-clamp: unset;
+    display: block;
+    min-height: 0;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+}
 .nt-page-category-results #category-title::after, .nt-page-product #productName::after { margin: 12px 0 0; }
 
 /* Composants et surfaces */
