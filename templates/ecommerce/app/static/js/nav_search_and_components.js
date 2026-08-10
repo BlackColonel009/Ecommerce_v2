@@ -447,7 +447,7 @@ function initMegaMenuLatestProducts() {
                     ? `${amount.toLocaleString('fr-FR')} XOF`
                     : 'Prix sur demande';
                 image.src = productImage(product);
-                image.alt = productName;
+                image.alt = '';
                 image.onerror = () => {
                     image.onerror = null;
                     image.src = fallbackImage;

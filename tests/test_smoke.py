@@ -368,6 +368,21 @@ def test_modern_navigation_and_footer_components_render():
     assert search_document.xpath("//a[@href='/blog']")
 
 
+def test_latest_product_visual_keeps_names_hidden_and_images_prominent():
+    search_template = Path("templates/ecommerce/app/templates/search-bar-modern.html").read_text(encoding="utf-8")
+    components_css = Path("templates/ecommerce/app/static/css/components-modern.css").read_text(encoding="utf-8")
+    navigation_js = Path("templates/ecommerce/app/static/js/nav_search_and_components.js").read_text(encoding="utf-8")
+
+    assert 'class="sr-only nt-mega-menu-latest__name"' in search_template
+    assert "components-modern.css?v=20260810-latest-visual" in search_template
+    assert ".nt-mega-menu-latest {" in components_css
+    assert "overflow: visible !important" in components_css
+    assert "height: 205px" in components_css
+    assert "bottom: -38px" in components_css
+    assert "filter: drop-shadow" in components_css
+    assert "image.alt = ''" in navigation_js
+
+
 def test_blog_public_api_and_admin_protection():
     client = TestClient(api_app)
 

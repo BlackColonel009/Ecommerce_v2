@@ -87,12 +87,14 @@
 .nt-mega-menu__visual span { color: var(--nt-yellow); font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .nt-mega-menu__visual strong { font-size: 15px; margin-top: 5px; max-width: 130px; }
 .nt-mega-menu__visual img { bottom: -32px; height: 150px; object-fit: contain; position: absolute; right: -35px; width: 180px; }
-.nt-mega-menu-latest { isolation: isolate; transition: background-color .25s ease; }
-.nt-mega-menu-latest::after { background: radial-gradient(circle, rgba(237, 0, 18, .32), transparent 68%); content: ""; height: 180px; position: absolute; right: -55px; top: 12px; width: 210px; z-index: -1; }
-.nt-mega-menu-latest__name { line-height: 1.35; min-height: 40px; transition: opacity .18s ease, transform .18s ease; }
-.nt-mega-menu-latest .nt-mega-menu-latest__price { color: rgba(255,255,255,.76); display: block; font-size: 10px; font-weight: 700; margin-top: 7px; max-width: 115px; position: relative; transition: opacity .18s ease, transform .18s ease; z-index: 2; }
-.nt-mega-menu-latest .nt-mega-menu-latest__image { bottom: -12px; filter: drop-shadow(0 12px 12px rgba(0,0,0,.28)); height: 142px; object-position: center; right: -20px; transition: opacity .18s ease, transform .35s ease; width: 165px; }
-.nt-mega-menu-latest:hover .nt-mega-menu-latest__image { transform: scale(1.04) translateY(-2px); }
+.nt-mega-menu-latest { border: 1px solid rgba(237,213,0,.28); box-shadow: 0 18px 40px rgba(0,0,0,.2); isolation: isolate; overflow: visible !important; transition: background-color .25s ease, box-shadow .25s ease, transform .25s ease; z-index: 2; }
+.nt-mega-menu-latest::before { background: rgba(237,213,0,.12); border: 1px solid rgba(237,213,0,.22); border-radius: 50%; content: ""; height: 154px; position: absolute; right: -27px; top: 12px; width: 154px; z-index: 0; }
+.nt-mega-menu-latest::after { background: radial-gradient(circle, rgba(237, 0, 18, .42), transparent 68%); content: ""; height: 215px; position: absolute; right: -65px; top: -8px; width: 235px; z-index: 0; }
+.nt-mega-menu-latest__name { transition: opacity .18s ease, transform .18s ease; }
+.nt-mega-menu-latest .nt-mega-menu-latest__price { bottom: 15px; color: rgba(255,255,255,.9); display: block; font-size: 10px; font-weight: 800; left: 18px; margin: 0; max-width: 105px; position: absolute; transition: opacity .18s ease, transform .18s ease; z-index: 3; }
+.nt-mega-menu-latest .nt-mega-menu-latest__image { bottom: -38px; filter: drop-shadow(0 22px 18px rgba(0,0,0,.42)); height: 205px; max-width: none; object-fit: contain; object-position: center; pointer-events: none; right: -42px; transition: opacity .18s ease, filter .35s ease, transform .35s ease; width: 225px; z-index: 2; }
+.nt-mega-menu-latest:hover { box-shadow: 0 24px 54px rgba(0,0,0,.27); transform: translateY(-2px); }
+.nt-mega-menu-latest:hover .nt-mega-menu-latest__image { filter: drop-shadow(0 26px 20px rgba(0,0,0,.48)); transform: scale(1.07) translate(-3px, -4px); }
 .nt-mega-menu-latest.is-changing .nt-mega-menu-latest__name,
 .nt-mega-menu-latest.is-changing .nt-mega-menu-latest__price,
 .nt-mega-menu-latest.is-changing .nt-mega-menu-latest__image { opacity: 0; transform: translateY(5px); }
