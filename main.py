@@ -11,7 +11,7 @@ from policy import afficher_banner
 from routes import admin, banner, blog, brands, cart, category, compare, graph_W_F, lead, newsletter, popups, popups_promo, product, promos, recent, review, roles_permissions, stats, support, favoris, visitor, filtre
 from script.init_db import init_database
 # from routes import (user, annonces, favoris , clicked, galerie)
-
+from fastapi.middleware.cors import CORSMiddleware
 
 afficher_banner()
 
@@ -30,6 +30,20 @@ app = FastAPI(
     version=settings.PROJECT_VERSION,
     lifespan=lifespan,
 )
+
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://newtechnologiestg.com",
+        "https://www.newtechnologiestg.com",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.mount(
     "/uploads", StaticFiles(directory="uploads"), name="uploads"
 )
