@@ -315,7 +315,22 @@ def test_dashboard_product_editor_sends_explicit_main_image_selection():
     assert 'formData.append("new_main_image_index"' in dashboard_js
     assert "selectNewMainImage" in dashboard_js
     assert "setTimeout(() =>" not in dashboard_js[dashboard_js.index("function previewNewImages"):dashboard_js.index("function createPreviewContainer")]
-    assert "product.js?v=20260810-main-image-fix" in dashboard_template
+    assert "product.js?v=20260810-spec-templates" in dashboard_template
+
+
+def test_dashboard_product_creation_can_reuse_specs_by_category():
+    dashboard_js = Path("templates/dashboard/app/static/js/product.js").read_text(encoding="utf-8")
+    dashboard_template = Path("templates/dashboard/app/templates/product_manage.html").read_text(encoding="utf-8")
+
+    assert "productSpecTemplatesForCategory" in dashboard_js
+    assert "Number(product.category?.id) === Number(categoryId)" in dashboard_js
+    assert "right.specs.length - left.specs.length" in dashboard_js
+    assert "applySpecTemplate" in dashboard_js
+    assert "!hasEnteredSpecs()" in dashboard_js
+    assert dashboard_js.count("function createSpecRow") == 1
+    assert 'id="spec-template-product"' in dashboard_template
+    assert 'id="apply-spec-template"' in dashboard_template
+    assert "product.js?v=20260810-spec-templates" in dashboard_template
 
 
 def test_modern_navigation_and_footer_components_render():

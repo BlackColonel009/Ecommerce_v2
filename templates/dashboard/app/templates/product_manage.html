@@ -266,6 +266,20 @@
         }
         .product-feedback-issues:empty { display: none; }
 
+        .spec-template-panel {
+            background: linear-gradient(135deg, #f8f9fc, #eef2ff);
+            border: 1px solid #dce3f4;
+            border-radius: 12px;
+            margin-top: .75rem;
+            padding: .9rem;
+        }
+        .spec-template-panel label { color: #253044; font-weight: 700; }
+        .spec-template-panel .input-group { margin-bottom: .45rem; }
+        .spec-template-status { display: block; font-size: .78rem; line-height: 1.45; }
+        .spec-template-status.is-ready { color: #2e59a8; }
+        .spec-template-status.is-success { color: #13855c; }
+        .spec-template-status.is-empty { color: #858796; }
+
         
     </style>
 
@@ -470,6 +484,24 @@
                                         <div class="form-group">
                                             <label for="product-category">Catégorie</label>
                                             <select id="product-category" class="form-control" required></select>
+                                            <div id="spec-template-panel" class="spec-template-panel" hidden>
+                                                <label for="spec-template-product" class="small mb-2">
+                                                    <i class="fas fa-magic mr-1" aria-hidden="true"></i>
+                                                    Modèle de caractéristiques
+                                                </label>
+                                                <div class="input-group input-group-sm">
+                                                    <select id="spec-template-product" class="custom-select"
+                                                        aria-describedby="spec-template-status"></select>
+                                                    <div class="input-group-append">
+                                                        <button id="apply-spec-template" class="btn btn-primary" type="button">
+                                                            Préremplir
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <small id="spec-template-status" class="spec-template-status is-empty" aria-live="polite">
+                                                    Sélectionnez une catégorie pour obtenir un modèle.
+                                                </small>
+                                            </div>
                                         </div>
 
                                         <!-- Marque -->
@@ -844,7 +876,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="/static/js/nav.js"></script>
-    <script src="/static/js/product.js?v=20260810-main-image-fix"></script>
+    <script src="/static/js/product.js?v=20260810-spec-templates"></script>
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

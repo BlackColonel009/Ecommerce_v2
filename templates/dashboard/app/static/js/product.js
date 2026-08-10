@@ -247,6 +247,111 @@ function createSpecRow(key = "", value = "") {
   return wrapper;
 }
 
+function productSpecTemplatesForCategory(categoryId) {
+  if (!categoryId || !Array.isArray(allProducts)) return [];
+  return allProducts
+    .filter(product =>
+      Number(product.category?.id) === Number(categoryId) &&
+      Array.isArray(product.specs) &&
+      product.specs.length > 0
+    )
+    .sort((left, right) =>
+      (right.specs.length - left.specs.length) || (Number(right.id) - Number(left.id))
+    );
+}
+
+function hasEnteredSpecs() {
+  return [...document.querySelectorAll("#specs-list .spec-input")]
+    .some(input => input.value.trim());
+}
+
+function setSpecTemplateStatus(message, state = "empty") {
+  const status = document.getElementById("spec-template-status");
+  if (!status) return;
+  status.textContent = message;
+  status.className = `spec-template-status is-${state}`;
+}
+
+function applySpecTemplate(productId, { automatic = false } = {}) {
+  const product = allProducts.find(item => Number(item.id) === Number(productId));
+  if (!product?.specs?.length) return false;
+
+  const specsList = document.getElementById("specs-list");
+  specsList.replaceChildren(...product.specs.map(spec => createSpecRow(spec.key, spec.value)));
+  setSpecTemplateStatus(
+    `${product.specs.length} caractéristique${product.specs.length > 1 ? "s" : ""} copiée${product.specs.length > 1 ? "s" : ""} depuis « ${product.name} »${automatic ? " automatiquement" : ""}. Ajustez maintenant les valeurs nécessaires.`,
+    "success"
+  );
+  updatePreview();
+  return true;
+}
+
+function refreshSpecTemplateOptions({ autoApply = true } = {}) {
+  const categoryId = document.getElementById("product-category")?.value;
+  const panel = document.getElementById("spec-template-panel");
+  const select = document.getElementById("spec-template-product");
+  const applyButton = document.getElementById("apply-spec-template");
+  if (!panel || !select || !applyButton) return;
+
+  panel.hidden = !categoryId;
+  select.replaceChildren();
+  if (!categoryId) {
+    applyButton.disabled = true;
+    setSpecTemplateStatus("Sélectionnez une catégorie pour obtenir un modèle.", "empty");
+    return;
+  }
+
+  const templates = productSpecTemplatesForCategory(categoryId);
+  if (!templates.length) {
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = "Aucun modèle dans cette catégorie";
+    select.appendChild(option);
+    select.disabled = true;
+    applyButton.disabled = true;
+    setSpecTemplateStatus("Aucun produit de cette catégorie ne possède encore de caractéristiques réutilisables.", "empty");
+    return;
+  }
+
+  select.disabled = false;
+  applyButton.disabled = false;
+  templates.forEach((product, index) => {
+    const option = document.createElement("option");
+    option.value = product.id;
+    option.textContent = `${index === 0 ? "Recommandé — " : ""}${product.name} (${product.specs.length})`;
+    select.appendChild(option);
+  });
+
+  const recommended = templates[0];
+  if (autoApply && !hasEnteredSpecs()) {
+    applySpecTemplate(recommended.id, { automatic: true });
+  } else {
+    setSpecTemplateStatus(
+      `Modèle recommandé : « ${recommended.name} » avec ${recommended.specs.length} caractéristiques. Cliquez sur Préremplir pour remplacer les caractéristiques actuelles.`,
+      "ready"
+    );
+  }
+}
+
+document.getElementById("product-category").addEventListener("change", () => {
+  refreshSpecTemplateOptions({ autoApply: true });
+});
+
+document.getElementById("spec-template-product").addEventListener("change", event => {
+  if (event.target.value) {
+    const product = allProducts.find(item => Number(item.id) === Number(event.target.value));
+    setSpecTemplateStatus(
+      product ? `« ${product.name} » est prêt. Cliquez sur Préremplir pour copier ses caractéristiques.` : "",
+      "ready"
+    );
+  }
+});
+
+document.getElementById("apply-spec-template").addEventListener("click", () => {
+  const productId = document.getElementById("spec-template-product").value;
+  if (productId) applySpecTemplate(productId);
+});
+
 document.getElementById("add-spec-btn").addEventListener("click", (e) => {
   e.preventDefault();
   document.getElementById("specs-list").appendChild(createSpecRow());
@@ -491,6 +596,8 @@ document.getElementById("product-form").addEventListener("submit", async functio
         document.getElementById("prices-list").appendChild(createPriceRow());
         document.getElementById("simple-product-section").style.display = "block";
         document.getElementById("variants-section").style.display = "none";
+        document.getElementById("spec-template-panel").hidden = true;
+        document.getElementById("spec-template-product").replaceChildren();
         clearProductFieldErrors();
         updatePreview();
 
@@ -519,18 +626,6 @@ function createPriceRow() {
     document.getElementById("prices-list").appendChild(createPriceRow());
     });
 
-    // Ajouter une ligne spec
-    function createSpecRow() {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.className = "form-control spec-input mb-2";
-    input.placeholder = "Ex : RAM:16GB";
-    return input;
-    }
-    document.getElementById("add-spec-btn").addEventListener("click", () => {
-    document.getElementById("specs-list").appendChild(createSpecRow());
-});
-
 // Ajouter une ligne couleur
 function createColorRow() {
     const input = document.createElement("input");
@@ -547,7 +642,6 @@ document.getElementById("add-color-btn").addEventListener("click", () => {
 
 // Initialiser avec une ligne par défaut
 document.getElementById("prices-list").appendChild(createPriceRow());
-document.getElementById("specs-list").appendChild(createSpecRow());
 document.getElementById("colors-list").appendChild(createColorRow());
 
 // ---------- GESTION DES VARIANTES ----------
@@ -1532,6 +1626,7 @@ async function fetchProducts() {
         allProducts = await response.json(); // Stocker tous les produits
         displayProducts(allProducts); // Afficher tout
         updateProductSuggestions(allProducts);
+        refreshSpecTemplateOptions({ autoApply: true });
         updateSearchResultCount(allProducts.length, allProducts.length);
 
     } catch (error) {
