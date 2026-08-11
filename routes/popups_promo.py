@@ -103,7 +103,7 @@ def update_popup(
         popup.start_date = start_date
     if end_date is not None:
         popup.end_date = end_date
-    if image:
+    if image and image.filename:
         popup.image_url = save_upload_file(image)
 
     db.commit()

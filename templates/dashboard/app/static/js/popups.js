@@ -3,6 +3,9 @@
 // ==============================
 
 const token = localStorage.getItem("access_token"); // si authentification
+const DEFAULT_POPUP_WHATSAPP = "https://wa.me/22890045876?text=Bonjour%20New%20Technologies%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20votre%20offre.";
+let promotionProducts = [];
+let promotionItems = [];
 
 function authHeaders() {
     return token ? { "Authorization": `Bearer ${token}` } : {};
@@ -112,12 +115,16 @@ async function openEditPopup(id) {
     document.getElementById("editTitle").value = popup.title;
     document.getElementById("editMessage").value = popup.message;
     document.getElementById("editCtaText").value = popup.cta_text || "";
-    document.getElementById("editCtaLink").value = popup.cta_link || "";
+    document.getElementById("editCtaLink").value = popup.cta_link || DEFAULT_POPUP_WHATSAPP;
     document.getElementById("editTrigger").value = popup.trigger;
     document.getElementById("editDelay").value = popup.delay_seconds || "";
     document.getElementById("editActive").checked = popup.is_active;
     document.getElementById("editStartDate").value = popup.start_date ? popup.start_date.split("T")[0] : "";
     document.getElementById("editEndDate").value = popup.end_date ? popup.end_date.split("T")[0] : "";
+    document.getElementById("editImage").value = "";
+    document.getElementById("editImageCurrent").textContent = popup.image_url
+      ? "Image actuelle conservée si vous ne choisissez pas de nouveau fichier."
+      : "Aucune image actuellement enregistrée.";
 
     // Ouvrir le modal
     $("#editPopupModal").modal("show");
@@ -133,6 +140,9 @@ if (editPopupForm) {
     e.preventDefault();
     const id = document.getElementById("editPopupId").value;
     const formData = new FormData(editPopupForm);
+    const imageInput = document.getElementById("editImage");
+    // Un champ fichier vide ne doit jamais remplacer l’image enregistrée.
+    if (!imageInput.files || imageInput.files.length === 0) formData.delete("image");
 
     try {
       const res = await fetch(`${API_BASE}/popup/${id}`, {
@@ -188,16 +198,36 @@ if (promoForm) {
 async function loadPromos() {
     const res = await fetch(`${API_BASE}/marketing/promo`);
     if (!res.ok) return console.error("Erreur GET promos");
-    const promos = await res.json();
+    promotionItems = await res.json();
 
+    renderPromos();
+}
+
+function filterPromotionItems(query) {
+    const term = String(query || "").trim().toLocaleLowerCase();
+    if (!term) return promotionItems;
+    return promotionItems.filter(promo =>
+        `${promo.product_name || ""} ${promo.tag || ""}`.toLocaleLowerCase().includes(term)
+    );
+}
+
+function renderPromos() {
     const list = document.getElementById("promoList");
     const preview = document.getElementById("promosContainer");
+    const listSearch = document.getElementById("promoListSearch");
+    const previewSearch = document.getElementById("promoPreviewSearch");
     if (!list || !preview) return;
 
     list.innerHTML = "";
     preview.innerHTML = "";
 
-    promos.forEach(p => {
+    const listPromos = filterPromotionItems(listSearch?.value);
+    const previewPromos = filterPromotionItems(previewSearch?.value);
+
+    if (!listPromos.length) {
+        list.innerHTML = '<p class="small text-muted py-2 mb-0">Aucune promotion ne correspond à cette recherche.</p>';
+    }
+    listPromos.forEach(p => {
         list.innerHTML += `
             <div class="border rounded p-2 mb-2 d-flex justify-content-between align-items-center">
                 <div>
@@ -217,13 +247,22 @@ async function loadPromos() {
                 </div>
             </div>
         `;
+    });
+
+    if (!previewPromos.length) {
+        preview.innerHTML = '<div class="col-12"><p class="small text-muted py-2 mb-0">Aucune promotion à afficher.</p></div>';
+    }
+    previewPromos.forEach(p => {
         preview.innerHTML += `
             <div class="col-md-6 mb-2">
-                <div class="alert alert-warning text-center">🔥 -${p.discount_percent}% sur ${p.product_name}</div>
+                <div class="alert alert-warning text-center mb-0"><strong>-${p.discount_percent}%</strong> sur ${p.product_name}<br><small>Tag : ${p.tag}</small></div>
             </div>
         `;
     });
 }
+
+document.getElementById("promoListSearch")?.addEventListener("input", renderPromos);
+document.getElementById("promoPreviewSearch")?.addEventListener("input", renderPromos);
 
 async function loadProducts() {
     try {
@@ -232,15 +271,34 @@ async function loadProducts() {
 
         const products = await res.json();
         const select = document.getElementById("productSelect");
+        const search = document.getElementById("productSearch");
         if (!select) return;
 
-        select.innerHTML = "";
-        products.forEach(p => {
-            const option = document.createElement("option");
-            option.value = p.id;         // id pour le backend
-            option.textContent = p.name; // nom visible pour l'utilisateur
-            select.appendChild(option);
-        });
+        promotionProducts = Array.isArray(products) ? products : [];
+        const renderProductOptions = (query = "") => {
+            const normalizedQuery = query.trim().toLocaleLowerCase();
+            const selectedId = select.value;
+            const matches = promotionProducts.filter(product =>
+                String(product.name || "").toLocaleLowerCase().includes(normalizedQuery)
+            );
+            select.innerHTML = "";
+            if (!matches.length) {
+                const emptyOption = new Option("Aucun produit trouvé", "", true, true);
+                emptyOption.disabled = true;
+                select.add(emptyOption);
+                return;
+            }
+            matches.forEach(p => {
+                const option = document.createElement("option");
+                option.value = p.id;
+                option.textContent = p.name;
+                select.appendChild(option);
+            });
+            if ([...select.options].some(option => option.value === selectedId)) select.value = selectedId;
+        };
+
+        renderProductOptions();
+        search?.addEventListener("input", () => renderProductOptions(search.value));
     } catch (err) {
         console.error("Erreur chargement produits:", err);
     }

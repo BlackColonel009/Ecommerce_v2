@@ -193,6 +193,15 @@ def test_event_offers_page_and_promo_tags_are_available():
     assert {"gift", "black_friday"}.issubset(set(response.json()))
 
 
+def test_popup_editor_keeps_existing_image_and_offers_whatsapp_default():
+    template = Path("templates/dashboard/app/templates/popup_promos.html").read_text(encoding="utf-8")
+    script = Path("templates/dashboard/app/static/js/popups.js").read_text(encoding="utf-8")
+
+    assert "laisser vide pour garder l’actuelle" in template
+    assert "22890045876" in template
+    assert 'formData.delete("image")' in script
+
+
 def test_storefront_login_renders():
     response = TestClient(storefront_app).get("/login")
 

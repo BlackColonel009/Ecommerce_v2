@@ -64,19 +64,19 @@
                                             <h6>Ajouter un popup</h6>
 
                                             <div class="mb-2">
-                                                <input type="text" name="title" class="form-control" placeholder="Titre" required>
+                                                <input type="text" name="title" class="form-control" placeholder="Ex. 🎁 Offre de rentrée : jusqu’à -20 %" required>
                                             </div>
 
                                             <div class="mb-2">
-                                                <textarea name="message" class="form-control" placeholder="Message" required></textarea>
+                                                <textarea name="message" class="form-control" placeholder="Ex. Profitez de nos offres sur une sélection d’équipements. Notre équipe vous conseille sur WhatsApp." required></textarea>
                                             </div>
 
                                             <div class="mb-2">
-                                                <input type="text" name="cta_text" class="form-control" placeholder="Texte du bouton (ex: Commander)">
+                                                <input type="text" name="cta_text" class="form-control" value="Commander sur WhatsApp" placeholder="Ex. Commander sur WhatsApp">
                                             </div>
 
                                             <div class="mb-2">
-                                                <input type="text" name="cta_link" class="form-control" placeholder="Lien WhatsApp ou page">
+                                                <input type="url" name="cta_link" class="form-control" value="https://wa.me/22890045876?text=Bonjour%20New%20Technologies%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20votre%20offre." placeholder="Lien WhatsApp ou page">
                                             </div>
 
                                             <div class="mb-2">
@@ -87,12 +87,12 @@
                                             </div>
 
                                             <div class="mb-2">
-                                                <input type="number" name="delay_seconds" class="form-control" placeholder="Délai (secondes)">
+                                                <input type="number" name="delay_seconds" class="form-control" placeholder="Délai en secondes (ex. 5)">
                                             </div>
 
                                             <div class="mb-2">
                                                 <label>Image</label>
-                                                <input type="file" name="image" class="form-control" required>
+                                                <input type="file" name="image" class="form-control" accept="image/*" required>
                                             </div>
 
                                             <div class="mb-2 form-check">
@@ -153,6 +153,7 @@
 
                                         <div class="mb-2">
                                             <label for="productSelect">Produit</label>
+                                            <input type="search" id="productSearch" class="form-control mb-2" placeholder="Rechercher un produit par nom…" autocomplete="off" aria-controls="productSelect">
                                             <select id="productSelect" name="product_id" class="form-control" required>
                                                 <!-- options remplies par JS -->
                                             </select>
@@ -186,6 +187,8 @@
 
                                     <!-- LIST PROMOS -->
                                     <h6>Promotions existantes</h6>
+                                    <label class="sr-only" for="promoListSearch">Rechercher une promotion existante</label>
+                                    <input type="search" id="promoListSearch" class="form-control form-control-sm mb-2" placeholder="Rechercher par produit ou tag…" autocomplete="off">
                                     <div id="promoList"></div>
 
                                 </div>
@@ -199,6 +202,8 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Aperçu des promotions</h6>
                             </div>
                             <div class="card-body">
+                                <label class="sr-only" for="promoPreviewSearch">Rechercher dans l’aperçu des promotions</label>
+                                <input type="search" id="promoPreviewSearch" class="form-control form-control-sm mb-3" placeholder="Filtrer l’aperçu par produit ou tag…" autocomplete="off">
                                 <div class="row" id="promosContainer"></div>
                             </div>
                         </div>
@@ -313,16 +318,16 @@
                 <div class="modal-body">
                 <input type="hidden" name="id" id="editPopupId">
                 <div class="mb-2">
-                    <input type="text" name="title" id="editTitle" class="form-control" placeholder="Titre" required>
+                    <input type="text" name="title" id="editTitle" class="form-control" placeholder="Ex. 🎁 Offre de rentrée : jusqu’à -20 %" required>
                 </div>
                 <div class="mb-2">
-                    <textarea name="message" id="editMessage" class="form-control" placeholder="Message" required></textarea>
+                    <textarea name="message" id="editMessage" class="form-control" placeholder="Présentez clairement l’offre et son avantage client." required></textarea>
                 </div>
                 <div class="mb-2">
-                    <input type="text" name="cta_text" id="editCtaText" class="form-control" placeholder="Texte du bouton">
+                    <input type="text" name="cta_text" id="editCtaText" class="form-control" placeholder="Ex. Commander sur WhatsApp">
                 </div>
                 <div class="mb-2">
-                    <input type="text" name="cta_link" id="editCtaLink" class="form-control" placeholder="Lien">
+                    <input type="url" name="cta_link" id="editCtaLink" class="form-control" placeholder="https://wa.me/22890045876?text=Bonjour…">
                 </div>
                 <div class="mb-2">
                     <select name="trigger" id="editTrigger" class="form-control">
@@ -335,7 +340,8 @@
                 </div>
                 <div class="mb-2">
                     <label>Image (laisser vide pour garder l’actuelle)</label>
-                    <input type="file" name="image" id="editImage" class="form-control">
+                    <input type="file" name="image" id="editImage" class="form-control" accept="image/*">
+                    <small id="editImageCurrent" class="form-text text-muted"></small>
                 </div>
                 <div class="mb-2 form-check">
                     <input type="checkbox" name="is_active" id="editActive" class="form-check-input">
