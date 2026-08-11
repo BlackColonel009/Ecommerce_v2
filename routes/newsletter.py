@@ -5,7 +5,7 @@ from utils.service_email import email_service
 from database import get_db
 from models.model_newsletter import NewsletterSubscriber
 from models.model_users import Admin
-from schemas.newsletter_schema import NewsletterOut, NewsletterSubscribe
+from schemas.newsletter_schema import NewsletterCampaign, NewsletterOut, NewsletterSubscribe
 from typing import List
 import uuid
 
@@ -43,8 +43,9 @@ def subscribe_to_newsletter(
     # ✅ CORRECTION : passer l'email, pas FastMail
     background_tasks.add_task(
         email_service.send_newsletter_welcome,
-        data.email,  
-        bonus_amount="10000 FCFA"
+        data.email,
+        bonus_amount=f"{new_subscriber.bonus_amount:,.0f} XOF".replace(",", " "),
+        bonus_code=bonus_code,
     )
 
     return {
@@ -52,6 +53,35 @@ def subscribe_to_newsletter(
         "bonus_code": bonus_code,
         "bonus_amount": new_subscriber.bonus_amount
     }
+
+
+@router.post("/newsletter/campaign")
+def send_newsletter_campaign(
+    data: NewsletterCampaign,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+    _admin=Depends(get_current_admin),
+):
+    """Planifie une offre pour les abonnés ayant conservé leur abonnement actif."""
+    recipients = [
+        email
+        for (email,) in db.query(NewsletterSubscriber.email)
+        .filter(NewsletterSubscriber.is_active.is_(True))
+        .all()
+    ]
+    if not recipients:
+        raise HTTPException(status_code=400, detail="Aucun abonné actif à contacter.")
+
+    background_tasks.add_task(
+        email_service.send_newsletter_campaign,
+        recipients=recipients,
+        subject=data.subject,
+        title=data.title,
+        message=data.message,
+        cta_label=data.cta_label,
+        cta_url=str(data.cta_url) if data.cta_url else settings.FRONTEND_URL,
+    )
+    return {"message": "Campagne mise en file d’envoi.", "recipient_count": len(recipients)}
 
 @router.delete("/newsletter/clear")
 def delete_all_subscribers(db: Session = Depends(get_db), _admin = Depends(get_current_admin)):
@@ -78,23 +108,59 @@ async def send_test(_admin = Depends(get_current_admin)):
 # Activer & desactiver bonus
 
 @router.put("/newsletter/bonus/{subscriber_id}")
-def toggle_bonus(subscriber_id: int, activate: bool, db: Session = Depends(get_db), _admin = Depends(get_current_admin)):
+def toggle_bonus(
+    subscriber_id: int,
+    activate: bool,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+    _admin=Depends(get_current_admin),
+):
     subscriber = db.query(NewsletterSubscriber).filter(NewsletterSubscriber.id == subscriber_id).first()
     if not subscriber:
         raise HTTPException(status_code=404, detail="Abonné introuvable")
 
-    if subscriber.bonus_used and activate:
-        raise HTTPException(status_code=400, detail="Le bonus a déjà été utilisé, impossible de l’activer")
+    if activate:
+        if subscriber.bonus_used:
+            raise HTTPException(status_code=400, detail="Ce code a déjà été utilisé et ne peut pas être réactivé")
+        return {
+            "message": "✅ Bonus déjà disponible",
+            "subscriber": {
+                "id": subscriber.id,
+                "email": subscriber.email,
+                "bonus_code": subscriber.bonus_code,
+                "bonus_used": subscriber.bonus_used,
+            },
+        }
 
-    subscriber.is_active = activate
+    if subscriber.bonus_used:
+        return {
+            "message": "✅ Ce code est déjà marqué comme utilisé",
+            "subscriber": {
+                "id": subscriber.id,
+                "email": subscriber.email,
+                "bonus_code": subscriber.bonus_code,
+                "bonus_used": subscriber.bonus_used,
+            },
+        }
+
+    # Désactiver le bonus depuis le dashboard signifie que le premier achat a été validé.
+    subscriber.bonus_used = True
     db.commit()
 
+    background_tasks.add_task(
+        email_service.send_bonus_used_thank_you,
+        subscriber.email,
+        f"{subscriber.bonus_amount:,.0f} XOF".replace(",", " "),
+        subscriber.bonus_code,
+    )
+
     return {
-        "message": f"✅ Bonus {'activé' if activate else 'désactivé'} pour {subscriber.email}",
+        "message": f"✅ Bonus marqué comme utilisé pour {subscriber.email}. Un e-mail de remerciement est en cours d’envoi.",
         "subscriber": {
             "id": subscriber.id,
             "email": subscriber.email,
             "is_active": subscriber.is_active,
+            "bonus_code": subscriber.bonus_code,
             "bonus_used": subscriber.bonus_used,
             "bonus_amount": subscriber.bonus_amount,
             "bonus_expires_at": subscriber.bonus_expires_at,

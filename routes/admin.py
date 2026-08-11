@@ -118,7 +118,11 @@ def get_me(admin = Depends(get_current_admin)):
 # CREATE REGULAR USER (PUBLIC) - Plus besoin d'authentification
 # ---------------------------
 @router.post("/create", response_model=AdminSchema, status_code=201)
-def create_user(data: AdminCreate, db: Session = Depends(get_db)):
+def create_user(
+    data: AdminCreate,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+):
 
     # Vérifier si l'email existe déjà
     exists = db.query(Admin).filter(func.lower(Admin.email) == data.email.lower()).first()
@@ -158,7 +162,9 @@ def create_user(data: AdminCreate, db: Session = Depends(get_db)):
             status_code=409,
             detail="Cette adresse e-mail ou ce nom d'utilisateur est déjà utilisé",
         )
-    
+
+    background_tasks.add_task(email_service.send_welcome_email, admin.email, admin.username)
+
     # Ne pas renvoyer le mot de passe
     return admin
 

@@ -95,6 +95,12 @@
 .nt-mega-menu-latest .nt-mega-menu-latest__image { bottom: -38px; filter: drop-shadow(0 22px 18px rgba(0,0,0,.42)); height: 205px; max-width: none; object-fit: contain; object-position: center; pointer-events: none; right: -42px; transition: opacity .18s ease, filter .35s ease, transform .35s ease; width: 225px; z-index: 2; }
 .nt-mega-menu-latest:hover { box-shadow: 0 24px 54px rgba(0,0,0,.27); transform: translateY(-2px); }
 .nt-mega-menu-latest:hover .nt-mega-menu-latest__image { filter: drop-shadow(0 26px 20px rgba(0,0,0,.48)); transform: scale(1.07) translate(-3px, -4px); }
+
+.nt-event-menu-link { align-items:center; display:flex !important; gap:7px; }
+.nt-event-menu-badge { border-radius:999px; color:#fff; font-size:8px; font-weight:800; letter-spacing:.02em; line-height:1; padding:5px 7px; white-space:nowrap; }
+.nt-event-menu-badge.is-fresh { background:#ed0012; box-shadow:0 4px 10px rgba(237,0,18,.25); }
+.nt-event-menu-badge.is-warm { background:#ed7600; }
+.nt-event-menu-badge.is-soft { background:#858b93; }
 .nt-mega-menu-latest.is-changing .nt-mega-menu-latest__name,
 .nt-mega-menu-latest.is-changing .nt-mega-menu-latest__price,
 .nt-mega-menu-latest.is-changing .nt-mega-menu-latest__image { opacity: 0; transform: translateY(5px); }

@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, HTTPException, Form
-from fastapi_mail import FastMail, MessageSchema, MessageType
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from datetime import datetime
@@ -9,7 +8,7 @@ from schemas.support_schema import ContactMessage as ContactSchema
 from models.model_support_message import SupportMessage
 from schemas.support_message_schema import SupportReplySchema
 from routes.auth import get_current_admin
-from config import conf
+from utils.service_email import email_service
 
 router = APIRouter(prefix="/support", tags=["Support"])
 
@@ -96,16 +95,15 @@ async def reply_to_support(
     if not contact:
         raise HTTPException(status_code=404, detail="Message introuvable")
 
-    # 2️⃣ Envoi du mail
-    email = MessageSchema(
-        subject="Réponse du support",
-        recipients=[contact.email],
-        body=payload.reply,
-        subtype=MessageType.plain
+    # 2️⃣ Envoi du mail habillé New Technologies
+    email_sent = await email_service.send_support_reply(
+        contact.email,
+        contact.name,
+        contact.subject,
+        payload.reply,
     )
-
-    fm = FastMail(conf)
-    await fm.send_message(email)
+    if not email_sent:
+        raise HTTPException(status_code=502, detail="Impossible d’envoyer la réponse. Réessayez plus tard.")
 
     # 3️⃣ Création / MAJ du message support
     support_msg = db.query(SupportMessage).filter(

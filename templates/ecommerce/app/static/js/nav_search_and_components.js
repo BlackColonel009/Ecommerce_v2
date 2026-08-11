@@ -514,6 +514,29 @@ function initMegaMenuLatestProducts() {
 
 document.addEventListener('searchContainerLoaded', initMegaMenuLatestProducts);
 
+function initEventMenuBadge() {
+    const badges = Array.from(document.querySelectorAll('[data-event-badge]')).filter(badge => !badge.dataset.ready);
+    if (!badges.length) return;
+    badges.forEach(badge => { badge.dataset.ready = 'true'; });
+    fetch(`${window.API || ''}/marketing/promo/active`, { cache: 'no-store' })
+        .then(response => response.ok ? response.json() : [])
+        .then(promos => {
+            const latest = (Array.isArray(promos) ? promos : [])
+                .filter(item => item?.promo?.tag === 'gift')
+                .sort((left, right) => new Date(right.promo.start_date) - new Date(left.promo.start_date))[0];
+            if (!latest) return;
+            const age = Math.floor((Date.now() - new Date(latest.promo.start_date).getTime()) / 86400000);
+            if (age < 0 || age > 20) return;
+            badges.forEach(badge => {
+                badge.hidden = false;
+                badge.className = `nt-event-menu-badge is-${age < 7 ? 'fresh' : age < 14 ? 'warm' : 'soft'}`;
+            });
+        })
+        .catch(() => { badges.forEach(badge => { badge.dataset.ready = ''; }); });
+}
+
+document.addEventListener('searchContainerLoaded', initEventMenuBadge);
+
 // ------------------------------------------------------
 // INITIALISATION PRINCIPALE
 // ------------------------------------------------------
@@ -527,4 +550,5 @@ document.addEventListener('DOMContentLoaded', () => {
     waitForMobileMenu();
 
     initMegaMenuLatestProducts();
+    initEventMenuBadge();
 });

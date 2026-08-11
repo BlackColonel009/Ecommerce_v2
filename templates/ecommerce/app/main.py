@@ -40,6 +40,7 @@ PUBLIC_SITE_URL = "https://newtechnologiestg.com"
 SITEMAP_PATHS = (
     ("/", "daily", "1.0"),
     ("/shop", "daily", "0.9"),
+    ("/cadeaux-evenements", "daily", "0.8"),
     ("/category", "weekly", "0.8"),
     ("/services", "monthly", "0.8"),
     ("/logiciels", "weekly", "0.8"),
@@ -250,6 +251,11 @@ def index(request: Request):
 @app.get("/shop", response_class=HTMLResponse)
 def index(request: Request):
     return templates.TemplateResponse("shop.html", {"request": request})
+
+
+@app.get("/cadeaux-evenements", response_class=HTMLResponse)
+def event_offers(request: Request):
+    return templates.TemplateResponse("event-offers.html", {"request": request})
 
 @app.get("/category-product", response_class=HTMLResponse)
 def index(request: Request):

@@ -74,6 +74,7 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">Newsletter & Bonus</h1>
     <p class="mb-4">Gestion des abonnés, des statuts de bonus et des actions sur votre dashboard.</p>
+    <div id="newsletterNotice" class="alert d-none" role="status"></div>
 
     <div class="row">
         <!-- Tableau principal des abonnés -->
@@ -90,6 +91,7 @@
                                 <tr>
                                     <th>Email</th>
                                     <th>Abonnement actif</th>
+                                    <th>Code attribué</th>
                                     <th>Bonus actif</th>
                                     <th>Montant bonus</th>
                                     <th>Utilisé</th>
@@ -108,6 +110,24 @@
 
         <!-- Abonnés récents -->
         <div class="col-lg-4">
+            <div class="card shadow mb-4 border-left-danger">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-danger">Envoyer une offre</h6>
+                </div>
+                <div class="card-body">
+                    <p class="small text-muted">L’offre est envoyée individuellement aux abonnés actifs : leurs adresses restent privées.</p>
+                    <form id="newsletterCampaignForm">
+                        <div class="form-group"><label for="campaignSubject">Objet</label><input id="campaignSubject" class="form-control" maxlength="160" required placeholder="Ex. Nos offres de rentrée"></div>
+                        <div class="form-group"><label for="campaignTitle">Titre dans l’e-mail</label><input id="campaignTitle" class="form-control" maxlength="120" required placeholder="Une offre à ne pas manquer"></div>
+                        <div class="form-group"><label for="campaignMessage">Message</label><textarea id="campaignMessage" class="form-control" rows="5" maxlength="4000" required placeholder="Présentez votre offre…"></textarea></div>
+                        <div class="form-row">
+                            <div class="form-group col-6"><label for="campaignCtaLabel">Bouton</label><input id="campaignCtaLabel" class="form-control" maxlength="60" value="Voir les offres"></div>
+                            <div class="form-group col-6"><label for="campaignCtaUrl">Lien (facultatif)</label><input id="campaignCtaUrl" class="form-control" type="url" placeholder="https://…"></div>
+                        </div>
+                        <button id="sendNewsletterCampaign" class="btn btn-danger btn-block" type="submit"><i class="fas fa-paper-plane mr-1"></i> Envoyer l’offre</button>
+                    </form>
+                </div>
+            </div>
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Abonnés récents</h6>

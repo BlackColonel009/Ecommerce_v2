@@ -10,6 +10,7 @@ from templates.ecommerce.app.main import app as storefront_app
 from config import settings
 from utils.security import create_access_token
 from utils.security import hash_password
+from utils.service_email import email_service
 from database import get_db
 
 
@@ -18,6 +19,22 @@ def test_api_root_is_available():
 
     assert response.status_code == 200
     assert "message" in response.json()
+
+
+def test_new_technologies_email_layout_is_branded_and_escapes_message_content():
+    html_body = email_service._layout(
+        eyebrow="Support client",
+        title="Notre réponse est arrivée",
+        greeting="Bonjour Awa,",
+        content=email_service._paragraphs("Bonjour <Awa>\nVotre demande est traitée."),
+        cta_label="Visiter la boutique",
+        cta_url="javascript:alert(1)",
+    )
+
+    assert "NEW <span" in html_body
+    assert "Support client" in html_body
+    assert "&lt;Awa&gt;" in html_body
+    assert f'href="{email_service.frontend_url}"' in html_body
 
 
 def test_product_placeholder_is_available_and_cacheable():
@@ -161,6 +178,19 @@ def test_storefront_home_renders():
         if not (static_root / asset.split("?", 1)[0].removeprefix("/static/")).exists()
     ]
     assert missing_assets == []
+
+
+def test_event_offers_page_and_promo_tags_are_available():
+    response = TestClient(storefront_app).get("/cadeaux-evenements")
+
+    assert response.status_code == 200
+    assert 'id="gift-products"' in response.text
+    assert 'id="blackFridaySection"' in response.text
+    assert "/static/js/event-offers.js" in response.text
+
+    response = TestClient(api_app).get("/marketing/promo/tags")
+    assert response.status_code == 200
+    assert {"gift", "black_friday"}.issubset(set(response.json()))
 
 
 def test_storefront_login_renders():
