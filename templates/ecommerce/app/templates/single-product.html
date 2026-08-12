@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="/static/css/style.css">
         <link rel="stylesheet" href="/static/css/style-theme.css">
 
-        <link rel="stylesheet" href="/static/css/inner-modern.css?v=20260810-product-variants">
+        <link rel="stylesheet" href="/static/css/inner-modern.css?v=20260812-gallery-thumbs">
     </head>
 
     <body class="nt-inner-page nt-page-product">
@@ -601,7 +601,7 @@
         <script src="/static/js/nav_home.js"></script>
         <script src="/static/js/nav_search_and_components.js"></script>
         <script src="/static/js/currency.js"></script>
-        <script src="/static/js/product.js?v=20260810-product-variants"></script>
+        <script src="/static/js/product.js?v=20260812-product-image-zoom"></script>
         <script src="/static/js/auth.js"></script>
 
         
@@ -706,9 +706,10 @@
                 }
 
                 // Slick Carousel
-                $('.js-slick-carousel.slick-initialized').slick('unslick');
-                if ($('.js-slick-carousel').length) {
-                    $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
+                const gallerySelector = '#sliderSyncingNav, #sliderSyncingThumb';
+                $('.js-slick-carousel.slick-initialized').not(gallerySelector).slick('unslick');
+                if ($('.js-slick-carousel').not(gallerySelector).length) {
+                    $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel:not(#sliderSyncingNav):not(#sliderSyncingThumb)');
                 }
 
                 // Fancybox

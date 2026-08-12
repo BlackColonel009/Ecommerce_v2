@@ -223,14 +223,30 @@ async function loadProduct() {
         const galleryImages = sortedImages.length
             ? sortedImages
             : [{ image_url: "uploads/products/demo-placeholders/demo-accessory.webp", is_main: true }];
+        const galleryProductName = String(productData.name || "Produit")
+            .replace(/&/g, "&amp;")
+            .replace(/"/g, "&quot;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
         const sliderNav = document.getElementById("sliderSyncingNav");
         const sliderThumb = document.getElementById("sliderSyncingThumb");
 
         // Les sliders peuvent avoir été initialisés vides au chargement de la page.
         // Il faut les démonter avant d'injecter les images pour préserver le DOM Slick.
         [sliderNav, sliderThumb].forEach(slider => {
-            if (slider && typeof window.jQuery !== "undefined" && $.fn.slick && $(slider).hasClass("slick-initialized")) {
-                $(slider).slick("unslick");
+            if (slider && typeof window.jQuery !== "undefined") {
+                const $slider = $(slider);
+                if ($.fn.slick && $slider.hasClass("slick-initialized")) {
+                    $slider.slick("unslick");
+                }
+
+                // Les composants chargés après la page peuvent avoir marqué un
+                // carousel vide comme statique. On repart toujours d'une galerie
+                // propre, avec des miniatures à taille contrôlée.
+                $slider
+                    .removeClass("nt-slick-static slick-transform-off")
+                    .removeAttr("data-nt-slick-state")
+                    .css("--nt-slick-static-width", "");
             }
         });
 
@@ -240,7 +256,12 @@ async function loadProduct() {
             galleryImages.forEach((img, index) => {
                 sliderNav.innerHTML += `
                     <div class="js-slide">
-                        <img class="img-fluid" src="${API}/${img.image_url}" alt="${productData.name}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async">
+                        <a class="js-fancybox js-product-image-zoom" href="${API}/${img.image_url}"
+                            data-fancybox="product-gallery" data-caption="${galleryProductName}" data-speed="250"
+                            aria-label="Agrandir l'image ${index + 1} de ${galleryProductName}">
+                            <img class="img-fluid" src="${API}/${img.image_url}" alt="${galleryProductName}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async">
+                            <span class="nt-product-image-zoom__hint" aria-hidden="true"><i class="fas fa-search-plus"></i><span>Zoomer</span></span>
+                        </a>
                     </div>
                 `;
             });
@@ -259,6 +280,12 @@ async function loadProduct() {
         }
 
         initProductGallerySliders(sliderNav, sliderThumb, galleryImages.length);
+
+        // Les images sont injectées après le chargement de la page : on active
+        // Fancybox uniquement sur cette nouvelle galerie.
+        if (sliderNav && window.jQuery && $.HSCore?.components?.HSFancyBox) {
+            $.HSCore.components.HSFancyBox.init($(sliderNav).find('.js-product-image-zoom'));
+        }
         
         console.log(`✅ Produit #${newProductId} chargé avec succès`);
 
@@ -312,6 +339,10 @@ function initProductGallerySliders(sliderNav, sliderThumb, imageCount) {
         arrows: imageCount > thumbCount,
         dots: false,
         infinite: imageCount > thumbCount,
+        draggable: imageCount > thumbCount,
+        swipe: imageCount > thumbCount,
+        swipeToSlide: true,
+        touchMove: imageCount > thumbCount,
         focusOnSelect: true,
         asNavFor: "#sliderSyncingNav",
         responsive: [
