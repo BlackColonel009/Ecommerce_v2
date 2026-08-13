@@ -425,7 +425,7 @@ document.addEventListener("DOMContentLoaded", refreshNavigationBadges);
   }
   if (!document.querySelector('script[data-nt-social-proof-demo]')) {
     const script = document.createElement('script');
-    script.src = '/static/js/social-proof-demo.js?v=20260813';
+    script.src = '/static/js/social-proof-demo.js?v=20260813-real-visitors';
     script.defer = true;
     script.dataset.ntSocialProofDemo = 'true';
     document.head.appendChild(script);

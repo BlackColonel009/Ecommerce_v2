@@ -6,7 +6,7 @@
     // toutes les pages, sauf lorsqu'un visiteur la ferme pour sa session.
     if (sessionStorage.getItem(DISMISSED_KEY) === "1") return;
 
-    const names = [
+    const fictionalNames = [
         "Kossi A.", "Ama K.", "Kodjo S.", "Adjoa D.", "Komlan T.", "Akossiwa M.", "Yao G.", "Eyram A.", "Koffi N.", "Abla Y.",
         "Sena K.", "Mawuli D.", "Nana A.", "Yawa E.", "Kokou B.", "Dédé M.", "Afi S.", "Essohan P.", "Komi A.", "Mariam B.",
         "Kpatcha G.", "Akouvi K.", "N'to A.", "Ablavi S.", "Atakora K.", "Merveille A.", "Fovi D.", "Essowè N.", "Tchalla K.", "Aïcha M.",
@@ -20,6 +20,8 @@
     ];
     const times = ["à l'instant", "il y a 2 minutes", "il y a 6 minutes", "il y a 12 minutes", "il y a 18 minutes", "il y a 3 jours", "il y a 5 jours", "il y a 8 jours", "il y a 12 jours", "il y a 15 jours", "il y a 20 jours", "il y a 25 jours", "il y a 30 jours"];
     let products = [];
+    let realNames = [];
+    let people = [];
     let index = 0;
     let timer = null;
 
@@ -42,6 +44,29 @@
         return Array.isArray(result) ? result.filter(product => product?.slug && product?.name) : [];
     }
 
+    async function loadRealNames() {
+        const response = await fetch(`${window.API || ""}/visitor/social-proof`, { credentials: "include" });
+        if (!response.ok) throw new Error(`Visiteurs indisponibles (${response.status})`);
+        const result = await response.json();
+        return Array.isArray(result.visitors)
+            ? result.visitors.map(visitor => String(visitor.first_name || "").trim()).filter(Boolean)
+            : [];
+    }
+
+    function buildPeople() {
+        // À partir de 30 visiteurs ayant fourni un prénom, seules les données
+        // réelles sont proposées. Avant ce seuil, on mélange les deux listes.
+        if (realNames.length >= 30) return realNames;
+        if (!realNames.length) return fictionalNames;
+        const mixed = [];
+        const length = Math.max(realNames.length, fictionalNames.length);
+        for (let position = 0; position < length; position += 1) {
+            if (realNames[position]) mixed.push(realNames[position]);
+            if (fictionalNames[position]) mixed.push(fictionalNames[position]);
+        }
+        return mixed;
+    }
+
     function closeCard(card, dismissed = false) {
         card.classList.add("is-hiding");
         window.setTimeout(() => card.remove(), 380);
@@ -55,7 +80,7 @@
         if (!products.length || sessionStorage.getItem(DISMISSED_KEY) === "1") return;
         document.querySelector(".nt-social-proof-demo")?.remove();
         const product = products[index % products.length];
-        const name = names[index % names.length];
+        const name = people[index % people.length];
         const time = times[index % times.length];
         index += 1;
 
@@ -77,8 +102,14 @@
 
     async function init() {
         try {
-            products = await loadProducts();
-            if (products.length) timer = window.setTimeout(showNext, 5000);
+            const [loadedProducts, loadedNames] = await Promise.all([
+                loadProducts(),
+                loadRealNames().catch(() => [])
+            ]);
+            products = loadedProducts;
+            realNames = loadedNames;
+            people = buildPeople();
+            if (products.length && people.length) timer = window.setTimeout(showNext, 5000);
         } catch (error) {
             console.info("[SocialProofDemo] Aucune suggestion affichée", error.message);
         }
