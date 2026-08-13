@@ -395,8 +395,7 @@ document.addEventListener("DOMContentLoaded", refreshNavigationBadges);
   else observeCards();
 })();
 
-// Preuve sociale de démonstration : désactivée en production tant qu'elle n'est
-// pas explicitement demandée avec ?nt_demo_social_proof=1.
+// Preuve sociale de démonstration partagée par toutes les pages e-commerce.
 (() => {
   if (!document.querySelector('link[data-nt-social-proof-demo]')) {
     const style = document.createElement('link');

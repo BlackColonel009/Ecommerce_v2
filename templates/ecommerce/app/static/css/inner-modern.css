@@ -198,6 +198,21 @@
 .nt-inner-page #featured-products .product-item__outer { height: 100%; }
 .nt-inner-page #category-printers .product-item__inner { display: flex; flex-direction: column; height: 100%; padding: 16px !important; }
 .nt-inner-page #category-printers .product-item__body { display: flex; flex: 1; flex-direction: column; }
+.nt-page-product #category-printers .product-item__body > .flex-center-between.mb-1 {
+    margin-top: auto !important;
+    min-height: 44px;
+    padding-top: 10px;
+}
+.nt-page-product #category-printers .product-item__footer {
+    border-top: 1px solid var(--nt-line);
+    display: block;
+    flex: 0 0 38px;
+    margin-top: 0 !important;
+    min-height: 38px;
+    opacity: 1;
+    padding-top: 9px;
+    transform: none;
+}
 .nt-inner-page #category-printers .product-images-wrapper {
     align-items: center;
     aspect-ratio: 1 / 1;

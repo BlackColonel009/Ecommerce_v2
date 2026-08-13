@@ -1,17 +1,10 @@
 (() => {
     "use strict";
 
-    const DEMO_KEY = "nt_social_proof_demo";
     const DISMISSED_KEY = "nt_social_proof_demo_dismissed";
-    const params = new URLSearchParams(window.location.search);
-    const localHost = /^(localhost|127\.0\.0\.1|::1)$/i.test(window.location.hostname);
-    const requested = params.get("nt_demo_social_proof");
-
-    if (requested === "1") localStorage.setItem(DEMO_KEY, "1");
-    if (requested === "0") localStorage.removeItem(DEMO_KEY);
-    // En production, ce module reste un outil de démo : il doit être activé
-    // explicitement avec ?nt_demo_social_proof=1 (le choix est mémorisé).
-    if (!(localHost || localStorage.getItem(DEMO_KEY) === "1") || sessionStorage.getItem(DISMISSED_KEY) === "1") return;
+    // La carte fait partie de l'expérience e-commerce : elle est visible sur
+    // toutes les pages, sauf lorsqu'un visiteur la ferme pour sa session.
+    if (sessionStorage.getItem(DISMISSED_KEY) === "1") return;
 
     const names = [
         "Kossi A.", "Ama K.", "Kodjo S.", "Adjoa D.", "Komlan T.", "Akossiwa M.", "Yao G.", "Eyram A.", "Koffi N.", "Abla Y.",
