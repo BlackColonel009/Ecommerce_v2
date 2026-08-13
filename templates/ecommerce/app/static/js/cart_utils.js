@@ -395,6 +395,25 @@ document.addEventListener("DOMContentLoaded", refreshNavigationBadges);
   else observeCards();
 })();
 
+// Preuve sociale de démonstration : désactivée en production tant qu'elle n'est
+// pas explicitement demandée avec ?nt_demo_social_proof=1.
+(() => {
+  if (!document.querySelector('link[data-nt-social-proof-demo]')) {
+    const style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = '/static/css/social-proof-demo.css?v=20260812';
+    style.dataset.ntSocialProofDemo = 'true';
+    document.head.appendChild(style);
+  }
+  if (!document.querySelector('script[data-nt-social-proof-demo]')) {
+    const script = document.createElement('script');
+    script.src = '/static/js/social-proof-demo.js?v=20260812';
+    script.defer = true;
+    script.dataset.ntSocialProofDemo = 'true';
+    document.head.appendChild(script);
+  }
+})();
+
 // Panneau éditorial/promotionnel partagé par toutes les pages e-commerce.
 (() => {
   if (!document.querySelector('link[data-nt-context-rail]')) {

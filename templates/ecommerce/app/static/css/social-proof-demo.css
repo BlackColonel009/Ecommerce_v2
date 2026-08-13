@@ -1,0 +1,37 @@
+.nt-social-proof-demo {
+    align-items: center;
+    background: rgba(255,255,255,.98);
+    border: 1px solid rgba(17,17,17,.09);
+    border-radius: 18px;
+    bottom: 24px;
+    box-shadow: 0 16px 42px rgba(0,0,0,.18);
+    color: var(--nt-ink, #171717);
+    display: flex;
+    gap: 12px;
+    left: 24px;
+    max-width: min(360px, calc(100vw - 48px));
+    opacity: 0;
+    padding: 10px 38px 10px 10px;
+    position: fixed;
+    transform: translateX(-28px);
+    transition: opacity .32s ease, transform .38s cubic-bezier(.2,.8,.2,1);
+    z-index: 1070;
+}
+.nt-social-proof-demo.is-visible { opacity: 1; transform: translateX(0); }
+.nt-social-proof-demo.is-hiding { opacity: 0; transform: translateX(-20px); }
+.nt-social-proof-demo__image { align-items: center; background: var(--nt-soft, #f4f4f1); border-radius: 13px; display: flex; flex: 0 0 66px; height: 66px; justify-content: center; overflow: hidden; width: 66px; }
+.nt-social-proof-demo__image img { height: 100%; object-fit: contain; padding: 5px; width: 100%; }
+.nt-social-proof-demo__body { min-width: 0; }
+.nt-social-proof-demo__eyebrow { color: var(--nt-muted, #6c6c6c); display: block; font-size: 10px; font-weight: 700; letter-spacing: .03em; margin-bottom: 3px; }
+.nt-social-proof-demo__eyebrow strong { color: var(--nt-red, #ed0012); }
+.nt-social-proof-demo__name { color: inherit; display: -webkit-box; font-size: 13px; font-weight: 800; line-height: 1.25; overflow: hidden; text-decoration: none; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.nt-social-proof-demo__meta { color: var(--nt-muted, #747474); display: block; font-size: 11px; margin-top: 4px; }
+.nt-social-proof-demo__close { align-items: center; background: #ededed; border: 0; border-radius: 50%; color: #222; cursor: pointer; display: flex; font-size: 18px; height: 25px; justify-content: center; line-height: 1; padding: 0; position: absolute; right: 9px; top: 9px; width: 25px; }
+.nt-social-proof-demo__close:hover, .nt-social-proof-demo__close:focus-visible { background: var(--nt-red, #ed0012); color: #fff; outline: 0; }
+@media (max-width: 575.98px) {
+    .nt-social-proof-demo { bottom: 14px; left: 12px; max-width: calc(100vw - 24px); }
+    .nt-social-proof-demo__image { flex-basis: 58px; height: 58px; width: 58px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .nt-social-proof-demo { transition: none; }
+}
