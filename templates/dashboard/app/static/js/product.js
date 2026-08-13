@@ -357,6 +357,67 @@ document.getElementById("add-spec-btn").addEventListener("click", (e) => {
   document.getElementById("specs-list").appendChild(createSpecRow());
 });
 
+// ---------- RECHERCHE ASSISTÉE DES SPECS CONSTRUCTEUR ----------
+function applyLookupSpecs(specs) {
+  const list = document.getElementById("specs-list");
+  list.innerHTML = "";
+  specs.forEach(spec => list.appendChild(createSpecRow(spec.key, spec.value)));
+  if (!specs.length) list.appendChild(createSpecRow());
+  updatePreview();
+}
+
+document.getElementById("lookup-product-specs").addEventListener("click", async () => {
+  const name = document.getElementById("product-name").value.trim();
+  const status = document.getElementById("product-specs-lookup-status");
+  const results = document.getElementById("product-specs-lookup-results");
+  const button = document.getElementById("lookup-product-specs");
+  if (name.length < 3) {
+    status.textContent = "Saisissez d'abord le nom complet du produit.";
+    document.getElementById("product-name").focus();
+    return;
+  }
+  button.disabled = true;
+  status.textContent = "Recherche sur les sources constructeur…";
+  results.replaceChildren();
+  try {
+    const response = await fetch(`${API_BASE}/products/specs/lookup`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${TOKEN}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ product_name: name })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.detail || "Recherche indisponible.");
+    if (!data.candidates?.length) {
+      status.textContent = "Aucune fiche constructeur trouvée. Vérifiez le modèle exact.";
+      return;
+    }
+    status.textContent = "Choisissez une fiche puis vérifiez les caractéristiques avant l'enregistrement.";
+    data.candidates.forEach(candidate => {
+      const card = document.createElement("div");
+      card.className = "border rounded p-2 mb-2 bg-light";
+      const title = document.createElement("strong");
+      title.textContent = candidate.title || "Fiche constructeur";
+      const source = document.createElement("a");
+      source.href = candidate.url; source.target = "_blank"; source.rel = "noopener";
+      source.className = "d-block small text-primary text-truncate"; source.textContent = candidate.url;
+      const use = document.createElement("button");
+      use.type = "button"; use.className = "btn btn-sm btn-primary mt-2";
+      use.innerHTML = '<i class="fas fa-check mr-1"></i> Utiliser ces caractéristiques';
+      use.disabled = !candidate.specs?.length;
+      use.addEventListener("click", () => { applyLookupSpecs(candidate.specs); status.textContent = "Caractéristiques ajoutées : vérifiez-les avant de créer le produit."; results.replaceChildren(); });
+      const hint = document.createElement("small");
+      hint.className = "d-block text-muted mt-1";
+      hint.textContent = candidate.specs?.length ? `${candidate.specs.length} caractéristique(s) détectée(s)` : "Aucune caractéristique exploitable détectée";
+      card.append(title, source, hint, use);
+      results.appendChild(card);
+    });
+  } catch (error) {
+    status.textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
 // initial one spec row
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("specs-list").appendChild(createSpecRow());
@@ -588,6 +649,7 @@ document.getElementById("product-form").addEventListener("submit", async functio
 
         const product = await response.json();
         this.reset();
+        renderSelectedProductImages();
         ["specs-list", "colors-list", "prices-list", "variants-list"].forEach(id => {
             document.getElementById(id).innerHTML = "";
         });
@@ -833,7 +895,44 @@ function updatePreview() {
 
 // Attacher les événements
 document.getElementById("product-form").addEventListener("input", updatePreview);
-document.getElementById("product-images").addEventListener("change", updatePreview);
+const productImagesInput = document.getElementById("product-images");
+
+function renderSelectedProductImages() {
+    const container = document.getElementById("selected-product-images");
+    if (!container || !productImagesInput) return;
+    const files = [...productImagesInput.files];
+    container.replaceChildren();
+    if (!files.length) return;
+
+    files.forEach((file, index) => {
+        const item = document.createElement("div");
+        item.className = "nt-selected-product-image";
+        const label = document.createElement("span");
+        label.className = "nt-selected-product-image__name";
+        label.textContent = `${index === 0 ? "Principale · " : ""}${file.name}`;
+        label.title = file.name;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "nt-selected-product-image__remove";
+        remove.setAttribute("aria-label", `Retirer ${file.name}`);
+        remove.innerHTML = '<i class="fas fa-times" aria-hidden="true"></i>';
+        remove.addEventListener("click", () => {
+            const filesLeft = [...productImagesInput.files].filter((_, fileIndex) => fileIndex !== index);
+            const transfer = new DataTransfer();
+            filesLeft.forEach(currentFile => transfer.items.add(currentFile));
+            productImagesInput.files = transfer.files;
+            renderSelectedProductImages();
+            updatePreview();
+        });
+        item.append(label, remove);
+        container.appendChild(item);
+    });
+}
+
+productImagesInput.addEventListener("change", () => {
+    renderSelectedProductImages();
+    updatePreview();
+});
 
 // Fonction pour afficher les produits dans le tableau
 // Modifier displayProducts pour accepter un paramètre

@@ -140,6 +140,11 @@
             color: white;
             font-size: 0.65rem;
         }
+        .nt-selected-product-images { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .nt-selected-product-image { align-items: center; background: #f8f9fa; border: 1px solid #dfe3e7; border-radius: 999px; display: inline-flex; gap: 7px; max-width: 100%; padding: 5px 6px 5px 10px; }
+        .nt-selected-product-image__name { font-size: .78rem; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .nt-selected-product-image__remove { align-items: center; background: #fff; border: 1px solid #dc3545; border-radius: 50%; color: #dc3545; display: inline-flex; height: 24px; justify-content: center; padding: 0; width: 24px; }
+        .nt-selected-product-image__remove:hover, .nt-selected-product-image__remove:focus { background: #dc3545; color: #fff; outline: none; }
         /* Style pour la barre de recherche */
         .search-wrapper {
             min-width: 250px;
@@ -397,6 +402,11 @@
                                             <input type="text" class="form-control" id="product-name" list="existing-product-names" autocomplete="off" required>
                                             <datalist id="existing-product-names"></datalist>
                                             <small class="form-text text-muted">Commencez à écrire pour reprendre rapidement un nom déjà enregistré.</small>
+                                            <button id="lookup-product-specs" class="btn btn-sm btn-outline-primary mt-2" type="button">
+                                                <i class="fas fa-robot mr-1" aria-hidden="true"></i> Rechercher les caractéristiques
+                                            </button>
+                                            <small id="product-specs-lookup-status" class="form-text text-muted"></small>
+                                            <div id="product-specs-lookup-results" class="mt-2"></div>
                                         </div>
 
                                         <!-- Slug -->
@@ -551,9 +561,10 @@
 
                                         <!-- Images -->
                                         <div class="form-group">
-                                            <label for="product-images">Images (plusieurs)</label>
-                                            <input type="file" class="form-control-file" id="product-images" accept="image/*" multiple>
-                                            <small class="form-text text-muted">La première image sera l’image principale.</small>
+                                             <label for="product-images">Images (plusieurs)</label>
+                                             <input type="file" class="form-control-file" id="product-images" accept="image/*" multiple>
+                                             <small class="form-text text-muted">La première image sera l’image principale.</small>
+                                             <div id="selected-product-images" class="nt-selected-product-images" aria-live="polite"></div>
                                         </div>
 
                                         <button type="submit" class="btn btn-success btn-block mt-3">Ajouter le produit</button>
@@ -877,7 +888,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="/static/js/nav.js"></script>
-    <script src="/static/js/product.js?v=20260810-spec-templates"></script>
+    <script src="/static/js/product.js?v=20260813-manufacturer-specs"></script>
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

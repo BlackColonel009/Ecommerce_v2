@@ -1,11 +1,15 @@
 from datetime import datetime
+import json
 import re
+from urllib.error import URLError
+from urllib.request import Request as UrlRequest, urlopen
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
-from pydantic import json
+from pydantic import BaseModel, Field
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from database import get_db
+from config import settings
 from models.model_cart import CartItem
 from models.model_marketing import Promo, PromoType
 from models.model_product import Inventory, Price, Product, ProductColor, ProductImage, ProductSpec, ProductVariant
@@ -19,6 +23,72 @@ from schemas.product_schema import ProductSchema as ProductSchema, ProductColorS
 from fastapi import Query
 
 router = APIRouter(prefix="/products", tags=["Products"])
+
+
+class ProductSpecsLookup(BaseModel):
+    product_name: str = Field(min_length=3, max_length=220)
+
+
+MANUFACTURER_DOMAINS = {
+    "hp": "hp.com", "hewlett": "hp.com", "lenovo": "lenovo.com", "dell": "dell.com",
+    "asus": "asus.com", "acer": "acer.com", "apple": "apple.com", "samsung": "samsung.com",
+    "msi": "msi.com", "canon": "canon.com", "epson": "epson.com", "sony": "sony.com",
+    "logitech": "logitech.com", "huawei": "huawei.com", "xiaomi": "mi.com"
+}
+
+
+def extract_specs_from_text(text: str) -> list[dict[str, str]]:
+    """Extrait les informations explicites de l'extrait constructeur, sans inventer."""
+    patterns = [
+        ("Processeur", r"\b(?:intel\s+)?(?:core\s+)?i[3579][-\s\w]*|\b(?:amd\s+)?ryzen\s+[3579][-\s\w]*|\bapple\s+m[1-4][\w\s-]*"),
+        ("Mémoire RAM", r"\b(?:4|8|12|16|24|32|48|64|96)\s?GB\s+(?:RAM|memory)\b"),
+        ("Stockage", r"\b(?:128|256|512|1024|1|2|4)\s?(?:GB|TB)\s+(?:SSD|HDD|storage)\b"),
+        ("Écran", r"\b(?:[1-9]\d(?:\.\d)?)[\"”]\s*(?:FHD|QHD|OLED|IPS|display|écran)?"),
+        ("Carte graphique", r"\b(?:NVIDIA|GeForce|RTX|GTX|Radeon)[\w\s-]*(?:\d{3,4}|graphics)?\b"),
+        ("Système", r"\bWindows\s+(?:10|11)(?:\s+\w+)?\b|\bmacOS\b|\bAndroid\s+\d+\b"),
+    ]
+    specs, seen = [], set()
+    for key, pattern in patterns:
+        match = re.search(pattern, text, flags=re.IGNORECASE)
+        if match:
+            value = " ".join(match.group(0).split())
+            token = (key, value.lower())
+            if token not in seen:
+                seen.add(token)
+                specs.append({"key": key, "value": value})
+    return specs
+
+
+@router.post("/specs/lookup")
+def lookup_manufacturer_specs(payload: ProductSpecsLookup, _admin=Depends(get_current_admin)):
+    """Recherche les fiches constructeur via Serper et propose des specs à valider."""
+    if not settings.SERPER_API_KEY:
+        raise HTTPException(503, "Recherche non configurée : ajoutez SERPER_API_KEY dans le .env serveur.")
+
+    query = " ".join(payload.product_name.split())
+    query_lower = query.lower()
+    domain = next((value for token, value in MANUFACTURER_DOMAINS.items() if token in query_lower), None)
+    search_query = f'{query} site:{domain}' if domain else f'{query} official manufacturer specifications'
+    try:
+        request = UrlRequest(
+            "https://google.serper.dev/search",
+            data=json.dumps({"q": search_query, "num": 5}).encode("utf-8"),
+            headers={"X-API-KEY": settings.SERPER_API_KEY, "Content-Type": "application/json"},
+            method="POST",
+        )
+        with urlopen(request, timeout=12) as response:
+            results = json.loads(response.read().decode("utf-8"))
+    except (URLError, TimeoutError, ValueError) as error:
+        raise HTTPException(502, f"Recherche constructeur indisponible : {error}") from error
+
+    candidates = []
+    for item in results.get("organic", [])[:5]:
+        link, title, snippet = item.get("link", ""), item.get("title", ""), item.get("snippet", "")
+        if domain and domain not in link.lower():
+            continue
+        details = " ".join(part for part in (title, snippet) if part)
+        candidates.append({"title": title, "url": link, "specs": extract_specs_from_text(details)})
+    return {"query": query, "source_domain": domain, "candidates": candidates}
 
 def generate_slug(name):
         """Génère un slug à partir du nom du produit"""

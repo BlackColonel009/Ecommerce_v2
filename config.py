@@ -42,6 +42,9 @@ class Settings(BaseSettings):
     MAIL_SSL_TLS: bool = False
     FRONTEND_URL: str = "http://localhost:8001"
     DASHBOARD_URL: str = "http://localhost:8002"
+    # Clé serveur du moteur de recherche utilisé uniquement dans le dashboard.
+    # Ne jamais l'exposer dans les fichiers JavaScript.
+    SERPER_API_KEY: str | None = None
 
     @property
     def cors_origins(self) -> list[str]:
