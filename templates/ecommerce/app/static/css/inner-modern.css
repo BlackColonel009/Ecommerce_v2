@@ -230,6 +230,34 @@
 .nt-page-product .nt-product-image-zoom__hint { align-items: center; background: rgba(17,17,17,.82); border-radius: 999px; bottom: 14px; color: var(--nt-white); display: inline-flex; font-size: 11px; font-weight: 700; gap: 7px; left: 50%; opacity: 0; padding: 8px 13px; pointer-events: none; position: absolute; transform: translate(-50%, 8px); transition: opacity .2s ease, transform .2s ease; white-space: nowrap; }
 .nt-page-product #sliderSyncingNav .js-product-image-zoom:hover .nt-product-image-zoom__hint,
 .nt-page-product #sliderSyncingNav .js-product-image-zoom:focus-visible .nt-product-image-zoom__hint { opacity: 1; transform: translate(-50%, 0); }
+.nt-page-product #sliderSyncingNav .nt-gallery-arrow {
+    align-items: center;
+    background: var(--nt-yellow) !important;
+    border: 2px solid var(--nt-black) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 8px 18px rgba(0,0,0,.2);
+    color: var(--nt-black) !important;
+    display: flex !important;
+    font-size: 0 !important;
+    height: 40px;
+    justify-content: center;
+    opacity: 1 !important;
+    padding: 0 !important;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background-color .2s ease, color .2s ease, transform .2s ease;
+    width: 40px;
+    z-index: 7;
+}
+.nt-page-product #sliderSyncingNav .nt-gallery-arrow.slick-prev { left: 13px; }
+.nt-page-product #sliderSyncingNav .nt-gallery-arrow.slick-next { right: 13px; }
+.nt-page-product #sliderSyncingNav .nt-gallery-arrow::before { color: inherit !important; font-family: "Font Awesome 5 Free" !important; font-size: 13px !important; font-weight: 900 !important; line-height: 1; opacity: 1 !important; }
+.nt-page-product #sliderSyncingNav .nt-gallery-arrow.slick-prev::before { content: "\f053" !important; }
+.nt-page-product #sliderSyncingNav .nt-gallery-arrow.slick-next::before { content: "\f054" !important; }
+.nt-page-product #sliderSyncingNav .nt-gallery-arrow:hover,
+.nt-page-product #sliderSyncingNav .nt-gallery-arrow:focus-visible { background: var(--nt-red) !important; color: var(--nt-white) !important; outline: 0; transform: translateY(-50%) scale(1.06); }
+.nt-page-product #sliderSyncingNav .nt-gallery-arrow.slick-disabled { display: none !important; }
 .nt-page-product #sliderSyncingNav.nt-slick-static .js-slide,
 .nt-page-product #sliderSyncingThumb.nt-slick-static .js-slide { height: auto; overflow: visible; visibility: visible; }
 .nt-page-product #sliderSyncingThumb { margin-top: 12px; max-width: 100%; min-height: 82px; overflow: hidden !important; white-space: normal !important; }

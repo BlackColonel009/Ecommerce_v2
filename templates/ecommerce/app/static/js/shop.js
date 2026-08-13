@@ -92,8 +92,8 @@ async function loadrelatedinthiscategory() {
                 arrows: true,
                 dots: true,
                 appendDots: $container.closest(".position-relative").find(".u-slick__pagination"),
-                prevArrow: `<button type="button" class="${container.dataset.arrowLeftClasses}"></button>`,
-                nextArrow: `<button type="button" class="${container.dataset.arrowRightClasses}"></button>`,
+                prevArrow: '<button type="button" class="slick-prev" aria-label="Produits recommandés précédents"></button>',
+                nextArrow: '<button type="button" class="slick-next" aria-label="Produits recommandés suivants"></button>',
                 responsive: JSON.parse(container.dataset.responsive || "[]")
             });
         }

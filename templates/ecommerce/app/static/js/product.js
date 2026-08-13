@@ -330,6 +330,8 @@ function initProductGallerySliders(sliderNav, sliderThumb, imageCount) {
         fade: imageCount > 1,
         infinite: imageCount > 1,
         adaptiveHeight: false,
+        prevArrow: '<button type="button" class="slick-prev nt-gallery-arrow" aria-label="Image précédente"></button>',
+        nextArrow: '<button type="button" class="slick-next nt-gallery-arrow" aria-label="Image suivante"></button>',
         asNavFor: "#sliderSyncingThumb"
     });
 

@@ -9,6 +9,8 @@
 
     if (requested === "1") localStorage.setItem(DEMO_KEY, "1");
     if (requested === "0") localStorage.removeItem(DEMO_KEY);
+    // En production, ce module reste un outil de démo : il doit être activé
+    // explicitement avec ?nt_demo_social_proof=1 (le choix est mémorisé).
     if (!(localHost || localStorage.getItem(DEMO_KEY) === "1") || sessionStorage.getItem(DISMISSED_KEY) === "1") return;
 
     const names = [
@@ -80,12 +82,17 @@
         }, 7000);
     }
 
-    document.addEventListener("DOMContentLoaded", async () => {
+    async function init() {
         try {
             products = await loadProducts();
             if (products.length) timer = window.setTimeout(showNext, 5000);
         } catch (error) {
             console.info("[SocialProofDemo] Aucune suggestion affichée", error.message);
         }
-    }, { once: true });
+    }
+
+    // Le fichier est injecté dynamiquement par cart_utils : DOMContentLoaded
+    // peut déjà avoir eu lieu au moment où il s'exécute en production.
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
+    else init();
 })();

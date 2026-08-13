@@ -401,13 +401,13 @@ document.addEventListener("DOMContentLoaded", refreshNavigationBadges);
   if (!document.querySelector('link[data-nt-social-proof-demo]')) {
     const style = document.createElement('link');
     style.rel = 'stylesheet';
-    style.href = '/static/css/social-proof-demo.css?v=20260812';
+    style.href = '/static/css/social-proof-demo.css?v=20260813';
     style.dataset.ntSocialProofDemo = 'true';
     document.head.appendChild(style);
   }
   if (!document.querySelector('script[data-nt-social-proof-demo]')) {
     const script = document.createElement('script');
-    script.src = '/static/js/social-proof-demo.js?v=20260812';
+    script.src = '/static/js/social-proof-demo.js?v=20260813';
     script.defer = true;
     script.dataset.ntSocialProofDemo = 'true';
     document.head.appendChild(script);
