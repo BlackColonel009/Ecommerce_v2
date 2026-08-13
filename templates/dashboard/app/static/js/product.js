@@ -404,13 +404,68 @@ document.getElementById("lookup-product-specs").addEventListener("click", async 
       use.type = "button"; use.className = "btn btn-sm btn-primary mt-2";
       use.innerHTML = '<i class="fas fa-check mr-1"></i> Utiliser ces caractéristiques';
       use.disabled = !candidate.specs?.length;
-      use.addEventListener("click", () => { applyLookupSpecs(candidate.specs); status.textContent = "Caractéristiques ajoutées : vérifiez-les avant de créer le produit."; results.replaceChildren(); });
+      use.addEventListener("click", () => {
+        applyLookupSpecs(candidate.specs);
+        status.textContent = "Caractéristiques ajoutées : vérifiez-les, puis importez les images souhaitées ci-dessous.";
+        use.disabled = true;
+        use.innerHTML = '<i class="fas fa-check mr-1"></i> Caractéristiques ajoutées';
+      });
       const hint = document.createElement("small");
       hint.className = "d-block text-muted mt-1";
       hint.textContent = candidate.specs?.length ? `${candidate.specs.length} caractéristique(s) détectée(s)` : "Aucune caractéristique exploitable détectée";
       card.append(title, source, hint, use);
       results.appendChild(card);
     });
+    if (data.images?.length) {
+      const imagesTitle = document.createElement("p");
+      imagesTitle.className = "font-weight-bold mb-2 mt-3";
+      imagesTitle.textContent = "Images constructeur proposées (maximum 3)";
+      const imageRow = document.createElement("div");
+      imageRow.className = "d-flex flex-wrap";
+      data.images.forEach((image, index) => {
+        const card = document.createElement("div");
+        card.className = "border rounded p-2 mr-2 mb-2 bg-white";
+        card.style.width = "145px";
+        const preview = document.createElement("img");
+        preview.src = image.image_url; preview.alt = image.title || "Image constructeur";
+        preview.className = "img-fluid d-block mx-auto mb-2";
+        preview.style.cssText = "height:90px;object-fit:contain;max-width:100%;";
+        const importButton = document.createElement("button");
+        importButton.type = "button"; importButton.className = "btn btn-sm btn-outline-success btn-block";
+        importButton.innerHTML = '<i class="fas fa-download mr-1"></i> Importer';
+        importButton.addEventListener("click", async () => {
+          importButton.disabled = true;
+          importButton.textContent = "Import…";
+          try {
+            const response = await fetch(`${API_BASE}/products/specs/image-proxy`, {
+              method: "POST",
+              headers: { "Authorization": `Bearer ${TOKEN}`, "Content-Type": "application/json" },
+              body: JSON.stringify({ image_url: image.image_url, source_url: image.source_url, source_domain: data.source_domain })
+            });
+            if (!response.ok) {
+              const error = await response.json().catch(() => ({}));
+              throw new Error(error.detail || "Import impossible.");
+            }
+            const blob = await response.blob();
+            const extension = blob.type === "image/png" ? "png" : "jpg";
+            const file = new File([blob], `constructeur-${Date.now()}-${index + 1}.${extension}`, { type: blob.type });
+            const transfer = new DataTransfer();
+            [...productImagesInput.files, file].slice(0, 3).forEach(currentFile => transfer.items.add(currentFile));
+            productImagesInput.files = transfer.files;
+            renderSelectedProductImages();
+            updatePreview();
+            importButton.innerHTML = '<i class="fas fa-check mr-1"></i> Importée';
+          } catch (error) {
+            importButton.disabled = false;
+            importButton.textContent = "Réessayer";
+            status.textContent = error.message;
+          }
+        });
+        card.append(preview, importButton);
+        imageRow.appendChild(card);
+      });
+      results.append(imagesTitle, imageRow);
+    }
   } catch (error) {
     status.textContent = error.message;
   } finally {

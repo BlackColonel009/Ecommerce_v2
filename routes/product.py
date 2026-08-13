@@ -1,9 +1,11 @@
 from datetime import datetime
+from html import unescape
 import json
 import re
 from urllib.error import URLError
+from urllib.parse import urlparse
 from urllib.request import Request as UrlRequest, urlopen
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, Depends, HTTPException, Response, UploadFile, File, Form
 from pydantic import BaseModel, Field
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
@@ -29,6 +31,12 @@ class ProductSpecsLookup(BaseModel):
     product_name: str = Field(min_length=3, max_length=220)
 
 
+class ManufacturerImageImport(BaseModel):
+    image_url: str = Field(min_length=12, max_length=2000)
+    source_url: str = Field(min_length=12, max_length=2000)
+    source_domain: str = Field(min_length=3, max_length=120)
+
+
 MANUFACTURER_DOMAINS = {
     "hp": "hp.com", "hewlett": "hp.com", "lenovo": "lenovo.com", "dell": "dell.com",
     "asus": "asus.com", "acer": "acer.com", "apple": "apple.com", "samsung": "samsung.com",
@@ -38,14 +46,26 @@ MANUFACTURER_DOMAINS = {
 
 
 def extract_specs_from_text(text: str) -> list[dict[str, str]]:
-    """Extrait les informations explicites de l'extrait constructeur, sans inventer."""
+    """Extrait des valeurs explicites d'une fiche, sans jamais les inventer."""
     patterns = [
-        ("Processeur", r"\b(?:intel\s+)?(?:core\s+)?i[3579][-\s\w]*|\b(?:amd\s+)?ryzen\s+[3579][-\s\w]*|\bapple\s+m[1-4][\w\s-]*"),
-        ("Mémoire RAM", r"\b(?:4|8|12|16|24|32|48|64|96)\s?GB\s+(?:RAM|memory)\b"),
-        ("Stockage", r"\b(?:128|256|512|1024|1|2|4)\s?(?:GB|TB)\s+(?:SSD|HDD|storage)\b"),
-        ("Écran", r"\b(?:[1-9]\d(?:\.\d)?)[\"”]\s*(?:FHD|QHD|OLED|IPS|display|écran)?"),
-        ("Carte graphique", r"\b(?:NVIDIA|GeForce|RTX|GTX|Radeon)[\w\s-]*(?:\d{3,4}|graphics)?\b"),
-        ("Système", r"\bWindows\s+(?:10|11)(?:\s+\w+)?\b|\bmacOS\b|\bAndroid\s+\d+\b"),
+        ("Processeur", r"\b(?:intel\s+)?(?:core\s+)?(?:i[3579]|ultra\s?[579])[-\s\w]*|\b(?:amd\s+)?ryzen\s+[3579][-\s\w]*|\bapple\s+m[1-4][\w\s-]*"),
+        ("Génération du processeur", r"\b(?:[1-9]|1[0-5])(st|nd|rd|th|e|ème)\s*(?:gen|generation|génération)\b"),
+        ("Mémoire RAM", r"\b(?:4|8|12|16|24|32|48|64|96|128)\s?GB\s+(?:DDR[345]|RAM|memory)\b"),
+        ("Stockage", r"\b(?:128|256|512|1024|1|2|4)\s?(?:GB|TB)\s+(?:PCIe\s+)?(?:NVMe\s+)?(?:SSD|HDD|storage)\b"),
+        ("Taille de l'écran", r"\b(?:[1-9]\d(?:[.,]\d)?)[\"”]\s*(?:FHD|QHD|UHD|OLED|IPS|display|écran)?"),
+        ("Résolution écran", r"\b(?:1[0-9]{3}|2[0-9]{3}|3[0-9]{3}|4[0-9]{3})\s*[x×]\s*(?:[0-9]{3,4})\b"),
+        ("Carte graphique", r"\b(?:NVIDIA|GeForce|RTX|GTX|Radeon|Intel\s+(?:Iris|Arc|UHD))[\w\s-]*(?:\d{3,4}|graphics)?\b"),
+        ("Système d'exploitation", r"\bWindows\s+(?:10|11)(?:\s+\w+)?\b|\bmacOS\b|\bAndroid\s+\d+\b|\bChromeOS\b"),
+        ("Webcam", r"\b(?:[0-9]+\s?MP|HD|FHD)\s+(?:webcam|camera|caméra)\b"),
+        ("Wi-Fi", r"\bWi-?Fi\s*(?:[56]|6E|7)?\b"),
+        ("Bluetooth", r"\bBluetooth\s*(?:[4-6](?:\.\d)?)?\b"),
+        ("Ports USB", r"\b(?:[1-9]\s?[x×]\s*)?USB(?:\s*(?:Type-?C|3\.2|3\.1|3\.0|4|Thunderbolt\s*4))?\b"),
+        ("Port HDMI", r"\bHDMI\s*(?:[12](?:\.\d)?)?\b"),
+        ("Port Ethernet", r"\b(?:RJ-?45|Ethernet)\b"),
+        ("Lecteur de cartes", r"\b(?:micro)?SD\s*(?:card|reader|lecteur)?\b"),
+        ("Batterie", r"\b(?:[3-9]\d|1\d{2})\s?Wh\b"),
+        ("Poids", r"\b(?:[0-9](?:[.,]\d{1,2})?)\s?(?:kg|kgs)\b"),
+        ("Dimensions", r"\b\d{2,3}(?:[.,]\d)?\s*[x×]\s*\d{2,3}(?:[.,]\d)?\s*[x×]\s*\d{1,2}(?:[.,]\d)?\s*(?:mm|cm)\b"),
     ]
     specs, seen = [], set()
     for key, pattern in patterns:
@@ -57,6 +77,36 @@ def extract_specs_from_text(text: str) -> list[dict[str, str]]:
                 seen.add(token)
                 specs.append({"key": key, "value": value})
     return specs
+
+
+def fetch_manufacturer_text(link: str, expected_domain: str | None) -> str:
+    """Lit uniquement une page HTTPS constructeur retournée par la recherche."""
+    parsed = urlparse(link)
+    hostname = (parsed.hostname or "").lower()
+    if parsed.scheme != "https" or not hostname or (expected_domain and not hostname.endswith(expected_domain)):
+        return ""
+    try:
+        request = UrlRequest(link, headers={"User-Agent": "NewTechnologiesSpecsBot/1.0 (+https://newtechnologiestg.com)"})
+        with urlopen(request, timeout=8) as response:
+            raw = response.read(750_000).decode("utf-8", errors="ignore")
+        raw = re.sub(r"<(script|style|noscript)[^>]*>.*?</\1>", " ", raw, flags=re.IGNORECASE | re.DOTALL)
+        return re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", " ", raw)))[:80_000]
+    except (URLError, TimeoutError, ValueError):
+        return ""
+
+
+def is_allowed_manufacturer_url(link: str, domain: str) -> bool:
+    parsed = urlparse(link)
+    hostname = (parsed.hostname or "").lower()
+    allowed_domain = domain.lower().strip()
+    return parsed.scheme == "https" and bool(hostname) and (hostname == allowed_domain or hostname.endswith(f".{allowed_domain}"))
+
+
+def is_safe_public_image_url(link: str) -> bool:
+    parsed = urlparse(link)
+    hostname = (parsed.hostname or "").lower()
+    forbidden = {"localhost", "127.0.0.1", "0.0.0.0", "::1"}
+    return parsed.scheme == "https" and bool(hostname) and hostname not in forbidden and not hostname.endswith(".local")
 
 
 @router.post("/specs/lookup")
@@ -78,6 +128,14 @@ def lookup_manufacturer_specs(payload: ProductSpecsLookup, _admin=Depends(get_cu
         )
         with urlopen(request, timeout=12) as response:
             results = json.loads(response.read().decode("utf-8"))
+        image_request = UrlRequest(
+            "https://google.serper.dev/images",
+            data=json.dumps({"q": search_query, "num": 6}).encode("utf-8"),
+            headers={"X-API-KEY": settings.SERPER_API_KEY, "Content-Type": "application/json"},
+            method="POST",
+        )
+        with urlopen(image_request, timeout=12) as response:
+            image_results = json.loads(response.read().decode("utf-8"))
     except (URLError, TimeoutError, ValueError) as error:
         raise HTTPException(502, f"Recherche constructeur indisponible : {error}") from error
 
@@ -86,9 +144,45 @@ def lookup_manufacturer_specs(payload: ProductSpecsLookup, _admin=Depends(get_cu
         link, title, snippet = item.get("link", ""), item.get("title", ""), item.get("snippet", "")
         if domain and domain not in link.lower():
             continue
-        details = " ".join(part for part in (title, snippet) if part)
+        details = " ".join(part for part in (title, snippet, fetch_manufacturer_text(link, domain)) if part)
         candidates.append({"title": title, "url": link, "specs": extract_specs_from_text(details)})
-    return {"query": query, "source_domain": domain, "candidates": candidates}
+    images = []
+    seen_images = set()
+    for item in image_results.get("images", []):
+        image_url = item.get("imageUrl") or item.get("image_url") or ""
+        source_url = item.get("link") or item.get("sourceUrl") or ""
+        if not domain or not image_url or not source_url or not is_allowed_manufacturer_url(source_url, domain):
+            continue
+        if image_url in seen_images:
+            continue
+        seen_images.add(image_url)
+        images.append({"image_url": image_url, "source_url": source_url, "title": item.get("title") or "Image constructeur"})
+        if len(images) == 3:
+            break
+    return {"query": query, "source_domain": domain, "candidates": candidates, "images": images}
+
+
+@router.post("/specs/image-proxy")
+def import_manufacturer_image(payload: ManufacturerImageImport, _admin=Depends(get_current_admin)):
+    """Télécharge une image constructeur vérifiée pour l'ajouter au formulaire produit."""
+    if not is_allowed_manufacturer_url(payload.source_url, payload.source_domain):
+        raise HTTPException(400, "La source de l'image n'est pas une fiche constructeur autorisée.")
+    image_url = urlparse(payload.image_url)
+    # Les constructeurs emploient parfois un CDN distinct ; la fiche source reste
+    # obligatoirement officielle et l'image doit être une URL HTTPS publique.
+    if not is_safe_public_image_url(payload.image_url):
+        raise HTTPException(400, "L'URL d'image n'est pas autorisée.")
+    try:
+        request = UrlRequest(payload.image_url, headers={"User-Agent": "NewTechnologiesSpecsBot/1.0"})
+        with urlopen(request, timeout=12) as response:
+            content_type = response.headers.get_content_type()
+            content = response.read(15 * 1024 * 1024 + 1)
+    except (URLError, TimeoutError, ValueError) as error:
+        raise HTTPException(502, "Téléchargement de l'image constructeur impossible.") from error
+    if not content_type.startswith("image/") or not content or len(content) > 15 * 1024 * 1024:
+        raise HTTPException(400, "Le fichier distant n'est pas une image valide.")
+    suffix = ".png" if content_type == "image/png" else ".jpg"
+    return Response(content=content, media_type=content_type, headers={"Content-Disposition": f'inline; filename="constructeur{suffix}"'})
 
 def generate_slug(name):
         """Génère un slug à partir du nom du produit"""
