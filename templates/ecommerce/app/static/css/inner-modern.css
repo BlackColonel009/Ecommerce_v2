@@ -229,6 +229,16 @@
 .nt-inner-page #category-printers .product-images-wrapper a { align-items: center; display: flex !important; height: 100%; justify-content: center; width: 100%; }
 .nt-inner-page #category-printers .product-images-wrapper img.main-img { height: 100% !important; max-height: 230px; max-width: 100%; object-fit: contain !important; width: 100% !important; }
 .nt-inner-page #category-printers .prodcut-price { margin-top: auto; }
+
+/* Grilles /category et /category-slug : prix + panier alignés avant la wishlist. */
+.nt-page-category-results .products-group .product-item__inner,
+.nt-page-category-results .shop-product > .product-item .product-item__inner { display: flex; flex-direction: column; height: 100%; }
+.nt-page-category-results .products-group .product-item__body,
+.nt-page-category-results .shop-product > .product-item .product-item__body { display: flex; flex: 1; flex-direction: column; }
+.nt-page-category-results .products-group .product-item__body > .flex-center-between.mb-1,
+.nt-page-category-results .shop-product > .product-item .product-item__body > .flex-center-between.mb-1 { margin-top: auto !important; min-height: 44px; padding-top: 10px; }
+.nt-page-category-results .products-group .product-item__footer,
+.nt-page-category-results .shop-product > .product-item .product-item__footer { border-top: 1px solid var(--nt-line); display: block; flex: 0 0 38px; margin-top: 0 !important; min-height: 38px; opacity: 1; padding-top: 9px; transform: none; }
 .nt-inner-page #featured-products .product-images-wrapper { flex: 0 0 132px; height: 158px; margin: 0; width: 132px; }
 .nt-inner-page #featured-products .product-images-wrapper a { align-items: center; display: flex; height: 100%; justify-content: center; width: 100%; }
 .nt-inner-page #featured-products .product-images-wrapper img.main-img { height: 100% !important; max-width: 100%; object-fit: contain !important; width: 100% !important; }
