@@ -355,6 +355,7 @@ document.addEventListener("DOMContentLoaded", refreshNavigationBadges);
     if (action.getAttribute("aria-busy") === "true") return;
 
     const productId = action.dataset.productId;
+    if (window.NTVisitorName && !await window.NTVisitorName.ensure()) return;
     const popup = window.open("", "_blank");
     action.setAttribute("aria-busy", "true");
     action.classList.add("is-loading");
@@ -393,6 +394,24 @@ document.addEventListener("DOMContentLoaded", refreshNavigationBadges);
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", observeCards, { once: true });
   else observeCards();
+})();
+
+// Petit prénom facultatif demandé avant une première demande WhatsApp.
+(() => {
+  if (!document.querySelector('link[data-nt-visitor-name-modal]')) {
+    const style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = '/static/css/visitor-name-modal.css?v=20260813-red-eyes';
+    style.dataset.ntVisitorNameModal = 'true';
+    document.head.appendChild(style);
+  }
+  if (!document.querySelector('script[data-nt-visitor-name-modal]')) {
+    const script = document.createElement('script');
+    script.src = '/static/js/visitor-name-modal.js?v=20260813-red-eyes';
+    script.defer = true;
+    script.dataset.ntVisitorNameModal = 'true';
+    document.head.appendChild(script);
+  }
 })();
 
 // Preuve sociale de démonstration partagée par toutes les pages e-commerce.

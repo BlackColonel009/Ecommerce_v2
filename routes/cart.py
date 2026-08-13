@@ -2,6 +2,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from models.model_product import Product, ProductColor, ProductVariant
 from routes.admin import get_admin_whatsapp_number
+from models.model_vistor import Visitor
 from sqlalchemy.orm import Session
 from database import get_db
 from fastapi import Request
@@ -309,7 +310,7 @@ def delete_cart_item(item_id: int, db: Session = Depends(get_db)):
 # ------------------------------------
 
 @router.get("/{product_id}/whatsapp")
-def generate_product_whatsapp(product_id: int, db: Session = Depends(get_db)):
+def generate_product_whatsapp(product_id: int, request: Request, db: Session = Depends(get_db)):
     """
     Génère un message WhatsApp pour un produit individuel
     Utilisé quand le prix est 0 ou que le produit n'est pas disponible à l'achat
@@ -318,8 +319,19 @@ def generate_product_whatsapp(product_id: int, db: Session = Depends(get_db)):
     if not product:
         raise HTTPException(status_code=404, detail="Produit non trouvé")
 
+    visitor = None
+    device_id = request.cookies.get("device_id")
+    if device_id:
+        visitor = (
+            db.query(Visitor)
+            .filter(Visitor.device_id == device_id, Visitor.first_name.isnot(None))
+            .order_by(Visitor.date.desc())
+            .first()
+        )
+
     # Construire le message de base
-    message = f"🛍️ *Demande d'information produit*\n\n"
+    greeting = f"Bonjour, je suis {visitor.first_name}." if visitor and visitor.first_name else "Bonjour,"
+    message = f"🛍️ *Demande d'information produit*\n\n{greeting}\n"
     message += f"📱 *{product.name}*\n"
     
     # Prix (si disponible)
@@ -342,7 +354,7 @@ def generate_product_whatsapp(product_id: int, db: Session = Depends(get_db)):
     
     # Ajouter un message standard
     message += f"\n❓ *Question du client:*\n"
-    message += "Bonjour, je suis intéressé par ce produit. Pouvez-vous me donner plus d'informations ?\n\n"
+    message += "Je suis intéressé par ce produit. Pouvez-vous me donner plus d'informations ?\n\n"
     message += f"🔗 Lien: https://api.newtechnologiestg.com/graph/{product.slug}"
     
     # Numéro WhatsApp (à configurer)
@@ -491,7 +503,14 @@ def generate_whatsapp(
     if not cart.items:
         raise HTTPException(400, "Your cart is empty")
 
-    message = "Bonjour, je souhaite commander les articles suivants :\n\n"
+    visitor = (
+        db.query(Visitor)
+        .filter(Visitor.device_id == device_id, Visitor.first_name.isnot(None))
+        .order_by(Visitor.date.desc())
+        .first()
+    )
+    greeting = f"Bonjour, je suis {visitor.first_name}." if visitor and visitor.first_name else "Bonjour,"
+    message = f"{greeting} Je souhaite commander les articles suivants :\n\n"
     total = 0
     for item in cart.items:
             # ✅ Déterminer le produit (soit direct, soit via variante)

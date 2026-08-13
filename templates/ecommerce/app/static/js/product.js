@@ -536,6 +536,7 @@ async function buyNowWhatsAppHandler(e) {
         return;
     }
     
+    if (window.NTVisitorName && !await window.NTVisitorName.ensure()) return;
     const popup = window.open("", "_blank");
 
     try {

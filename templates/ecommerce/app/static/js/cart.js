@@ -289,6 +289,7 @@ let locationMethod = null; // 'gps' ou 'manual'
 // Modifier la fonction checkoutWhatsApp
 async function checkoutWhatsApp() {
     try {
+        if (window.NTVisitorName && !await window.NTVisitorName.ensure()) return;
         // Afficher le modal de localisation
         $('#locationModal').modal('show');
         
