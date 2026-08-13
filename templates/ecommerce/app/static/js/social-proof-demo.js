@@ -23,7 +23,7 @@
         "Sena M.", "Kossi K.", "Mariam A.", "Koffi D.", "Ablavi K.", "Eyram S.", "Komi M.", "Adjoa A.", "Kodjo K.", "Afi D.",
         "Mawuli A.", "Yawa K.", "Kokou S.", "Akouvi M.", "Kossi D.", "Sena A.", "Koffi K.", "Eyram D.", "Komlan M.", "Abla S."
     ];
-    const times = ["à l'instant", "il y a 2 minutes", "il y a 6 minutes", "il y a 12 minutes", "il y a 18 minutes"];
+    const times = ["à l'instant", "il y a 2 minutes", "il y a 6 minutes", "il y a 12 minutes", "il y a 18 minutes", "il y a 3 jours", "il y a 5 jours", "il y a 8 jours", "il y a 12 jours", "il y a 15 jours", "il y a 20 jours", "il y a 25 jours", "il y a 30 jours"];
     let products = [];
     let index = 0;
     let timer = null;
