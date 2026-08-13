@@ -184,6 +184,38 @@
 /* Carrousels produits des pages Catégories et Fiche produit. */
 .nt-inner-page #category-printers,
 .nt-inner-page #featured-products { overflow: visible !important; }
+.nt-page-category #featured-products .nt-category-carousel-arrow,
+.nt-page-category #category-printers .nt-category-carousel-arrow {
+    align-items: center;
+    background: var(--nt-yellow) !important;
+    border: 3px solid var(--nt-black) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,.28);
+    color: var(--nt-black) !important;
+    display: flex !important;
+    font-size: 0 !important;
+    height: 46px;
+    justify-content: center;
+    margin: 0 !important;
+    opacity: 1 !important;
+    padding: 0 !important;
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    transition: background-color .2s ease, color .2s ease, opacity .2s ease, transform .2s ease;
+    width: 46px;
+    z-index: 12 !important;
+}
+.nt-page-category #featured-products .nt-category-carousel-arrow.slick-prev,
+.nt-page-category #category-printers .nt-category-carousel-arrow.slick-prev { left: -23px !important; }
+.nt-page-category #featured-products .nt-category-carousel-arrow.slick-next,
+.nt-page-category #category-printers .nt-category-carousel-arrow.slick-next { right: -23px !important; }
+.nt-page-category .nt-category-carousel-arrow::before { color: inherit !important; font-family: "Font Awesome 5 Free" !important; font-size: 15px !important; font-weight: 900 !important; line-height: 1; opacity: 1 !important; }
+.nt-page-category .nt-category-carousel-arrow.slick-prev::before { content: "\f053" !important; }
+.nt-page-category .nt-category-carousel-arrow.slick-next::before { content: "\f054" !important; }
+.nt-page-category .nt-category-carousel-arrow:hover,
+.nt-page-category .nt-category-carousel-arrow:focus-visible { background: var(--nt-red) !important; color: var(--nt-white) !important; outline: 0; transform: translateY(-50%) scale(1.06) !important; }
+.nt-page-category .nt-category-carousel-arrow.slick-disabled { cursor: default; opacity: .35 !important; pointer-events: none; }
 .nt-inner-page #category-printers .slick-list,
 .nt-inner-page #featured-products .slick-list { margin: 0 -8px; overflow: hidden; padding: 8px 0 20px; }
 .nt-inner-page #category-printers .slick-track,

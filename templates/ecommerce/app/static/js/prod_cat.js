@@ -149,8 +149,8 @@ async function loadFProducts() {
             arrows: true,
             dots: true,
             appendDots: $container.closest(".position-relative").find(".u-slick__pagination"),
-            prevArrow: `<i class="slick-prev ${container.dataset.arrowsClasses} ${container.dataset.arrowLeftClasses}"></i>`,
-            nextArrow: `<i class="slick-next ${container.dataset.arrowsClasses} ${container.dataset.arrowRightClasses}"></i>`,
+            prevArrow: '<button type="button" class="slick-prev nt-category-carousel-arrow" aria-label="Produits vedettes précédents"></button>',
+            nextArrow: '<button type="button" class="slick-next nt-category-carousel-arrow" aria-label="Produits vedettes suivants"></button>',
             responsive: JSON.parse(container.dataset.responsive || "[]")
         });
 
@@ -317,8 +317,8 @@ async function loadrelatedinthiscategory() {
                 arrows: true,
                 dots: true,
                 appendDots: $container.closest(".position-relative").find(".u-slick__pagination"),
-                prevArrow: `<button type="button" class="${container.dataset.arrowLeftClasses}"></button>`,
-                nextArrow: `<button type="button" class="${container.dataset.arrowRightClasses}"></button>`,
+                prevArrow: '<button type="button" class="slick-prev nt-category-carousel-arrow" aria-label="Produits précédents"></button>',
+                nextArrow: '<button type="button" class="slick-next nt-category-carousel-arrow" aria-label="Produits suivants"></button>',
                 responsive: JSON.parse(container.dataset.responsive || "[]")
             });
         }
