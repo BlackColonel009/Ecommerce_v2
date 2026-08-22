@@ -9,6 +9,10 @@
             <label class="sr-only" for="searchProduct">Rechercher un produit</label>
             <i class="ec ec-search nt-search__icon" aria-hidden="true"></i>
             <input id="searchProduct" type="search" autocomplete="off" placeholder="Quel produit recherchez-vous ?" aria-controls="search-results">
+            <label class="sr-only" for="searchCategory">Filtrer par catégorie</label>
+            <select id="searchCategory" class="nt-search__category" aria-label="Filtrer la recherche par catégorie">
+                <option value="">Toutes catégories</option>
+            </select>
             <button id="searchProduct1" type="button">Rechercher</button>
             <div id="search-results" class="nt-search__results" aria-live="polite"></div>
         </div>

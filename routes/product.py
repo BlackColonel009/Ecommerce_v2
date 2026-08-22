@@ -975,21 +975,24 @@ def search_products(
     db: Session = Depends(get_db),
     q: str = Query(..., min_length=2),
     category: Optional[str] = Query(None),
+    category_slug: Optional[str] = Query(None),
     limit: int = Query(10, ge=1)
 ):
     # Base : produits non supprimés
     products = db.query(Product).filter(Product.is_deleted == False)
 
     # Filtre texte (nom ou description)
-    products = products.join(Product.brand).join(Product.specs).filter(
-        Product.name.ilike(f"%{q}%")
-        | Product.description.ilike(f"%{q}%")
-        | Product.brand.has(Brand.name.ilike(f"%{q}%"))
-        | Product.specs.any(ProductSpec.value.ilike(f"%{q}%"))
-    )
+    products = products.filter(or_(
+        Product.name.ilike(f"%{q}%"),
+        Product.description.ilike(f"%{q}%"),
+        Product.brand.has(Brand.name.ilike(f"%{q}%")),
+        Product.specs.any(ProductSpec.value.ilike(f"%{q}%")),
+    ))
 
     # Filtre catégorie (optionnel)
-    if category:
+    if category_slug:
+        products = products.filter(Product.category.has(CategoryModel.slug == category_slug))
+    elif category:
         products = products.join(CategoryModel).filter(CategoryModel.name.ilike(f"%{category}%"))
 
     # Limiter les résultats

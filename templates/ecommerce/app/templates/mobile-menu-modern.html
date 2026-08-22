@@ -19,6 +19,10 @@
             <label class="sr-only" for="mobileSearchInput">Rechercher un produit</label>
             <input id="mobileSearchInput" type="search" autocomplete="off" placeholder="Rechercher un produit…" aria-controls="mobile-search-results">
             <button id="mobileSearchButton" type="button" aria-label="Lancer la recherche"><i class="ec ec-search"></i></button>
+            <label class="sr-only" for="mobileSearchCategory">Filtrer par catégorie</label>
+            <select id="mobileSearchCategory" class="nt-mobile-search__category" aria-label="Filtrer la recherche par catégorie">
+                <option value="">Toutes catégories</option>
+            </select>
             <div id="mobile-search-results" class="nt-search__results" aria-live="polite"></div>
         </div>
         <nav class="nt-mobile-nav" aria-label="Navigation mobile">

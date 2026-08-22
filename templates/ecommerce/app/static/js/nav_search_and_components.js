@@ -57,10 +57,39 @@ function showResults(container) {
     }, 10);
 }
 
+let searchCategoriesRequest = null;
+
+async function populateSearchCategories(select) {
+    if (!select || select.dataset.categoriesLoaded === 'true') return;
+
+    try {
+        if (!searchCategoriesRequest) {
+            searchCategoriesRequest = fetch(`${API}/categories/`).then(res => {
+                if (!res.ok) throw new Error('Impossible de charger les catégories');
+                return res.json();
+            });
+        }
+
+        const categories = await searchCategoriesRequest;
+        const orderedCategories = [...categories].sort((a, b) => {
+            const aChild = a.parent_id ? 1 : 0;
+            const bChild = b.parent_id ? 1 : 0;
+            return aChild - bChild || a.name.localeCompare(b.name, 'fr');
+        });
+
+        orderedCategories.forEach(category => {
+            select.add(new Option(`${category.parent_id ? '— ' : ''}${category.name}`, category.slug));
+        });
+        select.dataset.categoriesLoaded = 'true';
+    } catch (error) {
+        console.warn('Catégories indisponibles pour la recherche :', error);
+    }
+}
+
 // ------------------------------------------------------
 // FONCTION DE RECHERCHE GÉNÉRIQUE
 // ------------------------------------------------------
-async function performSearch(query, container) {
+async function performSearch(query, container, categorySlug = '') {
     try {
         if (query.length < 2) {
             if (query.length === 0) {
@@ -83,7 +112,8 @@ async function performSearch(query, container) {
         </div>`;
         showResults(container);
 
-        const url = `${API}/products/search?q=${encodeURIComponent(query)}&limit=10`;
+        const categoryFilter = categorySlug ? `&category_slug=${encodeURIComponent(categorySlug)}` : '';
+        const url = `${API}/products/search?q=${encodeURIComponent(query)}&limit=10${categoryFilter}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error("Erreur recherche");
         const data = await res.json();
@@ -193,15 +223,20 @@ function initDesktopSearch() {
     const searchInput = document.getElementById("searchProduct");
     const resultsContainer = document.getElementById("search-results");
     const searchButton = document.getElementById("searchProduct1");
+    const searchCategory = document.getElementById("searchCategory");
 
     if (!searchInput || !resultsContainer || !searchButton) {
         return false;
     }
 
+    if (searchInput.dataset.searchReady === 'true') return true;
+    searchInput.dataset.searchReady = 'true';
+    populateSearchCategories(searchCategory);
+
     console.log("✅ Initialisation recherche desktop");
     
     async function desktopSearch() {
-        await performSearch(searchInput.value.trim(), resultsContainer);
+        await performSearch(searchInput.value.trim(), resultsContainer, searchCategory?.value || '');
     }
     
     const debouncedDesktopSearch = debounce(desktopSearch, 300);
@@ -210,6 +245,9 @@ function initDesktopSearch() {
     searchButton.addEventListener("click", (e) => {
         e.preventDefault();
         desktopSearch();
+    });
+    searchCategory?.addEventListener('change', () => {
+        if (searchInput.value.trim()) desktopSearch();
     });
     
     searchInput.addEventListener("focus", () => {
@@ -270,15 +308,20 @@ function initMobileSearch() {
     const mobileSearchInput = document.getElementById("mobileSearchInput");
     const mobileResultsContainer = document.getElementById("mobile-search-results");
     const mobileSearchButton = document.getElementById("mobileSearchButton");
+    const mobileSearchCategory = document.getElementById("mobileSearchCategory");
 
     if (!mobileSearchInput || !mobileResultsContainer || !mobileSearchButton) {
         return false;
     }
 
+    if (mobileSearchInput.dataset.searchReady === 'true') return true;
+    mobileSearchInput.dataset.searchReady = 'true';
+    populateSearchCategories(mobileSearchCategory);
+
     console.log("✅ Initialisation recherche mobile");
     
     async function mobileSearch() {
-        await performSearch(mobileSearchInput.value.trim(), mobileResultsContainer);
+        await performSearch(mobileSearchInput.value.trim(), mobileResultsContainer, mobileSearchCategory?.value || '');
     }
     
     const debouncedMobileSearch = debounce(mobileSearch, 300);
@@ -287,6 +330,9 @@ function initMobileSearch() {
     mobileSearchButton.addEventListener("click", (e) => {
         e.preventDefault();
         mobileSearch();
+    });
+    mobileSearchCategory?.addEventListener('change', () => {
+        if (mobileSearchInput.value.trim()) mobileSearch();
     });
     
     mobileSearchInput.addEventListener("focus", () => {
