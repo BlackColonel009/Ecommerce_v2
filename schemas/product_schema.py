@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
-from schemas.brand_schema import BrandBase
+from schemas.brand_schema import Brand
 from schemas.category_schema import CategoryBase
 from schemas.marketing_schema import Promo
 
@@ -115,7 +115,9 @@ class ProductSchema(BaseModel):
     slug: str
     description: Optional[str]
     category: CategoryBase
-    brand: BrandBase
+    # L'identifiant est nécessaire au dashboard pour présélectionner la marque
+    # lors de la modification d'un produit.
+    brand: Brand
     rating: float                     # moyenne des avis
     is_deleted: bool 
     images: List[ProductImage] = []

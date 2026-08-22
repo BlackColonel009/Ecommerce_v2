@@ -1107,8 +1107,14 @@ async function loadBrandsInEdit(selectedId) {
     select.innerHTML = "";
 
     brands.forEach(b => {
-        select.innerHTML += `<option value="${b.id}" ${b.id === selectedId ? "selected" : ""}>${b.name}</option>`;
+        select.innerHTML += `<option value="${b.id}">${b.name}</option>`;
     });
+
+    // La valeur d'un <select> est une chaîne : on la force explicitement afin
+    // de conserver la marque actuelle, quelle que soit la forme de l'ID renvoyé.
+    if (selectedId !== undefined && selectedId !== null) {
+        select.value = String(selectedId);
+    }
 }
 
 
