@@ -361,7 +361,7 @@ async def create_product(
         valid_images = [image for image in (images or []) if image and image.filename]
         if valid_images:
             for i, image in enumerate(valid_images):
-                file_path = save_upload_file(image)
+                file_path = save_upload_file(image, watermark=True)
                 img = ProductImage(
                     product_id=product.id,
                     image_url=file_path,
@@ -807,7 +807,7 @@ async def update_product(
 
         db.query(ProductImage).filter(ProductImage.product_id == product_id).delete()
         for i, img_file in enumerate(valid_images):
-            file_path = save_upload_file(img_file)
+            file_path = save_upload_file(img_file, watermark=True)
             db.add(ProductImage(
                 product_id=product_id,
                 image_url=file_path,
