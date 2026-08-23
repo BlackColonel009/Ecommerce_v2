@@ -78,13 +78,82 @@ async function populateSearchCategories(select) {
         });
 
         orderedCategories.forEach(category => {
-            select.add(new Option(`${category.parent_id ? '— ' : ''}${category.name}`, category.slug));
+            const option = new Option(`${category.parent_id ? '— ' : ''}${category.name}`, category.slug);
+            option.dataset.image = category.image_url || '';
+            select.add(option);
         });
         select.dataset.categoriesLoaded = 'true';
+        renderSearchCategoryMenu(select);
     } catch (error) {
         console.warn('Catégories indisponibles pour la recherche :', error);
     }
 }
+
+function renderSearchCategoryMenu(select) {
+    const menu = select?.closest('.nt-search__category-menu');
+    if (!menu) return;
+
+    const trigger = menu.querySelector('.nt-search__category-trigger');
+    const label = trigger?.querySelector('span');
+    const panel = menu.querySelector('.nt-search__category-panel');
+    const list = menu.querySelector('.nt-search__category-list');
+    const previewImage = menu.querySelector('.nt-search__category-preview img');
+    const previewCaption = menu.querySelector('.nt-search__category-preview figcaption');
+    if (!trigger || !label || !panel || !list) return;
+
+    const updatePreview = option => {
+        if (!previewImage || !previewCaption) return;
+        panel.classList.add('is-preview-changing');
+        window.setTimeout(() => {
+            const source = option?.dataset.image;
+            previewImage.src = !source ? '/static/img/favicon.png' : (source.startsWith('http') ? source : `${API}/${source.replace(/^\//, '')}`);
+            previewCaption.textContent = option?.value ? option.textContent.trim() : 'Nos catégories';
+            panel.classList.remove('is-preview-changing');
+        }, 70);
+    };
+
+    list.replaceChildren();
+    Array.from(select.options).forEach(option => {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'nt-search__category-option';
+        item.setAttribute('role', 'option');
+        item.setAttribute('aria-selected', String(option.value === select.value));
+        item.textContent = option.textContent;
+        item.addEventListener('mouseenter', () => updatePreview(option));
+        item.addEventListener('focus', () => updatePreview(option));
+        item.addEventListener('click', () => {
+            select.value = option.value;
+            label.textContent = option.value ? option.textContent.trim() : 'Catégories';
+            list.querySelectorAll('[role="option"]').forEach(entry => entry.setAttribute('aria-selected', String(entry === item)));
+            menu.classList.remove('is-open');
+            trigger.setAttribute('aria-expanded', 'false');
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+        list.appendChild(item);
+    });
+    updatePreview(select.options[select.selectedIndex]);
+
+    if (menu.dataset.ready === 'true') return;
+    menu.dataset.ready = 'true';
+    trigger.addEventListener('click', () => {
+        const open = !menu.classList.contains('is-open');
+        document.querySelectorAll('.nt-search__category-menu.is-open').forEach(other => {
+            other.classList.remove('is-open');
+            other.querySelector('.nt-search__category-trigger')?.setAttribute('aria-expanded', 'false');
+        });
+        menu.classList.toggle('is-open', open);
+        trigger.setAttribute('aria-expanded', String(open));
+    });
+}
+
+document.addEventListener('click', event => {
+    if (event.target.closest('.nt-search__category-menu')) return;
+    document.querySelectorAll('.nt-search__category-menu.is-open').forEach(menu => {
+        menu.classList.remove('is-open');
+        menu.querySelector('.nt-search__category-trigger')?.setAttribute('aria-expanded', 'false');
+    });
+});
 
 // ------------------------------------------------------
 // FONCTION DE RECHERCHE GÉNÉRIQUE
@@ -231,6 +300,7 @@ function initDesktopSearch() {
 
     if (searchInput.dataset.searchReady === 'true') return true;
     searchInput.dataset.searchReady = 'true';
+    renderSearchCategoryMenu(searchCategory);
     populateSearchCategories(searchCategory);
 
     console.log("✅ Initialisation recherche desktop");
