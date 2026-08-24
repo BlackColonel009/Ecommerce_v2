@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     ALGORITHM: str
     DOMAIN: str
     
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 120
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 180
     ADMIN_COOKIE_NAME: str = "nt_admin_session"
     ADMIN_COOKIE_DOMAIN: str = ".newtechnologiestg.com"
     COOKIE_SECURE: bool = False
