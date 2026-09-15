@@ -1460,6 +1460,7 @@ function displayExistingImages(images) {
         const setMainBtn = !img.is_main 
             ? `<button type="button" class="btn btn-sm btn-primary set-main-image mt-1" data-image-id="${img.id}" data-image-url="${img.image_url}">Définir principale</button>`
             : '';
+        const deleteBtn = `<button type="button" class="btn btn-sm btn-outline-danger delete-existing-image mt-1" data-image-id="${img.id}" title="Supprimer cette image"><i class="fas fa-trash"></i> Supprimer</button>`;
         
         imgDiv.innerHTML = `
             <img src="${API_BASE}/${img.image_url}" 
@@ -1468,21 +1469,61 @@ function displayExistingImages(images) {
             ${badgeHtml}
             <div class="text-center mt-1">
                 ${setMainBtn}
+                ${deleteBtn}
             </div>
         `;
         container.appendChild(imgDiv);
     });
     
     // ✅ Attacher les événements APRÈS avoir ajouté les boutons
-    attachSetMainImageEvents();
+    attachExistingImageEvents();
 }
 
-function attachSetMainImageEvents() {
+function attachExistingImageEvents() {
     document.querySelectorAll('.set-main-image').forEach(btn => {
         // Nettoyer les anciens événements
         btn.removeEventListener('click', handleSetMainClick);
         btn.addEventListener('click', handleSetMainClick);
     });
+    document.querySelectorAll('.delete-existing-image').forEach(btn => {
+        btn.removeEventListener('click', handleDeleteExistingImageClick);
+        btn.addEventListener('click', handleDeleteExistingImageClick);
+    });
+}
+
+async function handleDeleteExistingImageClick(event) {
+    event.preventDefault();
+    const button = event.currentTarget;
+    const productId = document.getElementById('editProductId').value;
+    const imageId = button.dataset.imageId;
+    const token = localStorage.getItem('access_token');
+
+    if (!productId || !imageId || !token) {
+        showAlert('Votre session a expiré. Reconnectez-vous puis réessayez.', 'error');
+        return;
+    }
+    if (!confirm('Supprimer cette image ? Cette action est immédiate.')) return;
+
+    button.disabled = true;
+    const originalContent = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+    try {
+        const response = await fetch(`${API_BASE}/products/${productId}/images/${imageId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` },
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.detail || 'Suppression impossible');
+
+        document.getElementById('editMainImageId').value = '';
+        displayExistingImages(payload.images || []);
+    } catch (error) {
+        console.error('delete product image:', error);
+        showAlert(error.message || 'Impossible de supprimer cette image.', 'error');
+        button.disabled = false;
+        button.innerHTML = originalContent;
+    }
 }
 
 function handleSetMainClick(e) {

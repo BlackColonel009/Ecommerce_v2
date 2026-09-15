@@ -841,6 +841,63 @@ async def update_product(
         "display_price": display_price
     }
 
+
+@router.delete("/{product_id}/images/{image_id}")
+def delete_product_image(
+    product_id: int,
+    image_id: int,
+    db: Session = Depends(get_db),
+    _admin = Depends(get_current_admin),
+):
+    """Supprime une image depuis le dashboard sans laisser la fiche produit vide."""
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Produit introuvable")
+
+    image = db.query(ProductImage).filter(
+        ProductImage.id == image_id,
+        ProductImage.product_id == product_id,
+    ).first()
+    if not image:
+        raise HTTPException(status_code=404, detail="Cette image n'appartient pas au produit")
+
+    deleted_was_main = bool(image.is_main)
+    db.delete(image)
+    db.flush()
+
+    remaining_images = (
+        db.query(ProductImage)
+        .filter(ProductImage.product_id == product_id)
+        .order_by(ProductImage.id.asc())
+        .all()
+    )
+
+    if remaining_images:
+        # Une fiche conserve toujours exactement une image principale.
+        if deleted_was_main or not any(item.is_main for item in remaining_images):
+            for item in remaining_images:
+                item.is_main = item.id == remaining_images[0].id
+    else:
+        # La suppression de la dernière photo rétablit une illustration de catégorie.
+        fallback = ProductImage(
+            product_id=product.id,
+            image_url=default_product_image_for_category(product.category.slug),
+            alt_text=f"Illustration automatique — {product.category.name}"[:150],
+            is_main=True,
+        )
+        db.add(fallback)
+        db.flush()
+        remaining_images = [fallback]
+
+    db.commit()
+    return {
+        "message": "Image supprimée",
+        "images": [
+            {"id": item.id, "image_url": item.image_url, "is_main": item.is_main}
+            for item in remaining_images
+        ],
+    }
+
 # *************************** PROMOS **************************
 
 
