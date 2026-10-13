@@ -56,10 +56,25 @@
 
     function startReveal() {
         const reveal = document.getElementById("eventReveal");
-        if (reveal && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) reveal.classList.add("is-playing");
+        if (!reveal) return;
+
+        const dismiss = () => reveal.remove();
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            dismiss();
+            return;
+        }
+
+        reveal.classList.add("is-playing");
+        reveal.addEventListener("animationend", dismiss, { once: true });
+        // Filet de sécurité : l'animation ne doit jamais bloquer la page.
+        window.setTimeout(dismiss, 2400);
     }
 
-    document.addEventListener("DOMContentLoaded", () => { startReveal(); initPage(); });
+    document.addEventListener("DOMContentLoaded", initPage);
+    // Le ruban démarre après le loader global : il reste donc visible au lieu
+    // de jouer derrière l'écran de chargement sur les connexions lentes.
+    if (document.readyState === "complete") startReveal();
+    else window.addEventListener("load", startReveal, { once: true });
     document.addEventListener("navContainerLoaded", () => activePromos().then(setEventBadge).catch(() => {}));
     window.initEventMenuBadge = () => activePromos().then(setEventBadge).catch(() => {});
 })();

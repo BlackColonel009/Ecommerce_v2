@@ -1,0 +1,12 @@
+/* Le rideau d'ouverture est seulement décoratif et ne bloque jamais un clic. */
+.nt-event-reveal { pointer-events: none; }
+
+/* Le panneau de compte est injecté après le HTML. Sur mobile, sans son
+   initialisation, il restait invisible mais recouvrait toute la page. */
+.nt-events-page #sidebarContent[aria-labelledby] { pointer-events: none; }
+.nt-events-page #sidebarContent.u-unfold--css-animation:not(.u-unfold--hidden),
+.nt-events-page #sidebarContent.u-unfold--jquery-slide:not(.u-unfold--hidden) { pointer-events: auto; }
+
+/* Lien d'accessibilité : masqué hors navigation clavier, sans débordement. */
+.nt-events-page .skip-link { background: #edd500; color: #171717; font-weight: 800; left: 12px; max-width: calc(100vw - 24px); padding: 10px 14px; position: fixed; top: -100px; z-index: 100000; }
+.nt-events-page .skip-link:focus { top: 12px; }
