@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
@@ -18,7 +18,10 @@ APP_DIR = Path(__file__).resolve().parent
 app.mount("/static", StaticFiles(directory=APP_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=APP_DIR / "templates")
 
-PUBLIC_PATHS = {"/login", "/forgot-password", "/logout"}
+# /session est volontairement public : il reçoit un JWT déjà signé par l'API,
+# le vérifie, puis crée le cookie sur le domaine du dashboard. Cela évite de
+# dépendre d'un cookie tiers entre api.* et dashboard.*.
+PUBLIC_PATHS = {"/login", "/forgot-password", "/logout", "/session"}
 
 
 def has_valid_admin_session(request: Request) -> bool:
@@ -31,6 +34,36 @@ def has_valid_admin_session(request: Request) -> bool:
         return payload.get("admin_id") is not None
     except JWTError:
         return False
+
+
+@app.post("/session")
+async def establish_dashboard_session(request: Request):
+    """Transforme un jeton API valide en cookie de session dashboard.
+
+    Le navigateur accepte toujours ce cookie car il est émis par le dashboard
+    lui-même, y compris si l'API est hébergée sur un autre sous-domaine.
+    """
+    try:
+        body = await request.json()
+        token = str(body.get("access_token", "")).strip()
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        if not payload.get("admin_id"):
+            raise JWTError("Jeton administrateur incomplet")
+    except (JWTError, ValueError, TypeError):
+        raise HTTPException(status_code=401, detail="Session administrateur invalide")
+
+    response = JSONResponse({"ok": True})
+    response.set_cookie(
+        key=settings.ADMIN_COOKIE_NAME,
+        value=token,
+        max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+        httponly=True,
+        secure=settings.admin_cookie_is_secure(request.url.hostname),
+        samesite="lax",
+        path="/",
+        domain=settings.admin_cookie_domain_for_host(request.url.hostname),
+    )
+    return response
 
 
 @app.middleware("http")
@@ -181,6 +214,10 @@ def index(request: Request):
 @app.get("/blog_manage", response_class=HTMLResponse)
 def blog_manage(request: Request):
     return templates.TemplateResponse("blog_manage.html", {"request": request})
+
+@app.get("/software_manage", response_class=HTMLResponse)
+def software_manage(request: Request):
+    return templates.TemplateResponse("software_manage.html", {"request": request})
 
 
 

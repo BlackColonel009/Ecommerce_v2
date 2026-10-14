@@ -5,8 +5,9 @@
         if (document.getElementById('nt-page-loader')) return;
 
         const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-        const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
-        const isHomePage = currentPath === '/' || currentPath === '/index' || currentPath === '/index.html';
+        // L'accueil utilise le même indicateur discret que les autres pages.
+        // Le GIF plein écran n'est plus affiché au rechargement.
+        const isHomePage = false;
         const loader = document.createElement('div');
         loader.id = 'nt-page-loader';
         loader.className = `nt-page-loader ${isHomePage ? 'nt-page-loader--home' : 'nt-page-loader--compact'}`;

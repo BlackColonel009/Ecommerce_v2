@@ -20,5 +20,6 @@ from . import model_support_message
 from . import model_review
 from . import model_newsletter
 from . import model_blog
+from . import model_software
 
 __all__ = [name for name in globals() if name.startswith("model_")]

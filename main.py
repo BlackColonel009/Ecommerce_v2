@@ -8,7 +8,7 @@ from jose import JWTError
 import jwt
 from config import settings
 from policy import afficher_banner
-from routes import admin, banner, blog, brands, cart, category, compare, graph_W_F, lead, newsletter, popups, popups_promo, product, promos, recent, review, roles_permissions, stats, support, favoris, visitor, filtre
+from routes import admin, banner, blog, brands, cart, category, compare, graph_W_F, lead, newsletter, popups, popups_promo, product, promos, recent, review, roles_permissions, software, stats, support, favoris, visitor, filtre
 from script.init_db import init_database
 # from routes import (user, annonces, favoris , clicked, galerie)
 
@@ -84,6 +84,7 @@ app.include_router(review.router)
 app.include_router(newsletter.router)
 app.include_router(graph_W_F.router)
 app.include_router(blog.router)
+app.include_router(software.router)
 
 
 app.add_middleware(

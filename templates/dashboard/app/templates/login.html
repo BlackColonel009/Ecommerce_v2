@@ -142,11 +142,17 @@
             setLoading(true);
 
             try {
-                const response = await fetch(`${API_BASE}/auth/login`, {
-                    method: "POST",
-                    body: formData,
-                    credentials: "include"
-                });
+                let response;
+                try {
+                    response = await fetch(`${API_BASE}/auth/login`, {
+                        method: "POST",
+                        body: formData,
+                        credentials: "include"
+                    });
+                } catch (apiError) {
+                    console.error("API de connexion inaccessible :", apiError);
+                    throw new Error("L’API de connexion est inaccessible. Vérifiez qu’elle est démarrée et que CORS autorise le dashboard.");
+                }
 
                 if (!response.ok) {
                     showLoginError(response.status === 401
@@ -156,11 +162,36 @@
                 }
 
                 const data = await response.json();
+                if (!data.access_token) {
+                    throw new Error("Jeton de connexion absent dans la réponse API.");
+                }
+
+                // L'API a validé les identifiants. On installe ensuite une
+                // session sur le domaine même du dashboard, afin que son
+                // middleware puisse autoriser la page d'accueil.
+                let sessionResponse;
+                try {
+                    sessionResponse = await fetch("/session", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        credentials: "same-origin",
+                        body: JSON.stringify({ access_token: data.access_token })
+                    });
+                } catch (sessionError) {
+                    console.error("Session dashboard inaccessible :", sessionError);
+                    throw new Error("Le dashboard ne peut pas créer votre session. Redémarrez le serveur du dashboard puis réessayez.");
+                }
+                if (!sessionResponse.ok) {
+                    throw new Error(`Le dashboard a refusé la session (erreur ${sessionResponse.status}). Redémarrez-le après la mise à jour.`);
+                }
+
                 localStorage.setItem("access_token", data.access_token);
                 window.location.replace("/");
             } catch (error) {
                 console.error("Erreur de connexion :", error);
-                showLoginError("Impossible de joindre le serveur. Vérifiez que l’API est démarrée.");
+                showLoginError(error instanceof Error
+                    ? error.message
+                    : "Connexion impossible. Vérifiez l’API et le dashboard.");
             } finally {
                 setLoading(false);
             }
