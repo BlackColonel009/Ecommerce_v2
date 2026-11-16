@@ -189,6 +189,9 @@ def serialize_product(product):
             "id": product.inventory.id,
             "quantity": product.inventory.quantity
         } if product.inventory else None,
+        "stock_quantity": product.stock_quantity,
+        "has_variants": bool(getattr(product, "variants", [])),
+        "variants_count": len(getattr(product, "variants", [])),
         "colors": [
             {"id": color.id, "color": color.color}
             for color in product.colors

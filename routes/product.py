@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 from urllib.request import Request as UrlRequest, urlopen
 from fastapi import APIRouter, Depends, HTTPException, Response, UploadFile, File, Form
 from pydantic import BaseModel, Field
-from sqlalchemy import or_
+from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from database import get_db
@@ -916,7 +916,7 @@ def featured_products(db: Session = Depends(get_db)):
     )
 
     return [
-        ProductWithPromoSchema.from_orm(product).copy(update={"promo": product.active_promo})
+        product_catalog_payload(product, db, include_promo=True)
         for product in products
     ]
 
@@ -936,7 +936,7 @@ def on_sale_products(db: Session = Depends(get_db)):
     )
 
     return [
-        ProductWithPromoSchema.from_orm(product).copy(update={"promo": product.active_promo})
+        product_catalog_payload(product, db, include_promo=True)
         for product in products
     ]
 
@@ -955,7 +955,7 @@ def top_rated_products(db: Session = Depends(get_db)):
     )
 
     return [
-        ProductWithPromoSchema.from_orm(product).copy(update={"promo": product.active_promo})
+        product_catalog_payload(product, db, include_promo=True)
         for product in products
     ]
 
@@ -963,7 +963,8 @@ def top_rated_products(db: Session = Depends(get_db)):
 @router.get("/", response_model=List[ProductSchema])
 def list_products(db: Session = Depends(get_db)):
     # afficher uniquement les produits non supprimés
-    return db.query(Product).filter(Product.is_deleted == False).all()
+    products = db.query(Product).filter(Product.is_deleted == False).all()
+    return [product_catalog_payload(product, db) for product in products]
 
 @router.get("/all", response_model=dict)
 def list_products(
@@ -1012,7 +1013,7 @@ def list_products(
 
     # --- Injection promo active ---
     data = [
-        ProductWithPromoSchema.from_orm(p).copy(update={"promo": p.active_promo})
+        product_catalog_payload(p, db, include_promo=True)
         for p in paginated
     ]
 
@@ -1057,7 +1058,7 @@ def search_products(
 
     # Injection promo active
     data = [
-        ProductWithPromoSchema.from_orm(p).copy(update={"promo": p.active_promo})
+        product_catalog_payload(p, db, include_promo=True)
         for p in products
     ]
 
@@ -1076,13 +1077,14 @@ def latest_products(
     limit: int = Query(10, description="Nombre de produits récents à récupérer"),
     db: Session = Depends(get_db)
 ):
-    return (
+    products = (
         db.query(Product)
         .filter(Product.is_deleted == False)
         .order_by(Product.created_at.desc())
         .limit(limit)
         .all()
     )
+    return [product_catalog_payload(product, db) for product in products]
 
 
 # ************************** CORBEILLE **************************
@@ -1150,6 +1152,39 @@ def attach_variant_metadata(product: Product, db: Session) -> Product:
     return product
 
 
+def product_catalog_payload(product: Product, db: Session, *, include_promo: bool = False):
+    """Construit la réponse catalogue avec le stock réel des variantes.
+
+    Les produits déclinés n'utilisent pas leur inventaire générique : la
+    disponibilité affichée est la somme des variantes actives. Cette fonction
+    est utilisée par toutes les routes consommées par l'accueil.
+    """
+    variants_count, variants_stock = db.query(
+        func.count(ProductVariant.id),
+        func.coalesce(func.sum(ProductVariant.quantity), 0),
+    ).filter(
+        ProductVariant.product_id == product.id,
+        ProductVariant.is_active.is_(True),
+    ).one()
+
+    has_variants = variants_count > 0
+    if has_variants:
+        stock_quantity = max(0, int(variants_stock or 0))
+    else:
+        stock_quantity = max(0, int(product.inventory.quantity or 0)) if product.inventory else 0
+
+    schema = ProductWithPromoSchema if include_promo else ProductSchema
+    payload = schema.model_validate(product, from_attributes=True)
+    update = {
+        "has_variants": has_variants,
+        "variants_count": int(variants_count),
+        "stock_quantity": stock_quantity,
+    }
+    if include_promo:
+        update["promo"] = product.active_promo
+    return payload.model_copy(update=update)
+
+
 @router.get("/slug/{slug}", response_model=ProductSchema)
 def get_product_by_slug(slug: str, db: Session = Depends(get_db)):
     """
@@ -1177,7 +1212,7 @@ def get_product_by_slug(slug: str, db: Session = Depends(get_db)):
             if p.name:
                 p_slug = Product.generate_slug(p.name)
                 if p_slug == slug:
-                    return attach_variant_metadata(p, db)
+                    return product_catalog_payload(p, db)
         
         # 3. Toujours pas trouvé → 404
         raise HTTPException(
@@ -1185,7 +1220,7 @@ def get_product_by_slug(slug: str, db: Session = Depends(get_db)):
             detail=f"Product with slug '{slug}' not found"
         )
     
-    return attach_variant_metadata(product, db)
+    return product_catalog_payload(product, db)
 
 @router.get("/{product_id}", response_model=ProductSchema)
 def get_product(product_id: int, db: Session = Depends(get_db)):
@@ -1195,7 +1230,7 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    return attach_variant_metadata(product, db)
+    return product_catalog_payload(product, db)
 
 @router.get("/{product_id}/variants")
 def get_product_variants(product_id: int, db: Session = Depends(get_db)):
@@ -1235,7 +1270,6 @@ def get_product_variants(product_id: int, db: Session = Depends(get_db)):
 # GET /products/related/{product_id}?limit=8
 
 
-from sqlalchemy.sql import func
 from fastapi import Query
 
 @router.get("/related/{product_id}", response_model=List[ProductSchema])
@@ -1252,7 +1286,7 @@ def related_products(
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    return (
+    products = (
         db.query(Product)
         .filter(
             Product.category_id == product.category_id,
@@ -1263,6 +1297,7 @@ def related_products(
         .limit(limit)
         .all()
     )
+    return [product_catalog_payload(item, db) for item in products]
 
 
 
