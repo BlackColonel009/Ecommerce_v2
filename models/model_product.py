@@ -62,6 +62,25 @@ class Product(Base):
             None
         )
 
+    @property
+    def stock_quantity(self):
+        """Stock réellement disponible pour l'affichage du catalogue.
+
+        Un produit décliné ne doit jamais reprendre le stock (souvent nul)
+        de son inventaire générique : sa disponibilité est la somme de ses
+        variantes actives. Ainsi, une seule variante disponible suffit à ne
+        pas présenter le produit comme vendu dans les listes et carrousels.
+        """
+        variants = [
+            variant for variant in getattr(self, "variants", [])
+            if getattr(variant, "is_active", True)
+        ]
+        if variants:
+            return sum(max(0, int(variant.quantity or 0)) for variant in variants)
+
+        inventory = self.inventory
+        return max(0, int(inventory.quantity or 0)) if inventory else 0
+
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 @event.listens_for(Product, 'before_insert')

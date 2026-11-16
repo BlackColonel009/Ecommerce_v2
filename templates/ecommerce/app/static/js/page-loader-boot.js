@@ -13,9 +13,14 @@
         style = document.createElement('style');
         style.id = 'nt-page-loader-boot-style';
         style.textContent = `
-            html.nt-page-loading { background: #000; }
-            html.nt-page-loading body > * { visibility: hidden !important; }
-            html.nt-page-loading body > #nt-page-loader { visibility: visible !important; }
+            html { background: #fff; }
+            html::before { background:transparent url('/static/img/logo/turn.gif') center/contain no-repeat; bottom:24px; content:''; height:92px; left:50%; opacity:0; pointer-events:none; position:fixed; transform:translateX(-50%); transition:opacity .42s ease; width:92px; z-index:2147483647; }
+            html.nt-page-loading::before { opacity:1; }
+            html body > *:not(#nt-page-loader) { transition:opacity .42s ease; }
+            html.nt-page-loading body > *:not(#nt-page-loader) { opacity:0 !important; visibility:hidden !important; }
+            html.nt-page-loading body > #nt-page-loader { opacity:1 !important; visibility:visible !important; }
+            @media (max-width:575.98px) { html::before { bottom:16px; height:76px; width:76px; } }
+            @media (prefers-reduced-motion:reduce) { html::before, html body > *:not(#nt-page-loader) { transition:none; } }
         `;
         (document.head || document.documentElement).appendChild(style);
     }
@@ -25,7 +30,8 @@
         if (revealed) return;
         revealed = true;
         root.classList.remove('nt-page-loading');
-        style.remove();
+        // Conserve les règles de transition le temps du fondu d'entrée.
+        window.setTimeout(() => style.remove(), 440);
         window.clearTimeout(safetyTimer);
     };
 
@@ -35,7 +41,6 @@
     const safetyTimer = window.setTimeout(reveal, 45000);
     window.__ntPageLoaderBoot = { reveal };
 
-    // Le bootstrap ne dépend pas du script de navigation : dès que le
-    // navigateur a fini de charger la page, il rend les interactions.
-    window.addEventListener('load', reveal, { once: true });
+    // Le script de navigation appelle reveal après avoir installé puis retiré
+    // son indicateur. Le filet de sécurité ci-dessus couvre un script rompu.
 })();

@@ -124,6 +124,9 @@ class ProductSchema(BaseModel):
     specs: List[ProductSpec] = []
     prices: List[Price] = []
     inventory: Optional[Inventory]
+    # Stock consolidé : pour un produit à variantes, c'est la somme des
+    # variantes actives, pas l'ancien stock générique du produit.
+    stock_quantity: int = 0
     colors: List[ProductColorSchema] = []
     reviews: List[Review] = []        # ✅ liste des avis du produit
     accessories: List[AccessorySchema] = [] 

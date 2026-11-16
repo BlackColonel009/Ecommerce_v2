@@ -203,7 +203,9 @@ document.addEventListener("DOMContentLoaded", refreshNavigationBadges);
       if (variantStocks.length) return variantStocks.reduce((total, stock) => total + stock, 0);
     }
 
-    return numericStock(product.inventory?.quantity ?? product.stock_quantity ?? product.stock);
+    // L'API fournit stock_quantity comme valeur consolidée des variantes.
+    // Il doit être prioritaire sur un éventuel inventaire générique ancien.
+    return numericStock(product.stock_quantity ?? product.inventory?.quantity ?? product.stock);
   }
 
   function isProduct(value) {

@@ -157,8 +157,20 @@ async function loadProduct() {
         
         // Stock
         const stockEl = document.getElementById("productStock");
-        if (stockEl && productData.inventory) {
-            stockEl.textContent = productData.inventory.quantity + " in stock";
+        if (stockEl) {
+            const availableStock = Number(productData.stock_quantity ?? productData.inventory?.quantity ?? 0);
+            if (productData.has_variants) {
+                stockEl.textContent = availableStock > 0
+                    ? "Configurations disponibles"
+                    : "Rupture de stock";
+            } else {
+                stockEl.textContent = availableStock > 0
+                    ? `${availableStock} en stock`
+                    : "Rupture de stock";
+            }
+            stockEl.className = availableStock > 0
+                ? "text-green font-weight-bold"
+                : "text-danger font-weight-bold";
         }
         
         // Rating (étoiles)
@@ -1595,9 +1607,11 @@ async function loadProductVariants() {
             renderOptions('processor', processorOptions);
         }
         
-        // Sélectionner la première variante par défaut
+        // Afficher une configuration disponible dès l'ouverture si elle existe.
+        // Les variantes à zéro restent sélectionnables : elles affichent alors
+        // correctement le cachet « Vendu » et la rupture de stock.
         if (productVariants.length > 0) {
-            selectVariant(productVariants[0]);
+            selectVariant(productVariants.find(variant => Number(variant.stock) > 0) || productVariants[0]);
         }
         
     } catch (error) {
